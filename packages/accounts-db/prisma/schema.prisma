@@ -1,0 +1,96 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../node_modules/.prisma/client"
+}
+
+model Client {
+  id                         String                   @id @default(cuid())
+  user_id                    String                   @unique
+  redirect_uris              String[]
+  token_endpoint_auth_method TokenEndpointAuthMethod? @default(private_key_jwt)
+  grant_types                GrantType[] // default: authorization_code
+  response_types             ResponseType[] // default: code
+  application_type           ApplicationType?         @default(web)
+  name                       String?                  @unique
+  description                String?
+  secret                     String?                  @default(cuid())
+  client_uri                 String?
+  logo_uri                   String?
+  scope                      Scope[]
+  contacts                   String[]
+  tos_uri                    String?
+  policy_uri                 String?
+  jwks_uri                   String?
+  jwks                       Json?
+  software_id                String?
+  software_version           String?
+  user                       User                     @relation(fields: [user_id], references: [id])
+  created_at                 DateTime                 @default(now())
+  updated_at                 DateTime                 @updatedAt
+
+  @@map(name: "clients")
+}
+
+model Profile {
+  id         String   @id @default(cuid())
+  user_id    String   @unique
+  first_name String?
+  last_name  String?
+  user       User     @relation(fields: [user_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map(name: "profiles")
+}
+
+model Scope {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  description  String
+  display_name String
+  clients      Client[]
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  @@map(name: "scopes")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  username   String?  @unique
+  email      String   @unique
+  password   String
+  profile    Profile?
+  clients    Client[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map(name: "users")
+}
+
+enum TokenEndpointAuthMethod {
+  none
+  client_secret_basic
+  private_key_jwt
+}
+
+enum ResponseType {
+  code
+}
+
+enum GrantType {
+  authorization_code
+  refresh_token
+  client_credentials
+}
+
+enum ApplicationType {
+  browser
+  native
+  web
+}

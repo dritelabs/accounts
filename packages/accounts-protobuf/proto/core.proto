@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package core;
+
+import "google/protobuf/struct.proto";
+
+message Client {
+  string id = 1;
+  string user_id = 2;
+  repeated string redirect_uri = 3;
+  string token_endpoint_auth_method = 4;
+  repeated string grant_type = 5;
+  repeated string response_type = 6;
+  string application_type = 7;
+  string name = 8;
+  string description = 9;
+  string secret = 10;
+  string client_uri = 11;
+  string logo_uri = 12;
+  string scope = 13;
+  repeated string contact = 14;
+  string tos_uri = 15;
+  string policy_uri = 16;
+  string jwks_uri = 17;
+  google.protobuf.Struct jwks = 18;
+  string software_id = 19;
+  string software_version = 20;
+  string user = 21;
+  int64 created_at = 22;
+  int64 updated_at = 23;
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string username = 3;
+  string password = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message Scope {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string display_name = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message GetClientRequest {
+  string id = 1;
+}
+
+
+message CreateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthenticateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthenticateUserResponse {
+  string id = 1;
+  string email = 2;
+  string initial_access_token = 3;
+}
+
+message CreateTokenRequest {
+  string client_id = 1;
+  string scope = 2;
+  string sub = 4;
+  repeated string aud = 5;
+}
+
+message CreateTokenResponse {
+  string token = 1;
+}
+
+message CreateAuthorizationCodeRequest {
+  string client_id = 1;
+  string sub = 2;
+  string code_challenge = 3;
+  string code_challenge_method = 4;
+  string redirect_uri = 5;
+  string scope = 6;
+  repeated string aud = 7;
+}
+
+message CreateAuthorizationCodeResponse {
+  string code = 1;
+}
+
+message ListScopesRequest {
+  string parent = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListScopesResponse {
+  repeated Scope scope = 1;
+  string next_page_token = 2;
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@driten/accounts-errors",
+  "version": "0.0.0",
+  "description": "Accounts utils module",
+  "keywords": [
+    "accounts",
+    "errors",
+    "module"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/accounts.git"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/accounts/issues"
+  },
+  "dependencies": {}
+}

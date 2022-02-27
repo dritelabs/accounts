@@ -1,0 +1,40 @@
+{
+  "name": "@driten/accounts-db",
+  "version": "0.0.0",
+  "description": "Accounts database module",
+  "keywords": [
+    "Accounts",
+    "database",
+    "module"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "exports": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/accounts.git"
+  },
+  "scripts": {
+    "build": "tsup",
+    "generate": "prisma generate",
+    "test": "tsup-node script.ts --watch --onSuccess 'node dist/script.js'"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/accounts/issues"
+  },
+  "dependencies": {
+    "@prisma/client": "3.7.0"
+  },
+  "devDependencies": {
+    "prisma": "3.7.0"
+  }
+}
