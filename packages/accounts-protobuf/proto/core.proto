@@ -72,7 +72,8 @@ message AuthenticateUserResponse {
 message CreateTokenRequest {
   string client_id = 1;
   string scope = 2;
-  string sub = 4;
+  string sub = 3;
+  string exp = 4;
   repeated string aud = 5;
 }
 

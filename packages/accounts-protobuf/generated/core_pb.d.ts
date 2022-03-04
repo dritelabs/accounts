@@ -273,6 +273,8 @@ export class CreateTokenRequest extends jspb.Message {
     setScope(value: string): CreateTokenRequest;
     getSub(): string;
     setSub(value: string): CreateTokenRequest;
+    getExp(): string;
+    setExp(value: string): CreateTokenRequest;
     clearAudList(): void;
     getAudList(): Array<string>;
     setAudList(value: Array<string>): CreateTokenRequest;
@@ -293,6 +295,7 @@ export namespace CreateTokenRequest {
         clientId: string,
         scope: string,
         sub: string,
+        exp: string,
         audList: Array<string>,
     }
 }

@@ -15,6 +15,11 @@ async function main() {
   await client.scope.createMany({
     data: [
       {
+        display_name: "Profile",
+        name: "profile",
+        description: "Create or update profile information",
+      },
+      {
         display_name: "Write clients",
         name: "clients:write",
         description: "Create, update or delete clients",
@@ -34,6 +39,7 @@ async function main() {
           email: "guillermolopez2529@gmail.com",
         },
       },
+      id: "cl05amov600137o9kit49f4cz",
       application_type: "web",
       client_uri: `${host}`,
       contacts: [],
@@ -59,7 +65,7 @@ async function main() {
       scope: {
         connect: [{ name: "clients:write" }, { name: "clients:read" }],
       },
-      // secret: "",
+      secret: "cl05amov600137o9kit49f4czcl05amov600137o9kit49f4cz",
       software_id: "developers",
       software_version: "0.0.0",
       token_endpoint_auth_method: "private_key_jwt",

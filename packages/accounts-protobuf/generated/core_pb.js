@@ -2438,7 +2438,8 @@ proto.core.CreateTokenRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     clientId: jspb.Message.getFieldWithDefault(msg, 1, ""),
     scope: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    sub: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    sub: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    exp: jspb.Message.getFieldWithDefault(msg, 4, ""),
     audList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
   };
 
@@ -2484,9 +2485,13 @@ proto.core.CreateTokenRequest.deserializeBinaryFromReader = function(msg, reader
       var value = /** @type {string} */ (reader.readString());
       msg.setScope(value);
       break;
-    case 4:
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setSub(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setExp(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
@@ -2536,6 +2541,13 @@ proto.core.CreateTokenRequest.serializeBinaryToWriter = function(message, writer
     );
   }
   f = message.getSub();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getExp();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -2589,11 +2601,11 @@ proto.core.CreateTokenRequest.prototype.setScope = function(value) {
 
 
 /**
- * optional string sub = 4;
+ * optional string sub = 3;
  * @return {string}
  */
 proto.core.CreateTokenRequest.prototype.getSub = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -2602,6 +2614,24 @@ proto.core.CreateTokenRequest.prototype.getSub = function() {
  * @return {!proto.core.CreateTokenRequest} returns this
  */
 proto.core.CreateTokenRequest.prototype.setSub = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string exp = 4;
+ * @return {string}
+ */
+proto.core.CreateTokenRequest.prototype.getExp = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.core.CreateTokenRequest} returns this
+ */
+proto.core.CreateTokenRequest.prototype.setExp = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 

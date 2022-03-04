@@ -5,7 +5,7 @@ import {
 } from "@driten/accounts-protobuf/generated/core_pb";
 import { grpc } from "@driten/accounts-protobuf";
 import * as jose from "jose";
-import { privateKey } from "../config";
+import { privateKey, authorizationServerMetadata } from "../config";
 
 export async function createToken(
   call: grpc.ServerUnaryCall<CreateTokenRequest, CreateTokenResponse>,
@@ -19,8 +19,8 @@ export async function createToken(
       scope: call.request.getScope(),
     })
       .setProtectedHeader({ alg: "RS256", typ: "at+jwt" })
-      .setIssuer("http://localhost:3000")
-      .setExpirationTime("1h")
+      .setIssuer(authorizationServerMetadata.issuer)
+      .setExpirationTime(call.request.getExp())
       .setAudience(call.request.getAudList())
       .setSubject(call.request.getSub())
       .setIssuedAt()

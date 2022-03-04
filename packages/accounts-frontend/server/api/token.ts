@@ -4,29 +4,31 @@ import {
   InvalidGrantError,
   InvalidRequestError,
   ServerError,
+  UnauthorizedClientError,
 } from "@driten/accounts-errors";
 import { codeChallenge } from "@driten/accounts-utils";
-import { verify } from "@driten/accounts-jwt-verifier";
 import { withIronSession } from "~/lib/session";
 import {
   ValidationError,
   tokenRequestSchema,
   authorizationCodeGrantTokenRequestSchema,
   clientCredentialsGrantTokenRequestSchema,
+  refreshTokenGrantTokenRequestSchema,
 } from "~/schemas";
 import {
   client as clientService,
   token as tokenService,
   metadata as metadataService,
+  authorizationCode as authorizationCodeService,
 } from "~/services";
 
 export default withIronSession(async (req, res) => {
   try {
     const body = await useBody(req);
     const params = new URLSearchParams(body);
-    const jsonParams = Object.fromEntries(params);
+    const jsonBody = Object.fromEntries(params);
     const metadata = await metadataService.get();
-    const tokenRequest = await tokenRequestSchema.validate(jsonParams);
+    const tokenRequest = await tokenRequestSchema.validate(jsonBody);
 
     const client = req.headers.authorization
       ? await clientService.authenticateWithBasic(req.headers.authorization)
@@ -34,24 +36,21 @@ export default withIronSession(async (req, res) => {
           tokenRequest?.client_assertion
         );
 
+    if (!client.grant_types.includes(tokenRequest.grant_type)) {
+      throw new UnauthorizedClientError(
+        "The authenticated client is not authorized to use this authorization grant type"
+      );
+    }
+
     if (tokenRequest.grant_type === "authorization_code") {
       const authorizationCodeGrantTokenRequest =
-        await authorizationCodeGrantTokenRequestSchema.validate(jsonParams);
+        await authorizationCodeGrantTokenRequestSchema.validate(jsonBody);
 
-      const code = await verify(
-        authorizationCodeGrantTokenRequest.code,
-        metadata.jwks_uri,
-        {
-          issuer: metadata.issuer,
-          audience: metadata.issuer,
-        }
-      ).catch((err) => {
-        throw new InvalidGrantError(err?.message);
-      });
+      const code = await authorizationCodeService.verify(
+        authorizationCodeGrantTokenRequest.code
+      );
 
-      const areClientIdsEqual = code.payload.client_id === client.client_id;
-
-      if (!areClientIdsEqual) {
+      if (code.payload.client_id !== client.client_id) {
         throw new InvalidClientError(
           "The provided authorization grant was issued to another client."
         );
@@ -66,30 +65,35 @@ export default withIronSession(async (req, res) => {
         }
       );
 
-      const areCodeChallengesEqual =
-        code.payload.code_challenge === calculatedCodeChallenge;
-
-      if (!areCodeChallengesEqual) {
+      if (code.payload.code_challenge !== calculatedCodeChallenge) {
         throw new InvalidGrantError(
           "The provided authorization grant does not match the code_challenge used in the authorization request"
         );
       }
 
-      const areRedirectUrisEqual =
+      if (
         code.payload.redirect_uri ===
-        authorizationCodeGrantTokenRequest.redirect_uri;
-
-      if (!areRedirectUrisEqual) {
+        authorizationCodeGrantTokenRequest.redirect_uri
+      ) {
         throw new InvalidGrantError(
           "The provided authorization grant does not match the redirect_uri used in the authorization request"
         );
       }
 
       const token = await tokenService.create({
-        clientId: authorizationCodeGrantTokenRequest.client_id,
+        clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
         audList: code.payload.aud as string[],
+        exp: "1h",
+      });
+
+      const refreshToken = await tokenService.create({
+        clientId: authorizationCodeGrantTokenRequest.client_id,
+        scope: code.payload.scope as string,
+        sub: code.payload.sub,
+        audList: [...code.payload.aud, metadata.issuer],
+        exp: "30days",
       });
 
       return {
@@ -97,19 +101,22 @@ export default withIronSession(async (req, res) => {
         token_type: "Bearer",
         expires_in: 3600,
         scope: code.payload.scope,
-        // refresh_token: "",
+        refresh_token: refreshToken,
       };
     }
 
     if (tokenRequest.grant_type === "client_credentials") {
       const clientCredentialsGrantTokenRequest =
-        await clientCredentialsGrantTokenRequestSchema.validate(jsonParams);
+        await clientCredentialsGrantTokenRequestSchema.validate(jsonBody);
 
       const token = await tokenService.create({
         clientId: client.client_id,
         scope: clientCredentialsGrantTokenRequest.scope,
         sub: client.client_id,
-        audList: undefined,
+        audList: Array.isArray(clientCredentialsGrantTokenRequest.resource)
+          ? clientCredentialsGrantTokenRequest.resource
+          : [clientCredentialsGrantTokenRequest.resource],
+        exp: "1m",
       });
 
       return {
@@ -117,6 +124,31 @@ export default withIronSession(async (req, res) => {
         token_type: "Bearer",
         expires_in: 3600,
         scope: clientCredentialsGrantTokenRequest.scope,
+      };
+    }
+
+    if (tokenRequest.grant_type === "refresh_token") {
+      const refreshTokenGrantTokenRequest =
+        await refreshTokenGrantTokenRequestSchema.validate(jsonBody);
+
+      const refreshToken = await tokenService.verifyRefreshToken(
+        refreshTokenGrantTokenRequest.refresh_token
+      );
+
+      const token = await tokenService.create({
+        clientId: client.client_id,
+        scope: refreshToken.payload.scope as string,
+        sub: refreshToken.payload.sub,
+        audList: refreshToken.payload.aud as string[],
+        exp: "1h",
+      });
+
+      return {
+        access_token: token,
+        token_type: "Bearer",
+        expires_in: 3600,
+        scope: refreshToken.payload.scope,
+        refresh_token: refreshToken,
       };
     }
   } catch (error) {
@@ -134,7 +166,8 @@ export default withIronSession(async (req, res) => {
     if (
       error instanceof InvalidRequestError ||
       error instanceof InvalidClientError ||
-      error instanceof InvalidGrantError
+      error instanceof InvalidGrantError ||
+      error instanceof UnauthorizedClientError
     ) {
       res.statusCode = error.code;
 

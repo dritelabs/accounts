@@ -61,14 +61,16 @@ model Scope {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  username   String?  @unique
-  email      String   @unique
-  password   String
-  profile    Profile?
-  clients    Client[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id             String   @id @default(cuid())
+  username       String?  @unique
+  email          String   @unique
+  email_verified Boolean? @default(false)
+  password       String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  profile Profile?
+  clients Client[]
 
   @@map(name: "users")
 }

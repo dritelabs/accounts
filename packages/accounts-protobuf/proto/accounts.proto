@@ -7,12 +7,12 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 
 service Accounts {
-  rpc CreateUser(core.CreateUserRequest) returns (core.User);
   rpc AuthenticateUser(core.AuthenticateUserRequest) returns (core.AuthenticateUserResponse);
-  rpc GetAuthorizationServerMetadata(google.protobuf.Empty) returns (google.protobuf.Struct);
-  rpc GetJWKS(google.protobuf.Empty) returns (google.protobuf.Struct);
-  rpc CreateToken(core.CreateTokenRequest) returns (core.CreateTokenResponse);
-  rpc GetClient(core.GetClientRequest) returns (core.Client);
   rpc CreateAuthorizationCode(core.CreateAuthorizationCodeRequest) returns (core.CreateAuthorizationCodeResponse);
+  rpc CreateToken(core.CreateTokenRequest) returns (core.CreateTokenResponse);
+  rpc CreateUser(core.CreateUserRequest) returns (core.User);
+  rpc GetAuthorizationServerMetadata(google.protobuf.Empty) returns (google.protobuf.Struct);
+  rpc GetClient(core.GetClientRequest) returns (core.Client);
+  rpc GetJWKS(google.protobuf.Empty) returns (google.protobuf.Struct);
   rpc ListScopes(core.ListScopesRequest) returns (core.ListScopesResponse);
 }
