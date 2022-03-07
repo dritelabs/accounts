@@ -25,6 +25,7 @@ export async function verifyRefreshToken(token: string) {
   const metadata = await metadataService.get();
 
   return verifyToken(token, metadata.jwks_uri as string, {
+    typ: "rt+jwt",
     issuer: metadata.issuer,
     audience: metadata.issuer,
   }).catch((err) => {

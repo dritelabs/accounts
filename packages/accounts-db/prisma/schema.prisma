@@ -10,7 +10,7 @@ generator client {
 
 model Client {
   id                         String                   @id @default(cuid())
-  user_id                    String                   @unique
+  user_id                    String
   redirect_uris              String[]
   token_endpoint_auth_method TokenEndpointAuthMethod? @default(private_key_jwt)
   grant_types                GrantType[] // default: authorization_code
@@ -33,7 +33,23 @@ model Client {
   created_at                 DateTime                 @default(now())
   updated_at                 DateTime                 @updatedAt
 
+  client_approvals ClientApproval[]
+
   @@map(name: "clients")
+}
+
+model ClientApproval {
+  id         String   @id @default(cuid())
+  user_id    String
+  client_id  String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  client Client @relation(fields: [client_id], references: [id])
+  user   User   @relation(fields: [user_id], references: [id])
+
+
+  @@map(name: "client_approvals")
 }
 
 model Profile {
@@ -69,8 +85,10 @@ model User {
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
-  profile Profile?
-  clients Client[]
+
+  clients          Client[]
+  client_approvals ClientApproval[]
+  profile          Profile?
 
   @@map(name: "users")
 }

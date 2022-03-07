@@ -18,7 +18,10 @@ export async function createToken(
       client_id: call.request.getClientId(),
       scope: call.request.getScope(),
     })
-      .setProtectedHeader({ alg: "RS256", typ: "at+jwt" })
+      .setProtectedHeader({
+        alg: "RS256",
+        typ: call.request.getTyp() || "at+jwt",
+      })
       .setIssuer(authorizationServerMetadata.issuer)
       .setExpirationTime(call.request.getExp())
       .setAudience(call.request.getAudList())

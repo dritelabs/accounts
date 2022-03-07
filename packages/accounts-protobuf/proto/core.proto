@@ -75,6 +75,7 @@ message CreateTokenRequest {
   string sub = 3;
   string exp = 4;
   repeated string aud = 5;
+  string typ = 6;
 }
 
 message CreateTokenResponse {

@@ -279,6 +279,8 @@ export class CreateTokenRequest extends jspb.Message {
     getAudList(): Array<string>;
     setAudList(value: Array<string>): CreateTokenRequest;
     addAud(value: string, index?: number): string;
+    getTyp(): string;
+    setTyp(value: string): CreateTokenRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): CreateTokenRequest.AsObject;
@@ -297,6 +299,7 @@ export namespace CreateTokenRequest {
         sub: string,
         exp: string,
         audList: Array<string>,
+        typ: string,
     }
 }
 

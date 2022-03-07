@@ -28,6 +28,7 @@ export async function verify(code: string) {
   const metadata = await metadataService.get();
 
   return verifyCode(code, metadata.jwks_uri, {
+    typ: "ac+jwt",
     issuer: metadata.issuer,
     audience: metadata.issuer,
   }).catch((err) => {

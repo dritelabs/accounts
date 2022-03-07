@@ -81,6 +81,7 @@ export default withIronSession(async (req, res) => {
       }
 
       const token = await tokenService.create({
+        typ: "at+jwt",
         clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
@@ -89,6 +90,7 @@ export default withIronSession(async (req, res) => {
       });
 
       const refreshToken = await tokenService.create({
+        typ: "rt+jwt",
         clientId: authorizationCodeGrantTokenRequest.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
@@ -110,13 +112,14 @@ export default withIronSession(async (req, res) => {
         await clientCredentialsGrantTokenRequestSchema.validate(jsonBody);
 
       const token = await tokenService.create({
+        typ: "at+jwt",
         clientId: client.client_id,
         scope: clientCredentialsGrantTokenRequest.scope,
         sub: client.client_id,
         audList: Array.isArray(clientCredentialsGrantTokenRequest.resource)
           ? clientCredentialsGrantTokenRequest.resource
           : [clientCredentialsGrantTokenRequest.resource],
-        exp: "1m",
+        exp: "1h",
       });
 
       return {
@@ -136,6 +139,7 @@ export default withIronSession(async (req, res) => {
       );
 
       const token = await tokenService.create({
+        typ: "at+jwt",
         clientId: client.client_id,
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,

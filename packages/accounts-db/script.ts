@@ -3,7 +3,8 @@ import * as prisma from "@prisma/client";
 export const client = new prisma.PrismaClient();
 
 async function main() {
-  const host = "http://localhost:3001";
+  const developersHost = "http://localhost:3001";
+  const sitesHost = "http://localhost:3002";
 
   await client.user.create({
     data: {
@@ -20,6 +21,11 @@ async function main() {
         description: "Create or update profile information",
       },
       {
+        display_name: "Write and read clients",
+        name: "clients",
+        description: "Create, read, update or delete clients",
+      },
+      {
         display_name: "Write clients",
         name: "clients:write",
         description: "Create, update or delete clients",
@@ -28,6 +34,16 @@ async function main() {
         display_name: "Read clients",
         name: "clients:read",
         description: "Read clients",
+      },
+      {
+        display_name: "Write sites",
+        name: "sites:write",
+        description: "Create, update or delete sites",
+      },
+      {
+        display_name: "Read sites",
+        name: "sites:read",
+        description: "Read sites",
       },
     ],
   });
@@ -41,10 +57,14 @@ async function main() {
       },
       id: "cl05amov600137o9kit49f4cz",
       application_type: "web",
-      client_uri: `${host}`,
+      client_uri: `${developersHost}`,
       contacts: [],
-      description: "Developers application",
-      grant_types: ["authorization_code", "refresh_token"],
+      description: "Driten application to create clients.",
+      grant_types: [
+        "authorization_code",
+        "client_credentials",
+        "refresh_token",
+      ],
       jwks: {
         keys: [
           {
@@ -56,11 +76,11 @@ async function main() {
           },
         ],
       },
-      jwks_uri: `${host}/jwks.json`,
-      logo_uri: `${host}/logo.png`,
-      name: "Developers",
-      policy_uri: `${host}/policy`,
-      redirect_uris: [`${host}/callback`],
+      jwks_uri: `${developersHost}/jwks.json`,
+      logo_uri: `${developersHost}/logo.png`,
+      name: "Driten Developers",
+      policy_uri: `${developersHost}/policy`,
+      redirect_uris: [`${developersHost}/callback`],
       response_types: ["code"],
       scope: {
         connect: [{ name: "clients:write" }, { name: "clients:read" }],
@@ -69,7 +89,52 @@ async function main() {
       software_id: "developers",
       software_version: "0.0.0",
       token_endpoint_auth_method: "private_key_jwt",
-      tos_uri: `${host}/tos`,
+      tos_uri: `${developersHost}/tos`,
+    },
+  });
+
+  await client.client.create({
+    data: {
+      user: {
+        connect: {
+          email: "guillermolopez2529@gmail.com",
+        },
+      },
+      id: "cl05amov600137o9kit49f4cf",
+      application_type: "web",
+      client_uri: `${sitesHost}`,
+      contacts: [],
+      description: "Driten application to create sites.",
+      grant_types: [
+        "authorization_code",
+        "client_credentials",
+        "refresh_token",
+      ],
+      jwks: {
+        keys: [
+          {
+            kty: "RSA",
+            e: "AQAB",
+            use: "sig",
+            alg: "RS256",
+            n: "goCfUUNl5jNUA_XMbtw3JXKYxeumDHQjWgHhCG_Qcj3N9w8aEE9OBVL-wSc-eYhW1u3q1eBEvt2TySmHW6fndP_G7FN-QkzINIvVN5wQVrX6P2V-y71GcazLXVgNw73IPo_1tvnivHpd3vSHC09ih_9vXFou8rVOS1mnWeR8rR7Mxjs0zf74E15H7_dh-NEQVsqDGMqsnB-E0Ki_JCBLgvAIlc0WCGmOIk0ithUnH-wQamWXqobHa8KJNJ4_esoZVoegbgZgRV1sb8x4jG1fKxAeNW0a-9B0GV7mSFGPSCTQ8jYaCalnWqdeEvFg7QrfQxReKWVyf42hk1CibS4vbw",
+          },
+        ],
+      },
+      jwks_uri: `${sitesHost}/jwks.json`,
+      logo_uri: `${sitesHost}/logo.png`,
+      name: "Driten Sites",
+      policy_uri: `${sitesHost}/policy`,
+      redirect_uris: [`${sitesHost}/callback`],
+      response_types: ["code"],
+      scope: {
+        connect: [{ name: "sites:write" }, { name: "sites:read" }],
+      },
+      secret: "cl05amov600137o9kit49f4czcl05amov600137o9kit49f4cz",
+      software_id: "sites",
+      software_version: "0.0.0",
+      token_endpoint_auth_method: "private_key_jwt",
+      tos_uri: `${sitesHost}/tos`,
     },
   });
 }

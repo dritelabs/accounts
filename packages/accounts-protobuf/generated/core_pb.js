@@ -2440,7 +2440,8 @@ proto.core.CreateTokenRequest.toObject = function(includeInstance, msg) {
     scope: jspb.Message.getFieldWithDefault(msg, 2, ""),
     sub: jspb.Message.getFieldWithDefault(msg, 3, ""),
     exp: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    audList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f
+    audList: (f = jspb.Message.getRepeatedField(msg, 5)) == null ? undefined : f,
+    typ: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -2496,6 +2497,10 @@ proto.core.CreateTokenRequest.deserializeBinaryFromReader = function(msg, reader
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addAud(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTyp(value);
       break;
     default:
       reader.skipField();
@@ -2558,6 +2563,13 @@ proto.core.CreateTokenRequest.serializeBinaryToWriter = function(message, writer
   if (f.length > 0) {
     writer.writeRepeatedString(
       5,
+      f
+    );
+  }
+  f = message.getTyp();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -2670,6 +2682,24 @@ proto.core.CreateTokenRequest.prototype.addAud = function(value, opt_index) {
  */
 proto.core.CreateTokenRequest.prototype.clearAudList = function() {
   return this.setAudList([]);
+};
+
+
+/**
+ * optional string typ = 6;
+ * @return {string}
+ */
+proto.core.CreateTokenRequest.prototype.getTyp = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.core.CreateTokenRequest} returns this
+ */
+proto.core.CreateTokenRequest.prototype.setTyp = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
