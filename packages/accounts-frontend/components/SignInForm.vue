@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const route = useRoute()
+const router = useRouter()
 const params = new URLSearchParams(route.query as any).toString()
 
+function handleErrorClose() {
+  router.push('/signin')
+}
 </script>
 
 <template>
@@ -34,6 +38,14 @@ const params = new URLSearchParams(route.query as any).toString()
     </div>
     <div class="control">
       <a class="is-block is-dark is-fullwidth has-text-black has-text-centered p-3">Forgot password?</a>
+    </div>
+    <div
+      v-if="route.query.error_description"
+      @click="handleErrorClose"
+      class="notification is-danger"
+    >
+      <button type="button" class="delete"></button>
+      {{ route.query.error_description }}
     </div>
   </form>
 </template>

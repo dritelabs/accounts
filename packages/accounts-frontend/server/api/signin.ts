@@ -1,12 +1,6 @@
-import {
-  useBody,
-  useMethod,
-  useQuery,
-  sendRedirect,
-  createError,
-  sendError,
-} from "h3";
+import { useBody, useMethod, useQuery, sendRedirect } from "h3";
 import { grpc } from "@driten/accounts-protobuf";
+import { InvalidRequestError } from "@driten/accounts-errors";
 import { withIronSession } from "~/lib/session";
 import { user as userService } from "~/services";
 
@@ -24,7 +18,10 @@ export default withIronSession(async (req, res) => {
         password: params.get("password"),
       });
 
-      req.session.user = response;
+      req.session.user = {
+        ...response,
+        isAuthenticated: true,
+      };
 
       await req.session.save();
 
@@ -37,24 +34,20 @@ export default withIronSession(async (req, res) => {
       return sendRedirect(res, "/");
     } catch (error) {
       if (error.code === grpc.status.INVALID_ARGUMENT) {
-        return sendError(
-          res,
-          createError({
-            ...error,
-            statusCode: 400,
-            statusMessage: error.details,
-          })
-        );
+        const err = new InvalidRequestError(error?.details);
+        const params = new URLSearchParams({
+          error: err.error,
+          error_description: err.error_description,
+        });
+
+        return sendRedirect(res, `/signin?${params}`);
       }
 
-      sendError(
-        res,
-        createError({
-          ...error,
-          statusCode: 500,
-          statusMessage: error.details,
-        })
-      );
+      const params = new URLSearchParams({
+        error_description: error?.message,
+      });
+
+      return sendRedirect(res, `/signin?${params}`);
     }
   }
 });

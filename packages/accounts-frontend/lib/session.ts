@@ -1,17 +1,20 @@
+import { IncomingMessage, ServerResponse } from "http";
 import { IronSessionOptions } from "iron-session";
+import { config } from "@driten/accounts-config";
 import * as core from "@driten/accounts-protobuf/generated/core_pb";
 import { withIronSessionApiRoute } from "./iron-session";
-import { IncomingMessage, ServerResponse } from "http";
 
 declare module "iron-session" {
   interface IronSessionData {
-    user?: Partial<core.User.AsObject>;
+    user?: Partial<core.User.AsObject> & {
+      isAuthenticated: boolean;
+    };
   }
 }
 
 export const options: IronSessionOptions = {
   cookieName: "driten/accounts",
-  password: "complex_password_at_least_32_characters_long",
+  password: config.frontend.secretCookiePassword,
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

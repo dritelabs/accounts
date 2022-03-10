@@ -55,14 +55,16 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
     }).catch((err) => {
       throw new InvalidClientError(err.message);
     });
-  } else {
-    await verify(clientAssertion, client.jwks_uri, {
-      issuer: client.client_uri,
-      audience: metadata.issuer,
-    }).catch(() => {
-      throw new InvalidClientError("Invalid client assertion");
-    });
+
+    return client;
   }
+
+  await verify(clientAssertion, client.jwks_uri, {
+    issuer: client.client_uri,
+    audience: metadata.issuer,
+  }).catch((err) => {
+    throw new InvalidClientError(err.message);
+  });
 
   return client;
 }

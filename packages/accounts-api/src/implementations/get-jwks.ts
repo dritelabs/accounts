@@ -1,12 +1,14 @@
+import { config } from "@driten/accounts-config";
 import { grpc, Empty, Struct } from "@driten/accounts-protobuf";
-import { jwks } from "../config";
 
 export async function getJWKS(
   _: grpc.ServerUnaryCall<Empty, Struct>,
   callback: grpc.sendUnaryData<Struct>
 ) {
   try {
-    const response = Struct.fromJavaScript(jwks);
+    const response = Struct.fromJavaScript({
+      jwks: [config.api.publicKey],
+    });
 
     callback(null, response);
   } catch (e) {

@@ -1,4 +1,5 @@
 import { useBody } from "h3";
+import { config } from "@driten/accounts-config";
 import {
   InvalidClientError,
   InvalidGrantError,
@@ -86,7 +87,7 @@ export default withIronSession(async (req, res) => {
         scope: code.payload.scope as string,
         sub: code.payload.sub,
         audList: code.payload.aud as string[],
-        exp: "1h",
+        exp: `${config.common.accessTokenExpirationTime}s`,
       });
 
       const refreshToken = await tokenService.create({
@@ -95,13 +96,13 @@ export default withIronSession(async (req, res) => {
         scope: code.payload.scope as string,
         sub: code.payload.sub,
         audList: [...code.payload.aud, metadata.issuer],
-        exp: "30days",
+        exp: `${config.common.refreshTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: 3600,
+        expires_in: config.common.accessTokenExpirationTime,
         scope: code.payload.scope,
         refresh_token: refreshToken,
       };
@@ -119,13 +120,13 @@ export default withIronSession(async (req, res) => {
         audList: Array.isArray(clientCredentialsGrantTokenRequest.resource)
           ? clientCredentialsGrantTokenRequest.resource
           : [clientCredentialsGrantTokenRequest.resource],
-        exp: "1h",
+        exp: `${config.common.accessTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: 3600,
+        expires_in: config.common.accessTokenExpirationTime,
         scope: clientCredentialsGrantTokenRequest.scope,
       };
     }
@@ -144,13 +145,13 @@ export default withIronSession(async (req, res) => {
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,
         audList: refreshToken.payload.aud as string[],
-        exp: "1h",
+        exp: `${config.common.accessTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: 3600,
+        expires_in: config.common.accessTokenExpirationTime,
         scope: refreshToken.payload.scope,
         refresh_token: refreshToken,
       };

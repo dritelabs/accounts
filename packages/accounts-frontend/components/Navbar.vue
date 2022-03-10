@@ -2,21 +2,21 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <NuxtLink class="navbar-item" to="/">
           <img src="/new-isologo.svg" height="28" class="mr-2" />
           <p class="is-size-4 has-text-weight-bold">Driten</p>
           <!-- <span class="">/ Accounts</span> -->
-        </a>
+        </NuxtLink>
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <NuxtLink to="/signup" class="button is-dark">
-                <strong>Sign up</strong>
+              <NuxtLink to="/signup" class="button is-light">
+                <strong>Create an account</strong>
               </NuxtLink>
-              <NuxtLink to="/signin" class="button is-light">
-                <strong>Sign in</strong>
+              <NuxtLink to="/signin" class="button is-dark">
+                <strong>Go to Driten Account</strong>
               </NuxtLink>
             </div>
           </div>

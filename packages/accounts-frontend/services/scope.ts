@@ -27,10 +27,6 @@ export async function list(options?: Options) {
   };
 }
 
-export function reducer(payload: core.Scope) {
-  return {};
-}
-
 const listScopes = promisify<
   core.ListScopesRequest,
   grpc.Metadata | void,

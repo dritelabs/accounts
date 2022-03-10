@@ -1,11 +1,11 @@
+import * as jose from "jose";
+import { config } from "@driten/accounts-config";
 import { cuid } from "@driten/accounts-utils";
 import {
   CreateAuthorizationCodeRequest,
   CreateAuthorizationCodeResponse,
 } from "@driten/accounts-protobuf/generated/core_pb";
 import { grpc } from "@driten/accounts-protobuf";
-import * as jose from "jose";
-import { privateKey, authorizationServerMetadata } from "../config";
 
 export async function createAuthorizationCode(
   call: grpc.ServerUnaryCall<
@@ -15,7 +15,7 @@ export async function createAuthorizationCode(
   callback: grpc.sendUnaryData<CreateAuthorizationCodeResponse>
 ) {
   try {
-    const privatekey = await jose.importJWK(privateKey);
+    const privatekey = await jose.importJWK(config.api.privateKey);
 
     const code = await new jose.SignJWT({
       client_id: call.request.getClientId(),
@@ -25,8 +25,8 @@ export async function createAuthorizationCode(
       scope: call.request.getScope(),
     })
       .setProtectedHeader({ alg: "RS256", typ: "ac+jwt" })
-      .setIssuer(authorizationServerMetadata.issuer)
-      .setExpirationTime("1m")
+      .setIssuer(config.common.authorizationServerIssuer)
+      .setExpirationTime(`${config.common.authorizationCodeExpirationTime}s`)
       .setAudience(call.request.getAudList())
       .setSubject(call.request.getSub())
       .setIssuedAt()

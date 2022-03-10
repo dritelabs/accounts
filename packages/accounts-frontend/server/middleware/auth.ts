@@ -8,6 +8,8 @@ export default withIronSession(async (req, res, next) => {
     "/jwks.json",
     "/.well-known/oauth-authorization-server",
     "/token",
+    "/api/me",
+    "/",
   ];
 
   const url = new URL(req.url, `http://${req.headers.host}`);
