@@ -1,4 +1,4 @@
 import { Client } from "memjs";
-import { config } from "@driten/accounts-config";
+import config from "#config";
 
-export const client = Client.create(config.frontend.memcacheHost);
+export const client = Client.create(config.memcachedHost);

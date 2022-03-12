@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { IronSessionOptions } from "iron-session";
-import { config } from "@driten/accounts-config";
-import * as core from "@driten/accounts-protobuf/generated/core_pb";
+import * as core from "@driten/accounts-protobuf/protobuf/core_pb";
+import config from "#config";
 import { withIronSessionApiRoute } from "./iron-session";
 
 declare module "iron-session" {
@@ -14,7 +14,7 @@ declare module "iron-session" {
 
 export const options: IronSessionOptions = {
   cookieName: "driten/accounts",
-  password: config.frontend.secretCookiePassword,
+  password: config.secretCookiePassword,
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

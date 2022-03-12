@@ -7,7 +7,8 @@
   "scripts": {
     "build": "lerna run build",
     "build:libs": "lerna run build --ignore @driten/accounts-frontend --ignore @driten/accounts-api",
-    "dev": "lerna run dev --stream"
+    "dev": "lerna run dev --stream",
+    "generate": "lerna run generate"
   },
   "dependencies": {
     "jose": "^4.5.0",

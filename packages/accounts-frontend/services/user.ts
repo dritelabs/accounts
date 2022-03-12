@@ -1,6 +1,6 @@
 import { promisify } from "util";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/generated/core_pb";
+import core from "@driten/accounts-protobuf/protobuf/core_pb";
 import { client } from "~/lib/client";
 
 export async function authenticate(

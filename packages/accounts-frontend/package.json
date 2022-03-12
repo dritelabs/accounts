@@ -2,10 +2,10 @@
   "private": true,
   "name": "@driten/accounts-frontend",
   "version": "0.0.0",
-  "description": "Accounts database module",
+  "description": "Accounts frontend module",
   "keywords": [
-    "Accounts",
-    "database",
+    "accounts",
+    "frontend",
     "module"
   ],
   "author": "Guillermo <guillermolopez2529@gmail.com>",
@@ -33,7 +33,6 @@
   "dependencies": {
     "@types/memjs": "^1.2.4",
     "@types/yup": "^0.29.13",
-    "@driten/accounts-config": "*",
     "@driten/accounts-errors": "*",
     "@driten/accounts-jwt-verifier": "*",
     "@driten/accounts-protobuf": "*",

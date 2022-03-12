@@ -7,7 +7,7 @@ import {
 import { InvalidClientError } from "@driten/accounts-errors";
 import { decodeBasic } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/generated/core_pb";
+import core from "@driten/accounts-protobuf/protobuf/core_pb";
 import { client } from "~/lib/client";
 import { metadata as metadataService } from "~/services";
 

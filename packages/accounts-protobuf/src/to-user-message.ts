@@ -1,4 +1,4 @@
-import * as core from "../generated/core_pb";
+import * as core from "../protobuf/core_pb";
 
 export function toUserMessage(payload: core.User.AsObject) {
   const response = new core.User();

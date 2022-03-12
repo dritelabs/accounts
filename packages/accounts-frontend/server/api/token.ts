@@ -1,5 +1,4 @@
 import { useBody } from "h3";
-import { config } from "@driten/accounts-config";
 import {
   InvalidClientError,
   InvalidGrantError,
@@ -8,6 +7,7 @@ import {
   UnauthorizedClientError,
 } from "@driten/accounts-errors";
 import { codeChallenge } from "@driten/accounts-utils";
+import config from "#config";
 import { withIronSession } from "~/lib/session";
 import {
   ValidationError,
@@ -73,7 +73,7 @@ export default withIronSession(async (req, res) => {
       }
 
       if (
-        code.payload.redirect_uri ===
+        code.payload.redirect_uri !==
         authorizationCodeGrantTokenRequest.redirect_uri
       ) {
         throw new InvalidGrantError(
@@ -87,22 +87,22 @@ export default withIronSession(async (req, res) => {
         scope: code.payload.scope as string,
         sub: code.payload.sub,
         audList: code.payload.aud as string[],
-        exp: `${config.common.accessTokenExpirationTime}s`,
+        exp: `${config.accessTokenExpirationTime}s`,
       });
 
       const refreshToken = await tokenService.create({
         typ: "rt+jwt",
-        clientId: authorizationCodeGrantTokenRequest.client_id,
+        clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
         audList: [...code.payload.aud, metadata.issuer],
-        exp: `${config.common.refreshTokenExpirationTime}s`,
+        exp: `${config.refreshTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: config.common.accessTokenExpirationTime,
+        expires_in: config.accessTokenExpirationTime,
         scope: code.payload.scope,
         refresh_token: refreshToken,
       };
@@ -120,13 +120,13 @@ export default withIronSession(async (req, res) => {
         audList: Array.isArray(clientCredentialsGrantTokenRequest.resource)
           ? clientCredentialsGrantTokenRequest.resource
           : [clientCredentialsGrantTokenRequest.resource],
-        exp: `${config.common.accessTokenExpirationTime}s`,
+        exp: `${config.accessTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: config.common.accessTokenExpirationTime,
+        expires_in: config.accessTokenExpirationTime,
         scope: clientCredentialsGrantTokenRequest.scope,
       };
     }
@@ -145,13 +145,13 @@ export default withIronSession(async (req, res) => {
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,
         audList: refreshToken.payload.aud as string[],
-        exp: `${config.common.accessTokenExpirationTime}s`,
+        exp: `${config.accessTokenExpirationTime}s`,
       });
 
       return {
         access_token: token,
         token_type: "Bearer",
-        expires_in: config.common.accessTokenExpirationTime,
+        expires_in: config.accessTokenExpirationTime,
         scope: refreshToken.payload.scope,
         refresh_token: refreshToken,
       };
@@ -182,8 +182,13 @@ export default withIronSession(async (req, res) => {
       };
     }
 
-    res.statusCode = 500;
+    const e = new ServerError(error?.message);
 
-    return new ServerError(error?.message);
+    res.statusCode = error.code;
+
+    return {
+      error: e.error,
+      error_description: e.error_description,
+    };
   }
 });

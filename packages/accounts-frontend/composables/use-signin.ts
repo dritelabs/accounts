@@ -1,4 +1,4 @@
-import { AuthenticateUserRequest } from "~~/../accounts-protobuf/generated/core_pb";
+import { AuthenticateUserRequest } from "~~/../accounts-protobuf/protobuf/core_pb";
 
 export async function useSignIn(options: AuthenticateUserRequest) {
   return $fetch("/api/signin", {

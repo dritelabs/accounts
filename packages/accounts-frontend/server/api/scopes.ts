@@ -1,5 +1,5 @@
 import { useQuery } from "h3";
-import core from "@driten/accounts-protobuf/generated/core_pb";
+import core from "@driten/accounts-protobuf/protobuf/core_pb";
 import { withIronSession } from "~/lib/session";
 import { scope as scopeService } from "~/services";
 

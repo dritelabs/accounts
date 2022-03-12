@@ -1,0 +1,69 @@
+version: '3.7'
+
+services:
+  accounts-server:
+    container_name: accounts-server
+    build:
+      context: .
+      dockerfile: ./packages/accounts-server/Dockerfile
+      # restart: on-failure
+    ports:
+      - 5000:5000
+    command: >
+      /bin/sh -c "npm i && npm run dev -w @driten/accounts-server"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      DATABASE_URL: postgresql://driten:driten@postgres:5432/accounts?schema=public
+      AUTHORIZATION_SERVER_ISSUER_BASE_URL: http://localhost:8000
+    volumes:
+      - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
+      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
+      - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
+      - server_node_modules:/usr/src/accounts/node_modules
+    networks:
+      - accounts_net
+      - postgres_net
+      - memcached_net
+
+  accounts-frontend:
+    container_name: accounts-frontend
+    build:
+      context: .
+      dockerfile: ./packages/accounts-frontend/Dockerfile
+      # restart: on-failure
+    ports:
+      - 8000:8000
+    command: >
+      /bin/sh -c "npm i && npm run dev -w @driten/accounts-frontend"
+
+    environment:
+      NODE_ENV: development
+      PORT: 8000
+      SERVER_HOST: accounts-server:5000
+      MEMCACHED_HOST: memcached:11211
+      SECRET_COOKIE_PASSWORD: complex_password_at_least_32_characters_long
+    volumes:
+      - ./packages/accounts-errors:/usr/src/accounts/packages/accounts-errors
+      - ./packages/accounts-jwt-verifier:/usr/src/accounts/packages/accounts-jwt-verifier
+      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
+      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
+      - ./packages/accounts-frontend:/usr/src/accounts/packages/accounts-frontend
+      - /usr/src/accounts/packages/accounts-frontend/.nuxt
+      - frontend_node_modules:/usr/src/accounts/node_modules
+    networks:
+      - accounts_net
+      - memcached_net
+volumes:
+  frontend_node_modules:
+  server_node_modules:
+
+networks:
+  accounts_net:
+    name: accounts_net
+  postgres_net:
+    external:
+      name: postgres_net
+  memcached_net:
+    external:
+      name: memcached_net

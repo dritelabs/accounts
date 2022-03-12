@@ -6,6 +6,7 @@ import {
   ServerError,
 } from "@driten/accounts-errors";
 import { grpc } from "@driten/accounts-protobuf";
+import config from "#config";
 import { withIronSession } from "~/lib/session";
 import { authorizationRequestSchema, ValidationError } from "~/schemas";
 import {
@@ -91,6 +92,7 @@ export default withIronSession(async (req, res) => {
         scope: request.get("scope") || "",
         sub: req?.session?.user?.id,
         audList: request.getAll("resource"),
+        exp: `${config.authorizationCodeExpirationTime}s`,
       });
 
       const params = new URLSearchParams({

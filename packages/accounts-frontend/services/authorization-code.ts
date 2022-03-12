@@ -1,9 +1,9 @@
 import { promisify } from "util";
-import { config } from "@driten/accounts-config";
 import { InvalidGrantError } from "@driten/accounts-errors";
 import { verify as verifyCode, decode } from "@driten/accounts-jwt-verifier";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/generated/core_pb";
+import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import config from "#config";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
@@ -12,7 +12,6 @@ export async function create(
   payload: core.CreateAuthorizationCodeRequest.AsObject
 ) {
   const request = new core.CreateAuthorizationCodeRequest();
-
   request
     .setClientId(payload.clientId)
     .setSub(payload.sub)
@@ -20,15 +19,10 @@ export async function create(
     .setCodeChallengeMethod(payload.codeChallengeMethod)
     .setRedirectUri(payload.redirectUri)
     .setScope(payload.scope)
+    .setExp(`${config.authorizationCodeExpirationTime}s`)
     .setAudList(payload.audList);
 
   const response = await createAuthorizationCode(request);
-  const code = response.getCode();
-  const jwt = await decode(code);
-
-  await cache.set(jwt.jti, code, {
-    expires: config.common.authorizationCodeExpirationTime as number,
-  });
 
   return response.getCode();
 }
@@ -41,6 +35,10 @@ export async function verify(code: string) {
   if (cached) {
     throw new InvalidGrantError("The authorization code was already used");
   }
+
+  await cache.set(jwt.jti, code, {
+    expires: config.authorizationCodeExpirationTime as number,
+  });
 
   return verifyCode(code, metadata.jwks_uri, {
     typ: "ac+jwt",

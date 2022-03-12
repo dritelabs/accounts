@@ -89,7 +89,8 @@ message CreateAuthorizationCodeRequest {
   string code_challenge_method = 4;
   string redirect_uri = 5;
   string scope = 6;
-  repeated string aud = 7;
+  string exp = 7;
+  repeated string aud = 8;
 }
 
 message CreateAuthorizationCodeResponse {

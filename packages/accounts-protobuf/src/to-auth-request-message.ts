@@ -1,4 +1,4 @@
-import * as core from "../generated/core_pb";
+import * as core from "../protobuf/core_pb";
 
 export function toAuthRequestMessage(
   payload: core.AuthenticateUserRequest.AsObject
