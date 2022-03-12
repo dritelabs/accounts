@@ -29,14 +29,14 @@ export async function create(
 
 export async function verify(code: string) {
   const metadata = await metadataService.get();
-  const jwt = await decode(code);
-  const { value: cached } = await cache.get(jwt.jti);
+  const decoded = await decode(code);
+  const { value: cached } = await cache.get(decoded.jti);
 
   if (cached) {
     throw new InvalidGrantError("The authorization code was already used");
   }
 
-  await cache.set(jwt.jti, code, {
+  await cache.set(decoded.jti, code, {
     expires: config.authorizationCodeExpirationTime as number,
   });
 

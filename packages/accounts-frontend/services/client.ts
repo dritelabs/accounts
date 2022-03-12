@@ -8,7 +8,6 @@ import { InvalidClientError, InvalidGrantError } from "@driten/accounts-errors";
 import { decodeBasic } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import core from "@driten/accounts-protobuf/protobuf/core_pb";
-import config from "#config";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
@@ -42,23 +41,22 @@ export async function authenticateWithBasic(authorization: string) {
 }
 
 export async function authenticateWithPrivateKey(clientAssertion: string) {
-  const payload = await decode(clientAssertion);
+  const decoded = await decode(clientAssertion);
 
-  const client = await get(payload.sub).catch(() => {
+  const client = await get(decoded.sub).catch(() => {
     throw new InvalidClientError("Invalid client_id");
   });
 
   const metadata = await metadataService.get();
 
-  const jwt = await decode(clientAssertion);
-  const { value: cached } = await cache.get(jwt.jti);
+  const { value: cached } = await cache.get(decoded.jti);
 
   if (cached) {
     throw new InvalidGrantError("The client assertion was already used");
   }
 
-  await cache.set(jwt.jti, clientAssertion, {
-    expires: config.authorizationCodeExpirationTime as number,
+  await cache.set(decoded.jti, clientAssertion, {
+    expires: decoded.exp - decoded.iat,
   });
 
   if (client.jwks) {
