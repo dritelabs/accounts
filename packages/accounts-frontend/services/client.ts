@@ -4,11 +4,13 @@ import {
   verifyWithLocalJKWS,
   decode,
 } from "@driten/accounts-jwt-verifier";
-import { InvalidClientError } from "@driten/accounts-errors";
+import { InvalidClientError, InvalidGrantError } from "@driten/accounts-errors";
 import { decodeBasic } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import config from "#config";
 import { client } from "~/lib/client";
+import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
 
 export async function get(id: string) {
@@ -47,6 +49,17 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
   });
 
   const metadata = await metadataService.get();
+
+  const jwt = await decode(clientAssertion);
+  const { value: cached } = await cache.get(jwt.jti);
+
+  if (cached) {
+    throw new InvalidGrantError("The client assertion was already used");
+  }
+
+  await cache.set(jwt.jti, clientAssertion, {
+    expires: config.authorizationCodeExpirationTime as number,
+  });
 
   if (client.jwks) {
     await verifyWithLocalJKWS(clientAssertion, client.jwks, {
