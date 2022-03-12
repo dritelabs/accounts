@@ -33,10 +33,6 @@ const [
     }
   })
 ])
-
-definePageMeta({
-  layout: 'authenticated'
-})
 </script>
 
 <template>
@@ -84,7 +80,7 @@ definePageMeta({
               :key="key"
             />
             <select v-for="(value, key) in arrayValues" :name="key" multiple hidden>
-              <option v-for="(option, key) in value" selected :value="option">{{ option }}</option>
+              <option v-for="(option) in value" selected :value="option">{{ option }}</option>
             </select>
             <button type="submit" class="button is-light is-medium is-fullwidth">Cancel</button>
           </form>

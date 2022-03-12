@@ -1,5 +1,11 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'unauthenticated'
+})
+</script>
+
 <template>
-  <main>
+  <main class="is-flex is-flex-grow-1 is-flex-direction-column">
     <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">

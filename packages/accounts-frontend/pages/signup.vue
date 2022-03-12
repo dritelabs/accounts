@@ -1,3 +1,9 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: 'unauthenticated'
+})
+</script>
+
 <template>
   <main class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center">
     <div class="container">

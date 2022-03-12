@@ -46,6 +46,6 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "nuxt3": "latest"
+    "nuxt3": "3.0.0-27451165.114cbe3"
   }
 }

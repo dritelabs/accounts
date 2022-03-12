@@ -31,7 +31,7 @@ export default withIronSession(async (req, res) => {
         return sendRedirect(res, `${redirectUri}?${params.toString()}`);
       }
 
-      return sendRedirect(res, "/");
+      return sendRedirect(res, "/profile");
     } catch (error) {
       if (error.code === grpc.status.INVALID_ARGUMENT) {
         const err = new InvalidRequestError(error?.details);
