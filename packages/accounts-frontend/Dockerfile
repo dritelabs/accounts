@@ -56,4 +56,6 @@ ENV HOST 0.0.0.0
 ENV PORT 8000
 ENV NODE_ENV production
 
+EXPOSE 8000 24678
+
 CMD [ "npm", "start", "-w", "@driten/accounts-frontend"]

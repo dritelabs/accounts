@@ -1,5 +1,6 @@
 export const config = {
-  host: process.env.HOST || "localhost:5000",
+  host: process.env.HOST || "localhost",
+  port: process.env.PORT || "5000",
   authorizationServerIssuerBaseUrl:
     process.env.AUTHORIZATION_SERVER_ISSUER_BASE_URL || "http://localhost:3000",
   databaseUrl:

@@ -34,6 +34,7 @@ services:
       # restart: on-failure
     ports:
       - 8000:8000
+      - 24678:24678
     command: >
       /bin/sh -c "npm i && npm run dev -w @driten/accounts-frontend"
 
@@ -49,7 +50,7 @@ services:
       - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
       - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
       - ./packages/accounts-frontend:/usr/src/accounts/packages/accounts-frontend
-      - /usr/src/accounts/packages/accounts-frontend/.nuxt
+      # - /usr/src/accounts/packages/accounts-frontend/.nuxt
       - frontend_node_modules:/usr/src/accounts/node_modules
     networks:
       - accounts_net

@@ -4,11 +4,12 @@ import * as implementations from "./implementations";
 import { config } from "./config";
 
 const server = new grpc.Server();
+const hostname = `${config.host}:${config.port}`;
 
 server.addService(AccountsService, implementations);
 
 server.bindAsync(
-  config.host,
+  hostname,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err) {
