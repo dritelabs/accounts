@@ -26,8 +26,9 @@ message Client {
   string software_id = 19;
   string software_version = 20;
   string user = 21;
-  int64 created_at = 22;
-  int64 updated_at = 23;
+  bool is_first_party = 22;
+  int64 created_at = 23;
+  int64 updated_at = 24;
 }
 
 message User {

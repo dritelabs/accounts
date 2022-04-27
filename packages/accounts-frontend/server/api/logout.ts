@@ -1,8 +1,8 @@
 import { sendRedirect } from "h3";
 import { withIronSession } from "~/lib/session";
 
-export default withIronSession(async (req, res) => {
-  await req.session.destroy();
+export default withIronSession(async (event) => {
+  await event.req.session.destroy();
 
-  return sendRedirect(res, "/signin");
+  return sendRedirect(event, "/signin");
 });

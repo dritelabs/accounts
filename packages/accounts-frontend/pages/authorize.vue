@@ -1,43 +1,56 @@
 <script setup lang="ts">
+import { InternalApi } from "nitropack";
+import { authorizationRequestSchema, ValidationError } from "~/schemas";
+
+const validationError = ref<ValidationError>(undefined)
 const route = useRoute()
+const keyValues = useQueryKeyValues()
+const arrayValues = useQueryArrayValues()
+const scopeNames = route.query?.scope ? (route.query.scope as string).split(" ") : [];
+const validation = await authorizationRequestSchema.validate(route.query).catch(err => validationError.value = err)
 
-const keyValues = Object.keys(route.query).reduce((prev, current) => {
-  if (Array.isArray(route.query[current])) {
-    return { ...prev }
+const { data: client, error: clientError } = await useFetch<InternalApi['/api/clients/:id']>(
+  `/api/clients/${validation.client_id}`
+)
+
+const { data: user } = await useFetch('/api/me',
+  {
+    headers: useRequestHeaders(),
   }
-  return { ...prev, [current]: route.query[current] }
-}, {})
-
-const arrayValues = Object.keys(route.query).reduce((prev, current) => {
-  if (!Array.isArray(route.query[current])) {
-    return { ...prev }
-  }
-  return { ...prev, [current]: route.query[current] }
-}, {})
-
-const [
-  { data: user },
-  { data: client },
-  { data: scopes },
-] = await Promise.all([
-  useFetch(`/api/me`, {
-    headers: useRequestHeaders()
-  }),
-  useFetch(`/api/clients/${route.query.client_id}`, {
-    headers: useRequestHeaders()
-  }),
-  useFetch(`/api/scopes`, {
+)
+const { data: scopes } = await useFetch('/api/scopes',
+  {
     headers: useRequestHeaders(),
     params: {
       names: route.query?.scope
     }
-  })
-])
+  }
+)
+
+onMounted(() => {
+  if (client.value.is_first_party) {
+    const form = document.querySelector<HTMLFormElement>('#form-allow')
+
+    form.submit()
+  }
+})
 </script>
 
 <template>
   <main class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center">
-    <div class="container">
+    <div class="container" v-if="validationError">
+      {{ validationError?.message }}
+    </div>
+    <div class="container" v-else-if="clientError">
+      {{ clientError?.data?.message }}
+    </div>
+    <div class="container" v-else-if="!client.redirect_uris.includes(validation.redirect_uri)">
+      The redirect_uri is invalid
+    </div>
+    <div class="container" v-else-if="!scopeNames.length || scopeNames.length !== scopes.items?.length">
+      The requested scope is invalid, unknown, or malformed
+    </div>
+    <div class="container" v-else v-show="!client.is_first_party">
       <div class="columns is-centered">
         <div class="column is-5">
           <p class="title has-text-centered">{{ client?.client_name }}</p>
@@ -48,7 +61,7 @@ const [
             </figure>
             <span>{{ user?.email }}</span>
           </div>
-          <div class="has-border-bottom mb-4" v-for="scope in scopes.items">
+          <div class="has-border-bottom mb-4" v-for="scope in scopes?.items">
             <p class="has-text-weight-bold">{{ scope?.displayName }}</p>
             <p>{{ scope.description }}</p>
           </div>
@@ -58,27 +71,15 @@ const [
             you can change this and other Account Permissions at any time.
             <!-- https://myaccount.google.com/permissions -->
           </p>
-          <form method="post" action="/authorize/allow">
-            <input
-              v-for="(value, key) in keyValues"
-              type="hidden"
-              :name="key"
-              :value="value"
-              :key="key"
-            />
+          <form id="form-allow" method="post" action="/api/authorize/allow">
+            <input v-for="(value, key) in keyValues" type="hidden" :name="key" :value="value" :key="key" />
             <select v-for="(value, key) in arrayValues" :name="key" multiple hidden>
               <option v-for="(option, key) in value" selected :value="option">{{ option }}</option>
             </select>
             <button type="submit" class="button is-dark is-medium is-fullwidth mb-3">Allow</button>
           </form>
-          <form method="post" action="/authorize/cancel">
-            <input
-              v-for="(value, key) in keyValues"
-              type="hidden"
-              :name="key"
-              :value="value"
-              :key="key"
-            />
+          <form method="post" action="/api/authorize/cancel">
+            <input v-for="(value, key) in keyValues" type="hidden" :name="key" :value="value" :key="key" />
             <select v-for="(value, key) in arrayValues" :name="key" multiple hidden>
               <option v-for="(option) in value" selected :value="option">{{ option }}</option>
             </select>

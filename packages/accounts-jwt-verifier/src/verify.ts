@@ -1,16 +1,11 @@
 import * as jose from "jose";
 
-export interface Options {
-  issuer?: string;
-  audience?: string | string[];
-  typ?: string;
-  subject?: string;
-}
+export type Options = jose.JWTVerifyOptions;
 
 export async function verifyWithLocalJKWS(
   jwt: string,
   jwks: any,
-  options: Options
+  options: jose.JWTVerifyOptions
 ) {
   const JWKS = jose.createLocalJWKSet(jwks);
 
@@ -23,7 +18,11 @@ export async function verifyWithLocalJKWS(
   });
 }
 
-export async function verify(jwt: string, jwksUri: string, options: Options) {
+export async function verify(
+  jwt: string,
+  jwksUri: string,
+  options: jose.JWTVerifyOptions
+) {
   const url = new URL(jwksUri);
   const JWKS = jose.createRemoteJWKSet(url);
 

@@ -363,8 +363,9 @@ proto.core.Client.toObject = function(includeInstance, msg) {
     softwareId: jspb.Message.getFieldWithDefault(msg, 19, ""),
     softwareVersion: jspb.Message.getFieldWithDefault(msg, 20, ""),
     user: jspb.Message.getFieldWithDefault(msg, 21, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 22, 0),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 23, 0)
+    isFirstParty: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 23, 0),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 24, 0)
   };
 
   if (includeInstance) {
@@ -487,10 +488,14 @@ proto.core.Client.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUser(value);
       break;
     case 22:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsFirstParty(value);
+      break;
+    case 23:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setCreatedAt(value);
       break;
-    case 23:
+    case 24:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setUpdatedAt(value);
       break;
@@ -671,17 +676,24 @@ proto.core.Client.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getIsFirstParty();
+  if (f) {
+    writer.writeBool(
+      22,
+      f
+    );
+  }
   f = message.getCreatedAt();
   if (f !== 0) {
     writer.writeInt64(
-      22,
+      23,
       f
     );
   }
   f = message.getUpdatedAt();
   if (f !== 0) {
     writer.writeInt64(
-      23,
+      24,
       f
     );
   }
@@ -1162,28 +1174,28 @@ proto.core.Client.prototype.setUser = function(value) {
 
 
 /**
- * optional int64 created_at = 22;
+ * optional bool is_first_party = 22;
+ * @return {boolean}
+ */
+proto.core.Client.prototype.getIsFirstParty = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.core.Client} returns this
+ */
+proto.core.Client.prototype.setIsFirstParty = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 22, value);
+};
+
+
+/**
+ * optional int64 created_at = 23;
  * @return {number}
  */
 proto.core.Client.prototype.getCreatedAt = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.core.Client} returns this
- */
-proto.core.Client.prototype.setCreatedAt = function(value) {
-  return jspb.Message.setProto3IntField(this, 22, value);
-};
-
-
-/**
- * optional int64 updated_at = 23;
- * @return {number}
- */
-proto.core.Client.prototype.getUpdatedAt = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
 };
 
@@ -1192,8 +1204,26 @@ proto.core.Client.prototype.getUpdatedAt = function() {
  * @param {number} value
  * @return {!proto.core.Client} returns this
  */
-proto.core.Client.prototype.setUpdatedAt = function(value) {
+proto.core.Client.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3IntField(this, 23, value);
+};
+
+
+/**
+ * optional int64 updated_at = 24;
+ * @return {number}
+ */
+proto.core.Client.prototype.getUpdatedAt = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.core.Client} returns this
+ */
+proto.core.Client.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3IntField(this, 24, value);
 };
 
 

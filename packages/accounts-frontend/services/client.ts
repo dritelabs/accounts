@@ -62,7 +62,7 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
   if (client.jwks) {
     await verifyWithLocalJKWS(clientAssertion, client.jwks, {
       issuer: client.client_uri,
-      audience: metadata.issuer,
+      audience: [metadata.issuer],
     }).catch((err) => {
       throw new InvalidClientError(err.message);
     });
@@ -106,6 +106,7 @@ export function reducer(payload: core.Client) {
     jwks: payload.getJwks().toJavaScript(),
     software_id: obj.softwareId,
     software_version: obj.softwareVersion,
+    is_first_party: obj.isFirstParty,
   };
 }
 

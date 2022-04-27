@@ -1,36 +1,36 @@
 import { useQuery, sendRedirect } from "h3";
 import { withIronSession } from "~~/lib/session";
 
-export default withIronSession(async (req, res, next) => {
-  const isAuthenticated = req?.session?.user;
+export default withIronSession(async (event) => {
+  const isAuthenticated = event.req?.session?.user;
   const urls = ["/signin", "/signup", "/api/signin", "/api/signup"];
   const urls2 = [
-    "/jwks.json",
-    "/.well-known/oauth-authorization-server",
-    "/token",
+    "/api/jwks.json",
+    "/api/.well-known/oauth-authorization-server",
+    "/api/token",
     "/api/me",
     "/",
   ];
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
+  const url = new URL(event.req.url, `http://${event.req.headers.host}`);
 
   if (urls2.includes(url.pathname)) {
-    return next();
+    // return next();
   }
 
   if (!isAuthenticated && !urls.includes(url.pathname)) {
-    const query = useQuery(req);
+    const query = useQuery(event);
     const params = new URLSearchParams({
       ...query,
       continue: url.pathname,
     });
 
-    return sendRedirect(res, `/signin?${params.toString()}`);
+    return sendRedirect(event, `/signin?${params.toString()}`);
   }
 
   if (isAuthenticated && urls.includes(url.pathname)) {
-    return sendRedirect(res, "/");
+    return sendRedirect(event, "/");
   }
 
-  next();
+  // next();
 });

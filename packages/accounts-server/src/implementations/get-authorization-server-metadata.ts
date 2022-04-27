@@ -11,10 +11,10 @@ export async function getAuthorizationServerMetadata(
     const response = Struct.fromJavaScript({
       issuer: `${host}`,
       authorization_endpoint: `${host}/authorize`,
-      token_endpoint: `${host}/token`,
-      jwks_uri: `${host}/jwks.json`,
+      token_endpoint: `${host}/api/token`,
+      jwks_uri: `${host}/api/jwks`,
       registration_endpoint: `${host}/api/clients`,
-      userinfo_endpoint: `${host}/userinfo`,
+      userinfo_endpoint: `${host}/api/userinfo`,
       scopes_supported: [
         "openid",
         "profile",
@@ -35,12 +35,12 @@ export async function getAuthorizationServerMetadata(
       ui_locales_supported: ["en-US"],
       op_policy_uri: `${host}/policy`,
       op_tos_uri: `${host}/tos`,
-      revocation_endpoint: `${host}/revoke`,
+      revocation_endpoint: `${host}/api/revoke`,
       revocation_endpoint_auth_methods_supported: [
         "client_secret_basic",
         "private_key_jwt",
       ],
-      introspection_endpoint: `${host}/instropect`,
+      introspection_endpoint: `${host}/api/instropect`,
       introspection_endpoint_auth_methods_supported: [
         "client_secret_basic",
         "private_key_jwt",

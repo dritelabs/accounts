@@ -5,34 +5,55 @@ datasource db {
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["linux-musl"]
+  binaryTargets = ["native", "linux-musl"]
   output        = "../../../node_modules/.prisma/client"
+}
+
+model Address {
+  id          String    @id @default(cuid())
+  user_id     String
+  line1       String?
+  line2       String?
+  city        String?
+  postal_Code String?
+  country     String?
+  telephone   String?
+  mobile      String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map(name: "addreses")
 }
 
 model Client {
   id                         String                   @id @default(cuid())
   user_id                    String
-  redirect_uris              String[]
-  token_endpoint_auth_method TokenEndpointAuthMethod? @default(private_key_jwt)
-  grant_types                GrantType[] // default: authorization_code
-  response_types             ResponseType[] // default: code
   application_type           ApplicationType?         @default(web)
-  name                       String?                  @unique
-  description                String?
-  secret                     String?                  @default(cuid())
   client_uri                 String?
-  logo_uri                   String?
-  scope                      Scope[]
   contacts                   String[]
-  tos_uri                    String?
-  policy_uri                 String?
-  jwks_uri                   String?
+  description                String?
+  grant_types                GrantType[] // default: authorization_code
+  is_first_party             Boolean                  @default(false)
   jwks                       Json?
+  jwks_uri                   String?
+  logo_uri                   String?
+  name                       String?                  @unique
+  policy_uri                 String?
+  redirect_uris              String[]
+  secret                     String?                  @default(cuid())
+  response_types             ResponseType[] // default: code
+  scope                      Scope[]
   software_id                String?
   software_version           String?
+  token_endpoint_auth_method TokenEndpointAuthMethod? @default(private_key_jwt)
+  tos_uri                    String?
   user                       User                     @relation(fields: [user_id], references: [id])
   created_at                 DateTime                 @default(now())
   updated_at                 DateTime                 @updatedAt
+  deleted_at                 DateTime?
 
   client_approvals ClientApproval[]
 
@@ -40,11 +61,12 @@ model Client {
 }
 
 model ClientApproval {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   user_id    String
   client_id  String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
 
   client Client @relation(fields: [client_id], references: [id])
   user   User   @relation(fields: [user_id], references: [id])
@@ -58,38 +80,42 @@ model Profile {
   user_id    String   @unique
   first_name String?
   last_name  String?
-  user       User     @relation(fields: [user_id], references: [id])
+  telephone  Int?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id])
 
   @@map(name: "profiles")
 }
 
 model Scope {
-  id           String   @id @default(cuid())
-  name         String   @unique
+  id           String    @id @default(cuid())
+  name         String    @unique
   description  String
   display_name String
   clients      Client[]
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  deleted_at   DateTime?
 
   @@map(name: "scopes")
 }
 
 model User {
-  id             String   @id @default(cuid())
-  username       String?  @unique
-  email          String   @unique
-  email_verified Boolean? @default(false)
+  id             String    @id @default(cuid())
+  username       String?   @unique
+  email          String    @unique
+  email_verified Boolean?  @default(false)
   password       String
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
-
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  deleted_at     DateTime?
 
   clients          Client[]
   client_approvals ClientApproval[]
   profile          Profile?
+  addresses        Address[]
 
   @@map(name: "users")
 }

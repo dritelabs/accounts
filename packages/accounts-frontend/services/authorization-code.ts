@@ -3,15 +3,18 @@ import { InvalidGrantError } from "@driten/accounts-errors";
 import { verify as verifyCode, decode } from "@driten/accounts-jwt-verifier";
 import { grpc } from "@driten/accounts-protobuf";
 import core from "@driten/accounts-protobuf/protobuf/core_pb";
-import config from "#config";
+import { useRuntimeConfig } from "#imports";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
+
+const config = useRuntimeConfig();
 
 export async function create(
   payload: core.CreateAuthorizationCodeRequest.AsObject
 ) {
   const request = new core.CreateAuthorizationCodeRequest();
+
   request
     .setClientId(payload.clientId)
     .setSub(payload.sub)

@@ -16,33 +16,33 @@ async function main() {
   await client.scope.createMany({
     data: [
       {
-        display_name: "Profile",
+        display_name: "View profile information",
         name: "profile",
-        description: "Create or update profile information",
+        description: "Create update profile information",
       },
       {
-        display_name: "Write and read clients",
+        display_name: "Create, update and view clients",
         name: "clients",
         description: "Create, read, update or delete clients",
       },
       {
-        display_name: "Write clients",
+        display_name: "Create and update clients",
         name: "clients:write",
         description: "Create, update or delete clients",
       },
       {
-        display_name: "Read clients",
+        display_name: "View clients",
         name: "clients:read",
         description: "Read clients",
       },
       {
-        display_name: "Write sites",
-        name: "sites:write",
+        display_name: "Create and update cms information",
+        name: "cms:write",
         description: "Create, update or delete sites",
       },
       {
-        display_name: "Read sites",
-        name: "sites:read",
+        display_name: "View cms information",
+        name: "cms:read",
         description: "Read sites",
       },
     ],
@@ -76,7 +76,7 @@ async function main() {
           },
         ],
       },
-      jwks_uri: `${developersHost}/jwks.json`,
+      jwks_uri: `${developersHost}/api/jwks`,
       logo_uri: `${developersHost}/logo.png`,
       name: "Driten Developers",
       policy_uri: `${developersHost}/policy`,
@@ -90,6 +90,7 @@ async function main() {
       software_version: "0.0.0",
       token_endpoint_auth_method: "private_key_jwt",
       tos_uri: `${developersHost}/tos`,
+      is_first_party: true,
     },
   });
 
@@ -121,7 +122,7 @@ async function main() {
           },
         ],
       },
-      jwks_uri: `${sitesHost}/jwks.json`,
+      jwks_uri: `${sitesHost}/api/jwks`,
       logo_uri: `${sitesHost}/logo.png`,
       name: "Driten Sites",
       policy_uri: `${sitesHost}/policy`,
@@ -135,6 +136,7 @@ async function main() {
       software_version: "0.0.0",
       token_endpoint_auth_method: "private_key_jwt",
       tos_uri: `${sitesHost}/tos`,
+      is_first_party: true,
     },
   });
 }

@@ -29,7 +29,8 @@ export function toClientMessage(payload: prisma.Client) {
     .setTokenEndpointAuthMethod(payload.token_endpoint_auth_method!)
     .setTosUri(payload.tos_uri!)
     .setUserId(payload.user_id)
-    .setUpdatedAt(getTime(payload.updated_at));
+    .setUpdatedAt(getTime(payload.updated_at))
+    .setIsFirstParty(payload.is_first_party);
 
   return response;
 }

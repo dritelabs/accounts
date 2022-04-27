@@ -11,6 +11,10 @@ definePageMeta({
         <div class="column is-5">
           <SignInForm />
         </div>
+        <div class="column is-6 has-text-centered">
+          <p class="title is-1">Join our Community</p>
+          <p class="subtitle is-5">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
       </div>
     </div>
   </main>

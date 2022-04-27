@@ -1,5 +1,5 @@
 import { withIronSession } from "~/lib/session";
 
-export default withIronSession(async (req, res) => {
+export default withIronSession(async () => {
   return {};
 });

@@ -1,31 +1,38 @@
+import { CompatibilityEvent } from "h3";
 import { IncomingMessage, ServerResponse } from "http";
 import type { IronSessionOptions, IronSession } from "iron-session";
 import { getIronSession } from "iron-session";
 
 export function withIronSessionApiRoute<T>(
   handler: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    next?: Function
+    event: CompatibilityEvent
+    // req: IncomingMessage,
+    // res: ServerResponse,
+    // next?: Function
   ) => Promise<T>,
   options: IronSessionOptions
-): (req: IncomingMessage, res: ServerResponse, next?: Function) => Promise<T> {
-  return async function apiHandlerWrappedWithIronSession(req, res, next) {
-    const session = await getIronSession(req, res, options);
+): (event: CompatibilityEvent) => Promise<T> {
+  return async function apiHandlerWrappedWithIronSession(event) {
+    const session = await getIronSession(
+      event.req as unknown as IncomingMessage,
+      event.res as unknown as ServerResponse,
+      options
+    );
     // we define req.session as being enumerable (so console.log(req) shows it)
     // and we also want to allow people to do:
     // req.session = { admin: true }; or req.session = {...req.session, admin: true};
     // req.session.save();
 
-    if (!req.session) {
+    // @ts-ignore
+    if (!event.req?.session) {
       Object.defineProperty(
-        req,
+        event.req,
         "session",
         getPropertyDescriptorForReqSession(session)
       );
     }
 
-    return handler(req, res, next);
+    return handler(event);
   };
 }
 

@@ -1,4 +1,3 @@
-import { useBody } from "h3";
 import {
   InvalidClientError,
   InvalidGrantError,
@@ -7,7 +6,7 @@ import {
   UnauthorizedClientError,
 } from "@driten/accounts-errors";
 import { codeChallenge } from "@driten/accounts-utils";
-import config from "#config";
+import { useRuntimeConfig } from "#imports";
 import { withIronSession } from "~/lib/session";
 import {
   ValidationError,
@@ -23,16 +22,20 @@ import {
   authorizationCode as authorizationCodeService,
 } from "~/services";
 
-export default withIronSession(async (req, res) => {
+const config = useRuntimeConfig();
+
+export default withIronSession(async (event) => {
   try {
-    const body = await useBody(req);
-    const params = new URLSearchParams(body);
+    const body = await useRawBody(event);
+    const params = new URLSearchParams(body as string);
     const jsonBody = Object.fromEntries(params);
     const metadata = await metadataService.get();
     const tokenRequest = await tokenRequestSchema.validate(jsonBody);
 
-    const client = req.headers.authorization
-      ? await clientService.authenticateWithBasic(req.headers.authorization)
+    const client = event.req.headers.authorization
+      ? await clientService.authenticateWithBasic(
+          event.req.headers.authorization
+        )
       : await clientService.authenticateWithPrivateKey(
           tokenRequest?.client_assertion
         );
@@ -86,7 +89,9 @@ export default withIronSession(async (req, res) => {
         clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
-        audList: code.payload.aud as string[],
+        audList: [...(code.payload.aud as string[])].filter(
+          (resource) => resource !== metadata.issuer
+        ),
         exp: `${config.accessTokenExpirationTime}s`,
       });
 
@@ -95,7 +100,7 @@ export default withIronSession(async (req, res) => {
         clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
-        audList: [...code.payload.aud, metadata.issuer],
+        audList: [...code.payload.aud],
         exp: `${config.refreshTokenExpirationTime}s`,
       });
 
@@ -144,8 +149,19 @@ export default withIronSession(async (req, res) => {
         clientId: client.client_id,
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,
-        audList: refreshToken.payload.aud as string[],
+        audList: [...(refreshToken.payload.aud as string[])].filter(
+          (resource) => resource !== metadata.issuer
+        ),
         exp: `${config.accessTokenExpirationTime}s`,
+      });
+
+      const nextRefreshToken = await tokenService.create({
+        typ: "rt+jwt",
+        clientId: client.client_id,
+        scope: refreshToken.payload.scope as string,
+        sub: refreshToken.payload.sub,
+        audList: [...refreshToken.payload.aud],
+        exp: `${config.refreshTokenExpirationTime}s`,
       });
 
       return {
@@ -153,14 +169,14 @@ export default withIronSession(async (req, res) => {
         token_type: "Bearer",
         expires_in: config.accessTokenExpirationTime,
         scope: refreshToken.payload.scope,
-        refresh_token: refreshToken,
+        refresh_token: nextRefreshToken,
       };
     }
   } catch (error) {
     if (error instanceof ValidationError) {
       const e = new InvalidRequestError(error?.errors?.[0]);
 
-      res.statusCode = 400;
+      event.res.statusCode = 400;
 
       return {
         error: e.error,
@@ -174,7 +190,7 @@ export default withIronSession(async (req, res) => {
       error instanceof InvalidGrantError ||
       error instanceof UnauthorizedClientError
     ) {
-      res.statusCode = error.code;
+      event.res.statusCode = error.code;
 
       return {
         error: error.error,
@@ -184,7 +200,7 @@ export default withIronSession(async (req, res) => {
 
     const e = new ServerError(error?.message);
 
-    res.statusCode = error.code;
+    event.res.statusCode = error.code;
 
     return {
       error: e.error,

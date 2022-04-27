@@ -61,6 +61,8 @@ export class Client extends jspb.Message {
     setSoftwareVersion(value: string): Client;
     getUser(): string;
     setUser(value: string): Client;
+    getIsFirstParty(): boolean;
+    setIsFirstParty(value: boolean): Client;
     getCreatedAt(): number;
     setCreatedAt(value: number): Client;
     getUpdatedAt(): number;
@@ -99,6 +101,7 @@ export namespace Client {
         softwareId: string,
         softwareVersion: string,
         user: string,
+        isFirstParty: boolean,
         createdAt: number,
         updatedAt: number,
     }

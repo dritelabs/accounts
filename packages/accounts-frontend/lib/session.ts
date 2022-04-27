@@ -1,12 +1,14 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { CompatibilityEvent } from "h3";
 import { IronSessionOptions } from "iron-session";
 import * as core from "@driten/accounts-protobuf/protobuf/core_pb";
-import config from "#config";
+import { useRuntimeConfig } from "#imports";
 import { withIronSessionApiRoute } from "./iron-session";
 
+const config = useRuntimeConfig();
 declare module "iron-session" {
   interface IronSessionData {
     user?: Partial<core.User.AsObject> & {
+      initialAccessToken: string;
       isAuthenticated: boolean;
     };
   }
@@ -22,9 +24,5 @@ export const options: IronSessionOptions = {
 };
 
 export const withIronSession = <T>(
-  handler: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    next?: Function
-  ) => Promise<T>
+  handler: (event: CompatibilityEvent) => Promise<T>
 ) => withIronSessionApiRoute(handler, options);

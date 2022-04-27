@@ -7,8 +7,8 @@ interface Response {
   items: core.Scope.AsObject[];
 }
 
-export default withIronSession<Response>(async (req) => {
-  const query = useQuery(req);
+export default withIronSession<Response>(async (event) => {
+  const query = useQuery(event);
   const scopeNames = query?.names ? (query.names as string).split(" ") : [];
 
   try {
