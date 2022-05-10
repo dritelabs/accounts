@@ -2,7 +2,8 @@ import { promisify } from "util";
 import { InvalidGrantError } from "@driten/accounts-errors";
 import { verify as verifyCode, decode } from "@driten/accounts-jwt-verifier";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { CreateAuthorizationCodeRequest } from "@driten/accounts-protobuf/dist/protobuf/core/CreateAuthorizationCodeRequest";
+import { CreateAuthorizationCodeResponse } from "@driten/accounts-protobuf/dist/protobuf/core/CreateAuthorizationCodeResponse";
 import { useRuntimeConfig } from "#imports";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
@@ -10,24 +11,10 @@ import { metadata as metadataService } from "~/services";
 
 const config = useRuntimeConfig();
 
-export async function create(
-  payload: core.CreateAuthorizationCodeRequest.AsObject
-) {
-  const request = new core.CreateAuthorizationCodeRequest();
+export async function create(payload: CreateAuthorizationCodeRequest) {
+  const response = await createAuthorizationCode(payload);
 
-  request
-    .setClientId(payload.clientId)
-    .setSub(payload.sub)
-    .setCodeChallenge(payload.codeChallenge)
-    .setCodeChallengeMethod(payload.codeChallengeMethod)
-    .setRedirectUri(payload.redirectUri)
-    .setScope(payload.scope)
-    .setExp(`${config.authorizationCodeExpirationTime}s`)
-    .setAudList(payload.audList);
-
-  const response = await createAuthorizationCode(request);
-
-  return response.getCode();
+  return response.code;
 }
 
 export async function verify(code: string) {
@@ -53,7 +40,7 @@ export async function verify(code: string) {
 }
 
 const createAuthorizationCode = promisify<
-  core.CreateAuthorizationCodeRequest,
+  CreateAuthorizationCodeRequest,
   grpc.Metadata | void,
-  core.CreateAuthorizationCodeResponse
+  CreateAuthorizationCodeResponse
 >(client.createAuthorizationCode.bind(client));

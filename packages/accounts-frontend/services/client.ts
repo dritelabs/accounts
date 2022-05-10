@@ -7,17 +7,16 @@ import {
 import { InvalidClientError, InvalidGrantError } from "@driten/accounts-errors";
 import { decodeBasic } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { Client as CoreClient } from "@driten/accounts-protobuf/dist/protobuf/core/Client";
+import { GetClientRequest } from "@driten/accounts-protobuf/dist/protobuf/core/GetClientRequest";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
 
+export type Client = ReturnType<typeof reducer>;
+
 export async function get(id: string) {
-  const request = new core.GetClientRequest();
-
-  request.setId(id);
-
-  const response = await getClient(request);
+  const response = await getClient({ id });
 
   return reducer(response);
 }
@@ -80,38 +79,34 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
   return client;
 }
 
-export function reducer(payload: core.Client) {
-  const obj = payload.toObject();
-
+export function reducer(payload: CoreClient) {
   return {
-    client_id: obj.id,
-    client_secret: obj.secret,
-    client_id_issued_at: obj.createdAt,
+    client_id: payload.id,
+    client_secret: payload.secret,
+    client_id_issued_at: payload.createdAt,
     client_secret_expires_at: 0,
-    client_name: obj.name,
-    client_description: obj.description,
-    client_uri: obj.clientUri,
-    user_id: obj.userId,
-    application_type: obj.applicationType,
-    redirect_uris: obj.redirectUriList,
-    token_endpoint_auth_method: obj.tokenEndpointAuthMethod,
-    grant_types: obj.grantTypeList,
-    response_types: obj.responseTypeList,
-    logo_uri: obj.logoUri,
-    scope: obj.scope,
-    contacts: obj.contactList,
-    tos_uri: obj.tosUri,
-    policy_uri: obj.policyUri,
-    jwks_uri: obj.jwksUri,
-    jwks: payload.getJwks().toJavaScript(),
-    software_id: obj.softwareId,
-    software_version: obj.softwareVersion,
-    is_first_party: obj.isFirstParty,
+    client_name: payload.name,
+    client_description: payload.description,
+    client_uri: payload.clientUri,
+    user_id: payload.userId,
+    application_type: payload.applicationType,
+    redirect_uris: payload.redirectUris,
+    token_endpoint_auth_method: payload.tokenEndpointAuthMethod,
+    grant_types: payload.grantTypes,
+    response_types: payload.responseTypes,
+    logo_uri: payload.logoUri,
+    scope: payload.scope,
+    contacts: payload.contacts,
+    tos_uri: payload.tosUri,
+    policy_uri: payload.policyUri,
+    jwks_uri: payload.jwksUri,
+    jwks: payload.jwks,
+    software_id: payload.softwareId,
+    software_version: payload.softwareVersion,
+    is_first_party: payload.isFirstParty,
   };
 }
 
-const getClient = promisify<
-  core.GetClientRequest,
-  grpc.Metadata | void,
-  core.Client
->(client.getClient.bind(client));
+const getClient = promisify<GetClientRequest, grpc.Metadata | void, CoreClient>(
+  client.getClient.bind(client)
+);

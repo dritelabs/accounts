@@ -1,40 +1,33 @@
 import * as jose from "jose";
 import { cuid } from "@driten/accounts-utils";
-import {
-  CreateTokenRequest,
-  CreateTokenResponse,
-} from "@driten/accounts-protobuf/protobuf/core_pb";
 import { grpc } from "@driten/accounts-protobuf";
+import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { config } from "../config";
 
-export async function createToken(
-  call: grpc.ServerUnaryCall<CreateTokenRequest, CreateTokenResponse>,
-  callback: grpc.sendUnaryData<CreateTokenResponse>
-) {
+export const createToken: AccountHandlers["CreateToken"] = async (
+  call,
+  callback
+) => {
   try {
     const privatekey = await jose.importJWK(config.privateKey);
 
     const token = await new jose.SignJWT({
-      client_id: call.request.getClientId(),
-      scope: call.request.getScope(),
+      client_id: call.request.clientId,
+      scope: call.request.scope,
     })
       .setProtectedHeader({
         alg: "RS256",
-        typ: call.request.getTyp() || "at+jwt",
+        typ: call.request.typ || "at+jwt",
       })
       .setIssuer(config.authorizationServerIssuerBaseUrl)
-      .setExpirationTime(call.request.getExp())
-      .setAudience(call.request.getAudList())
-      .setSubject(call.request.getSub())
+      .setExpirationTime(call.request.exp)
+      .setAudience(call.request.aud)
+      .setSubject(call.request.sub)
       .setIssuedAt()
       .setJti(cuid())
       .sign(privatekey);
 
-    const response = new CreateTokenResponse();
-
-    response.setToken(token);
-
-    callback(null, response);
+    callback(null, { token });
   } catch (e) {
     const error = e as Error;
     callback({
@@ -42,4 +35,4 @@ export async function createToken(
       code: grpc.status.UNKNOWN,
     });
   }
-}
+};

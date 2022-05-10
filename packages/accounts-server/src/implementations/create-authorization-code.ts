@@ -1,48 +1,36 @@
 import * as jose from "jose";
 import { cuid } from "@driten/accounts-utils";
-import {
-  CreateAuthorizationCodeRequest,
-  CreateAuthorizationCodeResponse,
-} from "@driten/accounts-protobuf/protobuf/core_pb";
+import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { grpc } from "@driten/accounts-protobuf";
 import { config } from "../config";
 
-export async function createAuthorizationCode(
-  call: grpc.ServerUnaryCall<
-    CreateAuthorizationCodeRequest,
-    CreateAuthorizationCodeResponse
-  >,
-  callback: grpc.sendUnaryData<CreateAuthorizationCodeResponse>
-) {
-  try {
-    const privatekey = await jose.importJWK(config.privateKey);
+export const createAuthorizationCode: AccountHandlers["CreateAuthorizationCode"] =
+  async (call, callback) => {
+    try {
+      const privatekey = await jose.importJWK(config.privateKey);
 
-    const code = await new jose.SignJWT({
-      client_id: call.request.getClientId(),
-      code_challenge: call.request.getCodeChallenge(),
-      code_challenge_method: call.request.getCodeChallengeMethod(),
-      redirect_uri: call.request.getRedirectUri(),
-      scope: call.request.getScope(),
-    })
-      .setProtectedHeader({ alg: "RS256", typ: "ac+jwt" })
-      .setIssuer(config.authorizationServerIssuerBaseUrl)
-      .setExpirationTime(call.request.getExp())
-      .setAudience(call.request.getAudList())
-      .setSubject(call.request.getSub())
-      .setIssuedAt()
-      .setJti(cuid())
-      .sign(privatekey);
+      const code = await new jose.SignJWT({
+        client_id: call.request.clientId,
+        code_challenge: call.request.codeChallenge,
+        code_challenge_method: call.request.codeChallengeMethod,
+        redirect_uri: call.request.redirectUri,
+        scope: call.request.scope,
+      })
+        .setProtectedHeader({ alg: "RS256", typ: "ac+jwt" })
+        .setIssuer(config.authorizationServerIssuerBaseUrl)
+        .setExpirationTime(call.request.exp)
+        .setAudience(call.request.aud)
+        .setSubject(call.request.sub)
+        .setIssuedAt()
+        .setJti(cuid())
+        .sign(privatekey);
 
-    const response = new CreateAuthorizationCodeResponse();
-
-    response.setCode(code);
-
-    callback(null, response);
-  } catch (e) {
-    const error = e as Error;
-    callback({
-      ...error,
-      code: grpc.status.UNKNOWN,
-    });
-  }
-}
+      callback(null, { code });
+    } catch (e) {
+      const error = e as Error;
+      callback({
+        ...error,
+        code: grpc.status.UNKNOWN,
+      });
+    }
+  };

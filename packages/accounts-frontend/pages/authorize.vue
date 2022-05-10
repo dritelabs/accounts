@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { InternalApi } from "nitropack";
 import { authorizationRequestSchema, ValidationError } from "~/schemas";
 
 const validationError = ref<ValidationError>(undefined)
@@ -7,28 +6,21 @@ const route = useRoute()
 const keyValues = useQueryKeyValues()
 const arrayValues = useQueryArrayValues()
 const scopeNames = route.query?.scope ? (route.query.scope as string).split(" ") : [];
-const validation = await authorizationRequestSchema.validate(route.query).catch(err => validationError.value = err)
 
-const { data: client, error: clientError } = await useFetch<InternalApi['/api/clients/:id']>(
-  `/api/clients/${validation.client_id}`
-)
+const validation = await authorizationRequestSchema
+  .validate(route.query)
+  .catch(err => validationError.value = err)
 
-const { data: user } = await useFetch('/api/me',
-  {
-    headers: useRequestHeaders(),
+const { data: client, error: clientError } = await useClient(validation.client_id)
+const { data: user } = await useUser()
+const { data: scopes } = await useScopes({
+  filters: {
+    names: route.query?.scope as string[]
   }
-)
-const { data: scopes } = await useFetch('/api/scopes',
-  {
-    headers: useRequestHeaders(),
-    params: {
-      names: route.query?.scope
-    }
-  }
-)
+})
 
 onMounted(() => {
-  if (client.value.is_first_party) {
+  if (client.value?.is_first_party) {
     const form = document.querySelector<HTMLFormElement>('#form-allow')
 
     form.submit()
@@ -42,7 +34,7 @@ onMounted(() => {
       {{ validationError?.message }}
     </div>
     <div class="container" v-else-if="clientError">
-      {{ clientError?.data?.message }}
+      {{ clientError?.data?.error_description }}
     </div>
     <div class="container" v-else-if="!client.redirect_uris.includes(validation.redirect_uri)">
       The redirect_uri is invalid

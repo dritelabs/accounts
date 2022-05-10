@@ -1,8 +1,9 @@
-import { object, string, InferType, array, lazy } from "yup";
+import { object, string, array, lazy } from "yup";
+import * as yup from "yup";
 export { ValidationError } from "yup";
 
-export const tokenRequestSchema = object({
-  client_id: string(),
+export const tokenRequestSchema = yup.object({
+  client_id: yup.string(),
   scope: string().default(""),
   grant_type: string()
     .oneOf(["authorization_code", "refresh_token", "client_credentials"])

@@ -3,16 +3,14 @@ syntax = "proto3";
 package accounts;
 
 import "core.proto";
-import "google/protobuf/empty.proto";
-import "google/protobuf/struct.proto";
 
-service Accounts {
+service Account {
   rpc AuthenticateUser(core.AuthenticateUserRequest) returns (core.AuthenticateUserResponse);
   rpc CreateAuthorizationCode(core.CreateAuthorizationCodeRequest) returns (core.CreateAuthorizationCodeResponse);
   rpc CreateToken(core.CreateTokenRequest) returns (core.CreateTokenResponse);
   rpc CreateUser(core.CreateUserRequest) returns (core.User);
-  rpc GetAuthorizationServerMetadata(google.protobuf.Empty) returns (google.protobuf.Struct);
+  rpc GetAuthorizationServerMetadata(core.Empty) returns (core.AuthorizationServerMetadata);
   rpc GetClient(core.GetClientRequest) returns (core.Client);
-  rpc GetJWKS(google.protobuf.Empty) returns (google.protobuf.Struct);
+  rpc GetJWKS(core.Empty) returns (core.Jwks);
   rpc ListScopes(core.ListScopesRequest) returns (core.ListScopesResponse);
 }

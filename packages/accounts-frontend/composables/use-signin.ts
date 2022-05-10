@@ -1,8 +1,8 @@
-import { AuthenticateUserRequest } from "~~/../accounts-protobuf/protobuf/core_pb";
+import { AuthenticateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/core/AuthenticateUserRequest";
 
-export async function useSignIn(options: AuthenticateUserRequest) {
+export async function useSignIn(request: AuthenticateUserRequest) {
   return $fetch("/api/signin", {
     method: "POST",
-    body: options,
+    body: request,
   });
 }

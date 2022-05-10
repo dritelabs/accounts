@@ -1,12 +1,12 @@
 import { grpc } from "@driten/accounts-protobuf";
-import { AccountsService } from "@driten/accounts-protobuf/protobuf/accounts_grpc_pb";
+import { createServer, proto } from "@driten/accounts-protobuf/dist/server";
 import * as implementations from "./implementations";
 import { config } from "./config";
 
-const server = new grpc.Server();
 const hostname = `${config.host}:${config.port}`;
+const server = createServer();
 
-server.addService(AccountsService, implementations);
+server.addService(proto.accounts.Account.service, implementations);
 
 server.bindAsync(
   hostname,

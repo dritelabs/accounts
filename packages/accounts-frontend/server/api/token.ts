@@ -30,15 +30,36 @@ export default withIronSession(async (event) => {
     const params = new URLSearchParams(body as string);
     const jsonBody = Object.fromEntries(params);
     const metadata = await metadataService.get();
-    const tokenRequest = await tokenRequestSchema.validate(jsonBody);
+    const isAuthenticated =
+      !!event.req.headers.authorization || !!jsonBody?.client_assertion;
 
-    const client = event.req.headers.authorization
-      ? await clientService.authenticateWithBasic(
-          event.req.headers.authorization
-        )
-      : await clientService.authenticateWithPrivateKey(
-          tokenRequest?.client_assertion
-        );
+    const tokenRequest = await tokenRequestSchema.validate(jsonBody, {
+      context: { isAuthenticated },
+    });
+
+    appendHeader(event, "Cache-Control", "no-store");
+
+    if (event.req.headers.authorization && tokenRequest?.client_assertion) {
+      throw new UnauthorizedClientError("The authentication method is invalid");
+    }
+
+    if (!isAuthenticated && !tokenRequest?.client_id) {
+      throw new InvalidClientError("The client_id is required field");
+    }
+
+    let client: clientService.Client | undefined;
+
+    if (event.req.headers.authorization) {
+      client = await clientService.authenticateWithBasic(
+        event.req.headers.authorization
+      );
+    } else if (tokenRequest?.client_assertion) {
+      client = await clientService.authenticateWithPrivateKey(
+        tokenRequest?.client_assertion
+      );
+    } else {
+      client = await clientService.get(tokenRequest.client_id);
+    }
 
     if (!client.grant_types.includes(tokenRequest.grant_type)) {
       throw new UnauthorizedClientError(
@@ -62,11 +83,7 @@ export default withIronSession(async (event) => {
 
       const calculatedCodeChallenge = codeChallenge(
         authorizationCodeGrantTokenRequest.code_verifier,
-        {
-          codeChallengeMethod: code.payload.code_challenge_method as
-            | "plain"
-            | "S256",
-        }
+        code.payload.code_challenge_method as "plain" | "S256"
       );
 
       if (code.payload.code_challenge !== calculatedCodeChallenge) {
@@ -89,7 +106,7 @@ export default withIronSession(async (event) => {
         clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
-        audList: [...(code.payload.aud as string[])].filter(
+        aud: [...(code.payload.aud as string[])].filter(
           (resource) => resource !== metadata.issuer
         ),
         exp: `${config.accessTokenExpirationTime}s`,
@@ -100,7 +117,7 @@ export default withIronSession(async (event) => {
         clientId: client.client_id,
         scope: code.payload.scope as string,
         sub: code.payload.sub,
-        audList: [...code.payload.aud],
+        aud: [...code.payload.aud],
         exp: `${config.refreshTokenExpirationTime}s`,
       });
 
@@ -122,7 +139,7 @@ export default withIronSession(async (event) => {
         clientId: client.client_id,
         scope: clientCredentialsGrantTokenRequest.scope,
         sub: client.client_id,
-        audList: Array.isArray(clientCredentialsGrantTokenRequest.resource)
+        aud: Array.isArray(clientCredentialsGrantTokenRequest.resource)
           ? clientCredentialsGrantTokenRequest.resource
           : [clientCredentialsGrantTokenRequest.resource],
         exp: `${config.accessTokenExpirationTime}s`,
@@ -149,7 +166,7 @@ export default withIronSession(async (event) => {
         clientId: client.client_id,
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,
-        audList: [...(refreshToken.payload.aud as string[])].filter(
+        aud: [...(refreshToken.payload.aud as string[])].filter(
           (resource) => resource !== metadata.issuer
         ),
         exp: `${config.accessTokenExpirationTime}s`,
@@ -160,7 +177,7 @@ export default withIronSession(async (event) => {
         clientId: client.client_id,
         scope: refreshToken.payload.scope as string,
         sub: refreshToken.payload.sub,
-        audList: [...refreshToken.payload.aud],
+        aud: [...refreshToken.payload.aud],
         exp: `${config.refreshTokenExpirationTime}s`,
       });
 

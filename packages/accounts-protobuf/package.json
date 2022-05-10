@@ -12,8 +12,9 @@
   "license": "ISC",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./protobuf/*": "./protobuf/*.js"
+    ".": "./dist/index.mjs",
+    "./dist/server": "./dist/server.mjs",
+    "./dist/client": "./dist/client.mjs"
   },
   "directories": {
     "lib": "lib",
@@ -28,17 +29,17 @@
   },
   "scripts": {
     "build": "tsup",
-    "generate": "grpc_tools_node_protoc --proto_path=proto --ts_out=grpc_js:./protobuf --js_out=import_style=commonjs,binary:./protobuf/ --grpc_out=grpc_js:./protobuf --plugin=protoc-gen-ts=../../node_modules/.bin/protoc-gen-ts --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./proto/*.proto"
+    "generate": "proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=src/protobuf/ proto/*.proto",
+    "generate:2": "grpc_tools_node_protoc --proto_path=proto --ts_out=grpc_js:./protobuf --js_out=import_style=commonjs,binary:./protobuf/ --grpc_out=grpc_js:./protobuf --plugin=protoc-gen-ts=../../node_modules/.bin/protoc-gen-ts --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./proto/*.proto"
   },
   "bugs": {
     "url": "https://github.com/driten-project/accounts/issues"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.5.4",
-    "google-protobuf": "3.19.4"
+    "@grpc/grpc-js": "^1.6.7",
+    "@grpc/proto-loader": "^0.6.11"
   },
   "devDependencies": {
-    "@types/google-protobuf": "^3.15.5",
     "grpc-tools": "^1.11.2",
     "grpc_tools_node_protoc_ts": "^5.3.2"
   }

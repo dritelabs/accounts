@@ -1,13 +1,13 @@
 import { CompatibilityEvent } from "h3";
 import { IronSessionOptions } from "iron-session";
-import * as core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
 import { useRuntimeConfig } from "#imports";
 import { withIronSessionApiRoute } from "./iron-session";
 
 const config = useRuntimeConfig();
 declare module "iron-session" {
   interface IronSessionData {
-    user?: Partial<core.User.AsObject> & {
+    user?: Partial<User> & {
       initialAccessToken: string;
       isAuthenticated: boolean;
     };

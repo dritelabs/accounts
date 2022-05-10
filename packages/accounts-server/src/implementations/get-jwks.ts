@@ -1,16 +1,12 @@
-import { grpc, Empty, Struct } from "@driten/accounts-protobuf";
+import { grpc } from "@driten/accounts-protobuf";
+import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { config } from "../config";
 
-export async function getJWKS(
-  _: grpc.ServerUnaryCall<Empty, Struct>,
-  callback: grpc.sendUnaryData<Struct>
-) {
+export const getJWKS: AccountHandlers["GetJWKS"] = async (call, callback) => {
   try {
-    const response = Struct.fromJavaScript({
+    callback(null, {
       keys: [config.publicKey],
     });
-
-    callback(null, response);
   } catch (e) {
     const error = e as Error;
 
@@ -19,4 +15,4 @@ export async function getJWKS(
       code: grpc.status.UNKNOWN,
     });
   }
-}
+};

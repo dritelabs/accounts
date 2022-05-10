@@ -10,7 +10,9 @@
   "author": "Guillermo <guillermolopez2529@gmail.com>",
   "homepage": "https://driten.com",
   "license": "ISC",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
   "types": "dist/index.d.ts",
   "directories": {
     "lib": "dist",
@@ -25,7 +27,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup-node src/index.ts --sourcemap --watch --onSuccess 'node dist/index.js'"
+    "dev": "tsup-node src/index.ts --sourcemap --watch --onSuccess 'node dist/index.mjs'"
   },
   "bugs": {
     "url": "https://github.com/driten-project/accounts/issues"

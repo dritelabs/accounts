@@ -1,22 +1,18 @@
 import { client, prisma } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
-import {
-  ListScopesRequest,
-  ListScopesResponse,
-} from "@driten/accounts-protobuf/protobuf/core_pb";
-import { toScopeMessage } from "../utils";
+import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 
-export async function listScopes(
-  call: grpc.ServerUnaryCall<ListScopesRequest, ListScopesResponse>,
-  callback: grpc.sendUnaryData<ListScopesResponse>
-) {
+export const listScopes: AccountHandlers["ListScopes"] = async (
+  call,
+  callback
+) => {
   try {
     const metadata = call.metadata.getMap();
     const filter = new URLSearchParams(metadata?.filter as string);
 
     let where: prisma.Prisma.ScopeWhereInput = {};
 
-    if (filter.getAll("names")) {
+    if (filter.getAll("names")?.length) {
       where = {
         ...where,
         name: {
@@ -29,12 +25,10 @@ export async function listScopes(
       where,
     });
 
-    const response = new ListScopesResponse();
-    const list = found.map(toScopeMessage);
-
-    response.setScopeList(list);
-
-    callback(null, response);
+    callback(null, {
+      scopes: found,
+      nextPageToken: "",
+    });
   } catch (e) {
     const error = e as Error;
     callback({
@@ -42,4 +36,4 @@ export async function listScopes(
       code: grpc.status.UNKNOWN,
     });
   }
-}
+};

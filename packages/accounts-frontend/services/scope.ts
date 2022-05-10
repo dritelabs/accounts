@@ -1,6 +1,7 @@
 import { promisify } from "util";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { ListScopesRequest } from "@driten/accounts-protobuf/dist/protobuf/core/ListScopesRequest";
+import { ListScopesResponse } from "@driten/accounts-protobuf/dist/protobuf/core/ListScopesResponse";
 import { client } from "~/lib/client";
 
 interface Options {
@@ -10,7 +11,6 @@ interface Options {
 }
 
 export async function list(options?: Options) {
-  const request = new core.ListScopesRequest();
   const metadata = new grpc.Metadata();
   const filter = new URLSearchParams();
 
@@ -20,15 +20,13 @@ export async function list(options?: Options) {
 
   metadata.set("filter", filter.toString());
 
-  const response = (await listScopes(request, metadata)).toObject();
+  const response = await listScopes({}, metadata);
 
-  return {
-    scopes: response.scopeList,
-  };
+  return response;
 }
 
 const listScopes = promisify<
-  core.ListScopesRequest,
+  ListScopesRequest,
   grpc.Metadata | void,
-  core.ListScopesResponse
+  ListScopesResponse
 >(client.listScopes.bind(client));

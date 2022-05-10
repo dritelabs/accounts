@@ -1,13 +1,8 @@
 import { useQuery } from "h3";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
 import { withIronSession } from "~/lib/session";
 import { scope as scopeService } from "~/services";
 
-interface Response {
-  items: core.Scope.AsObject[];
-}
-
-export default withIronSession<Response>(async (event) => {
+export default withIronSession(async (event) => {
   const query = useQuery(event);
   const scopeNames = query?.names ? (query.names as string).split(" ") : [];
 
@@ -22,6 +17,6 @@ export default withIronSession<Response>(async (event) => {
       items: response.scopes,
     };
   } catch (error) {
-    return error;
+    throw error;
   }
 });

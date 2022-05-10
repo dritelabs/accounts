@@ -2,25 +2,17 @@ import { promisify } from "util";
 import { InvalidGrantError } from "@driten/accounts-errors";
 import { verify as verifyToken, decode } from "@driten/accounts-jwt-verifier";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { CreateTokenRequest } from "@driten/accounts-protobuf/dist/protobuf/core/CreateTokenRequest";
+import { CreateTokenResponse } from "@driten/accounts-protobuf/dist/protobuf/core/CreateTokenResponse";
 import { useRuntimeConfig } from "#imports";
 import { client } from "~/lib/client";
 import { metadata as metadataService } from "~/services";
 import { client as cache } from "~/lib/cache";
 
-export async function create(payload: core.CreateTokenRequest.AsObject) {
-  const request = new core.CreateTokenRequest();
+export async function create(payload: CreateTokenRequest) {
+  const response = await createToken(payload);
 
-  request
-    .setClientId(payload.clientId)
-    .setScope(payload.scope)
-    .setSub(payload.sub)
-    .setAudList(payload.audList)
-    .setExp(payload.exp);
-
-  const response = await createToken(request);
-
-  return response.getToken();
+  return response.token;
 }
 
 export async function verifyRefreshToken(token: string) {
@@ -47,7 +39,7 @@ export async function verifyRefreshToken(token: string) {
 }
 
 const createToken = promisify<
-  core.CreateTokenRequest,
+  CreateTokenRequest,
   grpc.Metadata | void,
-  core.CreateTokenResponse
+  CreateTokenResponse
 >(client.createToken.bind(client));

@@ -15,7 +15,7 @@ model Address {
   line1       String?
   line2       String?
   city        String?
-  postal_Code String?
+  postal_code String?
   country     String?
   telephone   String?
   mobile      String?

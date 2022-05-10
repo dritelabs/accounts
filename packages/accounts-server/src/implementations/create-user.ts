@@ -1,18 +1,14 @@
 import { genSalt, hash } from "bcrypt";
 import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
-import {
-  CreateUserRequest,
-  User,
-} from "@driten/accounts-protobuf/protobuf/core_pb";
-import { toUserMessage } from "../utils";
+import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 
-export async function createUser(
-  call: grpc.ServerUnaryCall<CreateUserRequest, User>,
-  callback: grpc.sendUnaryData<User>
-) {
+export const createUser: AccountHandlers["CreateUser"] = async (
+  call,
+  callback
+) => {
   try {
-    const payload = call.request.toObject();
+    const payload = call.request;
     const salt = await genSalt();
     const hashed = await hash(payload.password, salt);
     const found = await client.user.findFirst({
@@ -36,7 +32,13 @@ export async function createUser(
       },
     });
 
-    callback(null, toUserMessage(created));
+    callback(null, {
+      id: created.id,
+      email: created.email,
+      username: created.username!,
+      createdAt: created.created_at.toISOString(),
+      updatedAt: created.updated_at.toISOString(),
+    });
   } catch (e) {
     const error = e as Error;
 
@@ -45,4 +47,4 @@ export async function createUser(
       code: grpc.status.UNKNOWN,
     });
   }
-}
+};

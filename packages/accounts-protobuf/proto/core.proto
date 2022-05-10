@@ -2,15 +2,13 @@ syntax = "proto3";
 
 package core;
 
-import "google/protobuf/struct.proto";
-
 message Client {
   string id = 1;
   string user_id = 2;
-  repeated string redirect_uri = 3;
+  repeated string redirect_uris = 3;
   string token_endpoint_auth_method = 4;
-  repeated string grant_type = 5;
-  repeated string response_type = 6;
+  repeated string grant_types = 5;
+  repeated string response_types = 6;
   string application_type = 7;
   string name = 8;
   string description = 9;
@@ -18,17 +16,16 @@ message Client {
   string client_uri = 11;
   string logo_uri = 12;
   string scope = 13;
-  repeated string contact = 14;
+  repeated string contacts = 14;
   string tos_uri = 15;
   string policy_uri = 16;
   string jwks_uri = 17;
-  google.protobuf.Struct jwks = 18;
+  Jwks jwks = 18;
   string software_id = 19;
   string software_version = 20;
-  string user = 21;
-  bool is_first_party = 22;
-  int64 created_at = 23;
-  int64 updated_at = 24;
+  bool is_first_party = 21;
+  string created_at = 22;
+  string updated_at = 23;
 }
 
 message User {
@@ -49,10 +46,53 @@ message Scope {
   string updated_at = 6;
 }
 
+message AuthorizationServerMetadata {
+  string issuer = 1;
+  string authorization_endpoint = 2;
+  string token_endpoint = 3;
+  string jwks_uri = 4;
+  string registration_endpoint = 5;
+  string userinfo_endpoint = 6;
+  repeated string scopes_supported = 7;
+  repeated string response_types_supported = 8;
+  repeated string response_modes = 9;
+  repeated string grant_types_supported = 10;
+  repeated string token_endpoint_auth_methods_supported = 11;
+  repeated string token_endpoint_auth_signing_alg_values_supported = 12;
+  string service_documentation = 13;
+  repeated string ui_locales_supported = 14;
+  string op_policy_uri = 15;
+  string op_tos_uri = 16;
+  string revocation_endpoint = 17;
+  repeated string revocation_endpoint_auth_methods_supported = 18;
+  string introspection_endpoint = 19;
+  repeated string introspection_endpoint_auth_methods_supported = 20;
+  repeated string code_challenge_methods_supported = 21;
+}
+
+message Jwk {
+  string p = 1;
+  string kty = 2;
+  string q = 3;
+  string d = 4;
+  string e = 5;
+  string use = 6;
+  string qi = 7;
+  string dp = 8;
+  string alg = 9;
+  string dq = 10;
+  string n = 11;
+}
+
+message Jwks {
+  repeated Jwk keys = 1;
+}
+
+message Empty {}
+
 message GetClientRequest {
   string id = 1;
 }
-
 
 message CreateUserRequest {
   string email = 1;
@@ -105,6 +145,6 @@ message ListScopesRequest {
 }
 
 message ListScopesResponse {
-  repeated Scope scope = 1;
+  repeated Scope scopes = 1;
   string next_page_token = 2;
 }

@@ -10,10 +10,10 @@ export default defineNuxtConfig({
       process.env.SECRET_COOKIE_PASSWORD ||
       "complex_password_at_least_32_characters_long",
     authorizationCodeExpirationTime:
-      process.env.AUTHORIZATION_CODE_EXPIRATION_TIME || 60,
+      process.env.AUTHORIZATION_CODE_EXPIRATION_TIME || 30,
     accessTokenExpirationTime:
-      process.env.ACCESS_TOKEN_EXPIRATION_TIME || 60 * 5,
+      process.env.ACCESS_TOKEN_EXPIRATION_TIME || 60 * 10,
     refreshTokenExpirationTime:
-      process.env.REFRESH_TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 30,
+      process.env.REFRESH_TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 15,
   },
 });

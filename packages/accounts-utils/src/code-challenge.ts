@@ -1,14 +1,10 @@
-import { base64URLEncode } from './base64-url-encode'
-import { sha256 } from './sha256'
+import { base64URLEncode } from "./base64-url-encode";
+import { sha256 } from "./sha256";
 
-interface Options {
-  codeChallengeMethod: 'plain' | 'S256'
-}
-
-export function codeChallenge(codeVerifier: string, options: Options) {
-  if (options.codeChallengeMethod === 'plain') {
-    return codeVerifier
+export function codeChallenge(codeVerifier: string, method?: "plain" | "S256") {
+  if (method === "plain") {
+    return codeVerifier;
   }
 
-  return base64URLEncode(sha256(codeVerifier))
+  return base64URLEncode(sha256(codeVerifier));
 }

@@ -1,42 +1,33 @@
 import { promisify } from "util";
 import { grpc } from "@driten/accounts-protobuf";
-import core from "@driten/accounts-protobuf/protobuf/core_pb";
+import { AuthenticateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/core/AuthenticateUserRequest";
+import { AuthenticateUserResponse } from "@driten/accounts-protobuf/dist/protobuf/core/AuthenticateUserResponse";
+import { CreateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/core/CreateUserRequest";
+import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
 import { client } from "~/lib/client";
 
-export async function authenticate(
-  payload: core.AuthenticateUserRequest.AsObject
-) {
-  const request = new core.AuthenticateUserRequest();
-
-  request.setEmail(payload.email).setPassword(payload.password);
-
+export async function authenticate(request: AuthenticateUserRequest) {
   const response = await authenticateUser(request);
 
-  return response.toObject();
+  return response;
 }
 
-export async function create(payload: core.CreateUserRequest.AsObject) {
-  const request = new core.CreateUserRequest();
-
-  request.setEmail(payload.email).setPassword(payload.password);
-
+export async function create(request: CreateUserRequest) {
   const response = await createUser(request);
 
-  return response.toObject();
+  return response;
 }
 
-export function reducer(payload: core.CreateTokenResponse.AsObject) {
+export function reducer(request: any) {
   return {};
 }
 
 const authenticateUser = promisify<
-  core.AuthenticateUserRequest,
+  AuthenticateUserRequest,
   grpc.Metadata | void,
-  core.AuthenticateUserResponse
+  AuthenticateUserResponse
 >(client.authenticateUser.bind(client));
 
-const createUser = promisify<
-  core.CreateUserRequest,
-  grpc.Metadata | void,
-  core.User
->(client.createUser.bind(client));
+const createUser = promisify<CreateUserRequest, grpc.Metadata | void, User>(
+  client.createUser.bind(client)
+);
