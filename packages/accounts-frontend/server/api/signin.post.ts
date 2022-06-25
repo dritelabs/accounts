@@ -27,7 +27,7 @@ export default withIronSession(async (event) => {
       clientId: "",
       scope: "clients:read",
       sub: response.id,
-      audList: [metadata.issuer],
+      aud: [metadata.issuer],
       exp: `${config.accessTokenExpirationTime}s`,
     });
 

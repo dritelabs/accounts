@@ -1,0 +1,11 @@
+
+syntax = "proto3";
+
+package scope;
+
+import "core.proto";
+
+message ListScopesResponse {
+  string next_page_token = 2;
+  repeated core.Scope scopes = 1;
+}

@@ -1,4 +1,4 @@
-import { useBody, sendRedirect } from "h3";
+import { sendRedirect } from "h3";
 import { AccessDeniedError, ServerError } from "@driten/accounts-errors";
 import { useRuntimeConfig } from "#imports";
 import { withIronSession } from "~/lib/session";
@@ -29,7 +29,7 @@ export default withIronSession(async (event) => {
       redirectUri: request.get("redirect_uri"),
       scope: request.get("scope") || "",
       sub: event.req?.session?.user?.id,
-      audList: [metadata.issuer, ...request.getAll("resource")],
+      aud: [metadata.issuer, ...request.getAll("resource")],
       exp: `${config.authorizationCodeExpirationTime}s`,
     });
 

@@ -8,7 +8,7 @@ import { InvalidClientError, InvalidGrantError } from "@driten/accounts-errors";
 import { decodeBasic } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { Client as CoreClient } from "@driten/accounts-protobuf/dist/protobuf/core/Client";
-import { GetClientRequest } from "@driten/accounts-protobuf/dist/protobuf/core/GetClientRequest";
+import { GetRequest } from "@driten/accounts-protobuf/dist/protobuf/core/GetRequest";
 import { client } from "~/lib/client";
 import { client as cache } from "~/lib/cache";
 import { metadata as metadataService } from "~/services";
@@ -58,7 +58,7 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
     expires: decoded.exp - decoded.iat,
   });
 
-  if (client.jwks) {
+  if (client.public_keys_configuration === "local") {
     await verifyWithLocalJKWS(clientAssertion, client.jwks, {
       issuer: client.client_uri,
       audience: [metadata.issuer],
@@ -81,32 +81,34 @@ export async function authenticateWithPrivateKey(clientAssertion: string) {
 
 export function reducer(payload: CoreClient) {
   return {
+    application_type: payload.type,
     client_id: payload.id,
     client_secret: payload.secret,
     client_id_issued_at: payload.createdAt,
     client_secret_expires_at: 0,
     client_name: payload.name,
     client_description: payload.description,
-    client_uri: payload.clientUri,
-    user_id: payload.userId,
-    application_type: payload.applicationType,
-    redirect_uris: payload.redirectUris,
-    token_endpoint_auth_method: payload.tokenEndpointAuthMethod,
+    client_uri: payload.uri,
     grant_types: payload.grantTypes,
-    response_types: payload.responseTypes,
-    logo_uri: payload.logoUri,
-    scope: payload.scope,
     contacts: payload.contacts,
-    tos_uri: payload.tosUri,
-    policy_uri: payload.policyUri,
+    is_first_party: payload.isFirstParty,
     jwks_uri: payload.jwksUri,
     jwks: payload.jwks,
+    logo_uri: payload.logoUri,
+    policy_uri: payload.policyUri,
+    public_keys_configuration: payload.publicKeysConfiguration,
+    redirect_uris: payload.redirectUris,
+    response_types: payload.responseTypes,
+    refresh_token_rotation_type: payload.refreshTokenRotationType,
+    scope: payload.scope,
     software_id: payload.softwareId,
     software_version: payload.softwareVersion,
-    is_first_party: payload.isFirstParty,
+    token_endpoint_auth_method: payload.tokenEndpointAuthMethod,
+    tos_uri: payload.tosUri,
+    user_id: payload.userId,
   };
 }
 
-const getClient = promisify<GetClientRequest, grpc.Metadata | void, CoreClient>(
+const getClient = promisify<GetRequest, grpc.Metadata | void, CoreClient>(
   client.getClient.bind(client)
 );

@@ -8,21 +8,17 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 
 export interface ProtoGrpcType {
   core: {
-    AuthenticateUserRequest: MessageTypeDefinition
-    AuthenticateUserResponse: MessageTypeDefinition
+    Address: MessageTypeDefinition
     AuthorizationServerMetadata: MessageTypeDefinition
     Client: MessageTypeDefinition
-    CreateAuthorizationCodeRequest: MessageTypeDefinition
-    CreateAuthorizationCodeResponse: MessageTypeDefinition
-    CreateTokenRequest: MessageTypeDefinition
-    CreateTokenResponse: MessageTypeDefinition
-    CreateUserRequest: MessageTypeDefinition
+    DeleteRequest: MessageTypeDefinition
     Empty: MessageTypeDefinition
-    GetClientRequest: MessageTypeDefinition
-    Jwk: MessageTypeDefinition
-    Jwks: MessageTypeDefinition
-    ListScopesRequest: MessageTypeDefinition
-    ListScopesResponse: MessageTypeDefinition
+    GetRequest: MessageTypeDefinition
+    JWKS: MessageTypeDefinition
+    ListRequest: MessageTypeDefinition
+    PrivateJWK: MessageTypeDefinition
+    Profile: MessageTypeDefinition
+    PublicJWK: MessageTypeDefinition
     Scope: MessageTypeDefinition
     User: MessageTypeDefinition
   }

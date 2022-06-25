@@ -1,0 +1,20 @@
+
+syntax = "proto3";
+
+package jwk;
+
+import "core.proto";
+
+message AddJWKToClientRequest {
+  string client_id = 1;
+  core.PublicJWK jwk = 2;
+}
+
+message CreateJWKPairResponse {
+  core.PrivateJWK privateKey = 1;
+  core.PublicJWK publicKey = 2;
+}
+
+message DeleteJWKResponse {
+  core.PublicJWK key = 1;
+}

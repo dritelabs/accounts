@@ -1,11 +1,11 @@
 // Original file: proto/core.proto
 
-import type { Jwk as _core_Jwk, Jwk__Output as _core_Jwk__Output } from '../core/Jwk';
+import type { PublicJWK as _core_PublicJWK, PublicJWK__Output as _core_PublicJWK__Output } from '../core/PublicJWK';
 
-export interface Jwks {
-  'keys'?: (_core_Jwk)[];
+export interface JWKS {
+  'keys'?: (_core_PublicJWK)[];
 }
 
-export interface Jwks__Output {
-  'keys': (_core_Jwk__Output)[];
+export interface JWKS__Output {
+  'keys': (_core_PublicJWK__Output)[];
 }

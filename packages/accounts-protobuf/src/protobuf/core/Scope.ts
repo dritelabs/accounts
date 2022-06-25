@@ -3,18 +3,20 @@
 
 export interface Scope {
   'id'?: (string);
-  'name'?: (string);
   'description'?: (string);
   'displayName'?: (string);
+  'name'?: (string);
   'createdAt'?: (string);
+  'deletedAt'?: (string);
   'updatedAt'?: (string);
 }
 
 export interface Scope__Output {
   'id': (string);
-  'name': (string);
   'description': (string);
   'displayName': (string);
+  'name': (string);
   'createdAt': (string);
+  'deletedAt': (string);
   'updatedAt': (string);
 }

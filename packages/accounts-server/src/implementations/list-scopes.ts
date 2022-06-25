@@ -26,7 +26,15 @@ export const listScopes: AccountHandlers["ListScopes"] = async (
     });
 
     callback(null, {
-      scopes: found,
+      scopes: found.map((item) => ({
+        id: item.id,
+        description: item.description,
+        displayName: item.displayName,
+        name: item.name,
+        createdAt: item.createdAt.toISOString(),
+        deletedAt: item.deletedAt?.toISOString(),
+        updatedAt: item.updatedAt.toISOString(),
+      })),
       nextPageToken: "",
     });
   } catch (e) {

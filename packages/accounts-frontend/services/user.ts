@@ -1,8 +1,8 @@
 import { promisify } from "util";
 import { grpc } from "@driten/accounts-protobuf";
-import { AuthenticateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/core/AuthenticateUserRequest";
-import { AuthenticateUserResponse } from "@driten/accounts-protobuf/dist/protobuf/core/AuthenticateUserResponse";
-import { CreateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/core/CreateUserRequest";
+import { AuthenticateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/user/AuthenticateUserRequest";
+import { AuthenticateUserResponse } from "@driten/accounts-protobuf/dist/protobuf/user/AuthenticateUserResponse";
+import { CreateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/user/CreateUserRequest";
 import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
 import { client } from "~/lib/client";
 

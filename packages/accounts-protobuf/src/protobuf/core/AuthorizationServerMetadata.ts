@@ -2,49 +2,49 @@
 
 
 export interface AuthorizationServerMetadata {
-  'issuer'?: (string);
   'authorizationEndpoint'?: (string);
-  'tokenEndpoint'?: (string);
-  'jwksUri'?: (string);
-  'registrationEndpoint'?: (string);
-  'userinfoEndpoint'?: (string);
-  'scopesSupported'?: (string)[];
-  'responseTypesSupported'?: (string)[];
-  'responseModes'?: (string)[];
+  'codeChallengeMethodsSupported'?: (string)[];
   'grantTypesSupported'?: (string)[];
-  'tokenEndpointAuthMethodsSupported'?: (string)[];
-  'tokenEndpointAuthSigningAlgValuesSupported'?: (string)[];
-  'serviceDocumentation'?: (string);
-  'uiLocalesSupported'?: (string)[];
-  'opPolicyUri'?: (string);
-  'opTosUri'?: (string);
-  'revocationEndpoint'?: (string);
-  'revocationEndpointAuthMethodsSupported'?: (string)[];
+  'issuer'?: (string);
   'introspectionEndpoint'?: (string);
   'introspectionEndpointAuthMethodsSupported'?: (string)[];
-  'codeChallengeMethodsSupported'?: (string)[];
+  'jwksUri'?: (string);
+  'opPolicyUri'?: (string);
+  'opTosUri'?: (string);
+  'registrationEndpoint'?: (string);
+  'responseTypesSupported'?: (string)[];
+  'responseModes'?: (string)[];
+  'revocationEndpoint'?: (string);
+  'revocationEndpointAuthMethodsSupported'?: (string)[];
+  'scopesSupported'?: (string)[];
+  'serviceDocumentation'?: (string);
+  'tokenEndpoint'?: (string);
+  'tokenEndpointAuthMethodsSupported'?: (string)[];
+  'tokenEndpointAuthSigningAlgValuesSupported'?: (string)[];
+  'userinfoEndpoint'?: (string);
+  'uiLocalesSupported'?: (string)[];
 }
 
 export interface AuthorizationServerMetadata__Output {
-  'issuer': (string);
   'authorizationEndpoint': (string);
-  'tokenEndpoint': (string);
-  'jwksUri': (string);
-  'registrationEndpoint': (string);
-  'userinfoEndpoint': (string);
-  'scopesSupported': (string)[];
-  'responseTypesSupported': (string)[];
-  'responseModes': (string)[];
+  'codeChallengeMethodsSupported': (string)[];
   'grantTypesSupported': (string)[];
-  'tokenEndpointAuthMethodsSupported': (string)[];
-  'tokenEndpointAuthSigningAlgValuesSupported': (string)[];
-  'serviceDocumentation': (string);
-  'uiLocalesSupported': (string)[];
-  'opPolicyUri': (string);
-  'opTosUri': (string);
-  'revocationEndpoint': (string);
-  'revocationEndpointAuthMethodsSupported': (string)[];
+  'issuer': (string);
   'introspectionEndpoint': (string);
   'introspectionEndpointAuthMethodsSupported': (string)[];
-  'codeChallengeMethodsSupported': (string)[];
+  'jwksUri': (string);
+  'opPolicyUri': (string);
+  'opTosUri': (string);
+  'registrationEndpoint': (string);
+  'responseTypesSupported': (string)[];
+  'responseModes': (string)[];
+  'revocationEndpoint': (string);
+  'revocationEndpointAuthMethodsSupported': (string)[];
+  'scopesSupported': (string)[];
+  'serviceDocumentation': (string);
+  'tokenEndpoint': (string);
+  'tokenEndpointAuthMethodsSupported': (string)[];
+  'tokenEndpointAuthSigningAlgValuesSupported': (string)[];
+  'userinfoEndpoint': (string);
+  'uiLocalesSupported': (string)[];
 }

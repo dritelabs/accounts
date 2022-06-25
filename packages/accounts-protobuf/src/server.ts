@@ -6,7 +6,9 @@ import { ProtoGrpcType } from "./protobuf/accounts";
 export { AccountHandlers } from "./protobuf/accounts/Account";
 
 const filename = path.resolve(__dirname, "../proto/accounts.proto");
-const packageDef = protoLoader.loadSync(filename);
+const packageDef = protoLoader.loadSync(filename, {
+  arrays: true,
+});
 
 export const proto = grpc.loadPackageDefinition(
   packageDef

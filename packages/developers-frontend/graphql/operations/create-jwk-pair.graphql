@@ -1,0 +1,6 @@
+mutation CreateJWKPair {
+  createJWKPair {
+    privateKey
+    publicKey
+  }
+}

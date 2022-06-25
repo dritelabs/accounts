@@ -1,8 +1,8 @@
 import { CompatibilityEvent } from "h3";
 import { IronSessionOptions } from "iron-session";
+import { withIronSessionApiRoute } from "@driten/h3-iron-session";
 import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
 import { useRuntimeConfig } from "#imports";
-import { withIronSessionApiRoute } from "./iron-session";
 
 const config = useRuntimeConfig();
 declare module "iron-session" {

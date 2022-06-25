@@ -11,24 +11,47 @@ export interface ProtoGrpcType {
   accounts: {
     Account: SubtypeConstructor<typeof grpc.Client, _accounts_AccountClient> & { service: _accounts_AccountDefinition }
   }
-  core: {
-    AuthenticateUserRequest: MessageTypeDefinition
-    AuthenticateUserResponse: MessageTypeDefinition
-    AuthorizationServerMetadata: MessageTypeDefinition
-    Client: MessageTypeDefinition
+  authorization_code: {
     CreateAuthorizationCodeRequest: MessageTypeDefinition
     CreateAuthorizationCodeResponse: MessageTypeDefinition
-    CreateTokenRequest: MessageTypeDefinition
-    CreateTokenResponse: MessageTypeDefinition
-    CreateUserRequest: MessageTypeDefinition
+  }
+  client: {
+    CreateClientRequest: MessageTypeDefinition
+    ListClientsResponse: MessageTypeDefinition
+    UpdateClientRequest: MessageTypeDefinition
+    UpdateClientSecretRequest: MessageTypeDefinition
+  }
+  core: {
+    Address: MessageTypeDefinition
+    AuthorizationServerMetadata: MessageTypeDefinition
+    Client: MessageTypeDefinition
+    DeleteRequest: MessageTypeDefinition
     Empty: MessageTypeDefinition
-    GetClientRequest: MessageTypeDefinition
-    Jwk: MessageTypeDefinition
-    Jwks: MessageTypeDefinition
-    ListScopesRequest: MessageTypeDefinition
-    ListScopesResponse: MessageTypeDefinition
+    GetRequest: MessageTypeDefinition
+    JWKS: MessageTypeDefinition
+    ListRequest: MessageTypeDefinition
+    PrivateJWK: MessageTypeDefinition
+    Profile: MessageTypeDefinition
+    PublicJWK: MessageTypeDefinition
     Scope: MessageTypeDefinition
     User: MessageTypeDefinition
+  }
+  jwk: {
+    AddJWKToClientRequest: MessageTypeDefinition
+    CreateJWKPairResponse: MessageTypeDefinition
+    DeleteJWKResponse: MessageTypeDefinition
+  }
+  scope: {
+    ListScopesResponse: MessageTypeDefinition
+  }
+  token: {
+    CreateTokenRequest: MessageTypeDefinition
+    CreateTokenResponse: MessageTypeDefinition
+  }
+  user: {
+    AuthenticateUserRequest: MessageTypeDefinition
+    AuthenticateUserResponse: MessageTypeDefinition
+    CreateUserRequest: MessageTypeDefinition
   }
 }
 

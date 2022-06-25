@@ -36,8 +36,8 @@ export const createUser: AccountHandlers["CreateUser"] = async (
       id: created.id,
       email: created.email,
       username: created.username!,
-      createdAt: created.created_at.toISOString(),
-      updatedAt: created.updated_at.toISOString(),
+      createdAt: created.createdAt.toISOString(),
+      updatedAt: created.updatedAt.toISOString(),
     });
   } catch (e) {
     const error = e as Error;

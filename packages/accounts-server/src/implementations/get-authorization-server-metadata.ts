@@ -6,13 +6,38 @@ export const getAuthorizationServerMetadata: AccountHandlers["GetAuthorizationSe
   async (_, callback) => {
     try {
       const host = config.authorizationServerIssuerBaseUrl;
+
       const response = {
-        issuer: `${host}`,
         authorizationEndpoint: `${host}/authorize`,
-        tokenEndpoint: `${host}/api/token`,
+        codeChallengeMethodsSupported: ["plain", "S256"],
+        deviceAuthorizationEndpoint: `${host}/device/authorize`,
+        end_session_endpoint: `${host}/api/logout`,
+        grantTypesSupported: [
+          "authorization_code",
+          "refresh_token",
+          "client_credentials",
+          "urn:ietf:params:oauth:grant-type:device_code",
+        ],
+        issuer: `${host}`,
+        introspectionEndpoint: `${host}/api/introspect`,
+        introspectionEndpointAuthMethodsSupported: [
+          "client_secret_basic",
+          "private_key_jwt",
+          "node",
+        ],
         jwksUri: `${host}/api/jwks`,
+        opPolicyUri: `${host}/policy`,
+        opTosUri: `${host}/tos`,
         registrationEndpoint: `${host}/api/clients`,
-        userinfoEndpoint: `${host}/api/userinfo`,
+        responseTypesSupported: ["code"],
+        responseModes: ["query", "web_message"],
+        revocationEndpoint: `${host}/api/revoke`,
+        revocationEndpointAuthMethodsSupported: [
+          "client_secret_basic",
+          "private_key_jwt",
+          "node",
+        ],
+        serviceDocumentation: `${host}/service_documentation`,
         scopes_supported: [
           "openid",
           "profile",
@@ -20,30 +45,17 @@ export const getAuthorizationServerMetadata: AccountHandlers["GetAuthorizationSe
           "address",
           "phone",
           "offline_access",
+          "device_sso",
         ],
-        responseTypesSupported: ["code"],
-        responseModes: [""], // https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html,
-        grantTypesSupported: ["authorization_code"],
+        tokenEndpoint: `${host}/api/token`,
         tokenEndpointAuthMethodsSupported: [
           "client_secret_basic",
           "private_key_jwt",
+          "none",
         ],
         tokenEndpointAuthSigningAlgValuesSupported: ["RS256"],
-        serviceDocumentation: `${host}/service_documentation`,
+        userinfoEndpoint: `${host}/api/userinfo`,
         uiLocalesSupported: ["en-US"],
-        opPolicyUri: `${host}/policy`,
-        opTosUri: `${host}/tos`,
-        revocationEndpoint: `${host}/api/revoke`,
-        revocationEndpointAuthMethodsSupported: [
-          "client_secret_basic",
-          "private_key_jwt",
-        ],
-        introspectionEndpoint: `${host}/api/instropect`,
-        introspectionEndpointAuthMethodsSupported: [
-          "client_secret_basic",
-          "private_key_jwt",
-        ],
-        codeChallengeMethodsSupported: ["plain", "S256"],
       };
 
       callback(null, response);

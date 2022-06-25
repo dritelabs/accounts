@@ -1,4 +1,4 @@
-import { useBody, useMethod, createError, sendError } from "h3";
+import { useBody, createError, sendError } from "h3";
 import { grpc } from "@driten/accounts-protobuf";
 import { withIronSession } from "~/lib/session";
 import { user as userService } from "~/services";

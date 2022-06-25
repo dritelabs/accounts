@@ -16,4 +16,7 @@ export default defineNuxtConfig({
     refreshTokenExpirationTime:
       process.env.REFRESH_TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 15,
   },
+  typescript: {
+    shim: false
+  }
 });

@@ -1,7 +1,7 @@
 import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { Jwks } from "@driten/accounts-protobuf/dist/protobuf/core/Jwks";
+import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
 
 export const getClient: AccountHandlers["GetClient"] = async (
   call,
@@ -10,6 +10,9 @@ export const getClient: AccountHandlers["GetClient"] = async (
   try {
     const found = await client.client.findFirst({
       where: { id: call.request.id },
+      include: {
+        jwks: true,
+      },
     });
 
     if (!found) {
@@ -21,29 +24,34 @@ export const getClient: AccountHandlers["GetClient"] = async (
     }
 
     callback(null, {
-      applicationType: found.application_type!,
-      clientUri: found.client_uri!,
-      contacts: found.contacts,
-      createdAt: found.created_at.toISOString(),
-      description: found.description!,
-      grantTypes: found.grant_types,
       id: found.id,
-      isFirstParty: found.is_first_party,
-      jwks: found.jwks as Jwks,
-      jwksUri: found.jwks_uri!,
-      logoUri: found.logo_uri!,
-      name: found.name!,
-      policyUri: found.policy_uri!,
-      redirectUris: found.redirect_uris,
-      responseTypes: found.response_types,
+      userId: found.userId,
+      contacts: [],
+      description: found.description!,
+      grantTypes: found.grantTypes || [],
+      isFirstParty: found.isFirstParty,
+      jwks: {
+        keys: found.jwks.map((jwk) => jwk.jwk as PublicJWK),
+      },
+      jwksUri: found.jwksUri!,
+      logoUri: found.logoUri!,
+      name: found.name! || "",
+      policyUri: found.policyUri!,
+      publicKeysConfiguration: found.publicKeysConfiguration as string,
+      redirectUris: found.redirectUris || [],
+      responseTypes: found.responseTypes || [],
       scope: "",
       secret: found.secret!,
-      softwareId: found.software_id!,
-      softwareVersion: found.software_version!,
-      tokenEndpointAuthMethod: found.token_endpoint_auth_method!,
-      tosUri: found.tos_uri!,
-      updatedAt: found.updated_at.toISOString(),
-      userId: found.user_id,
+      softwareId: found.softwareId!,
+      softwareVersion: found.softwareVersion!,
+      tokenEndpointAuthMethod: found.tokenEndpointAuthMethod!,
+      tosUri: found.tosUri!,
+      type: found.type!,
+      uri: found.uri!,
+      refreshTokenRotationType: found.refreshTokenRotationType as string,
+      createdAt: found.createdAt.toISOString(),
+      deletedAt: found.deletedAt?.toISOString(),
+      updatedAt: found.updatedAt.toISOString(),
     });
   } catch (e) {
     const error = e as Error;

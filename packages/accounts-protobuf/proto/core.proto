@@ -2,149 +2,146 @@ syntax = "proto3";
 
 package core;
 
+message AuthorizationServerMetadata {
+  string authorization_endpoint = 1;
+  repeated string code_challenge_methods_supported = 2;
+  repeated string grant_types_supported = 3;
+  string issuer = 4;
+  string introspection_endpoint = 5;
+  repeated string introspection_endpoint_auth_methods_supported = 6;
+  string jwks_uri = 7;
+  string op_policy_uri = 8;
+  string op_tos_uri = 9;
+  string registration_endpoint = 10;
+  repeated string response_types_supported = 11;
+  repeated string response_modes = 12;
+  string revocation_endpoint = 13;
+  repeated string revocation_endpoint_auth_methods_supported = 14;
+  repeated string scopes_supported = 15;
+  string service_documentation = 16;
+  string token_endpoint = 17;
+  repeated string token_endpoint_auth_methods_supported = 18;
+  repeated string token_endpoint_auth_signing_alg_values_supported = 19;
+  string userinfo_endpoint = 20;
+  repeated string ui_locales_supported = 21;
+}
+
+message Address {
+  string id = 1;
+  string user_id = 2;
+  string city = 3;
+  string country = 4;
+  string line1 = 5;
+  string line2 = 6;
+  string mobile = 7;
+  string postal_code = 8;
+  string telephone = 9;
+  string created_at = 10;
+  string deleted_at = 11;
+  string updated_at = 12;
+}
+
 message Client {
   string id = 1;
   string user_id = 2;
-  repeated string redirect_uris = 3;
-  string token_endpoint_auth_method = 4;
-  repeated string grant_types = 5;
-  repeated string response_types = 6;
-  string application_type = 7;
-  string name = 8;
-  string description = 9;
-  string secret = 10;
-  string client_uri = 11;
-  string logo_uri = 12;
-  string scope = 13;
-  repeated string contacts = 14;
-  string tos_uri = 15;
-  string policy_uri = 16;
-  string jwks_uri = 17;
-  Jwks jwks = 18;
+  string type = 3;
+  repeated string contacts = 4;
+  string description = 5;
+  repeated string grant_types = 6;
+  bool is_first_party = 7;
+  JWKS jwks = 8;
+  string jwks_uri = 9;
+  string logo_uri = 10;
+  string name = 11;
+  string policy_uri = 12;
+  string public_keys_configuration = 13;
+  repeated string redirect_uris = 14;
+  repeated string response_types = 15;
+  string refresh_token_rotation_type = 16;
+  string secret = 17;
+  string scope = 18;
   string software_id = 19;
   string software_version = 20;
-  bool is_first_party = 21;
-  string created_at = 22;
-  string updated_at = 23;
+  string tos_uri = 21;
+  string token_endpoint_auth_method = 22;
+  string uri = 23;
+  string created_at = 24;
+  string deleted_at = 25;
+  string updated_at = 26;
 }
 
-message User {
+message DeleteRequest {
   string id = 1;
-  string email = 2;
-  string username = 3;
-  string password = 4;
-  string created_at = 5;
-  string updated_at = 6;
-}
-
-message Scope {
-  string id = 1;
-  string name = 2;
-  string description = 3;
-  string display_name = 4;
-  string created_at = 5;
-  string updated_at = 6;
-}
-
-message AuthorizationServerMetadata {
-  string issuer = 1;
-  string authorization_endpoint = 2;
-  string token_endpoint = 3;
-  string jwks_uri = 4;
-  string registration_endpoint = 5;
-  string userinfo_endpoint = 6;
-  repeated string scopes_supported = 7;
-  repeated string response_types_supported = 8;
-  repeated string response_modes = 9;
-  repeated string grant_types_supported = 10;
-  repeated string token_endpoint_auth_methods_supported = 11;
-  repeated string token_endpoint_auth_signing_alg_values_supported = 12;
-  string service_documentation = 13;
-  repeated string ui_locales_supported = 14;
-  string op_policy_uri = 15;
-  string op_tos_uri = 16;
-  string revocation_endpoint = 17;
-  repeated string revocation_endpoint_auth_methods_supported = 18;
-  string introspection_endpoint = 19;
-  repeated string introspection_endpoint_auth_methods_supported = 20;
-  repeated string code_challenge_methods_supported = 21;
-}
-
-message Jwk {
-  string p = 1;
-  string kty = 2;
-  string q = 3;
-  string d = 4;
-  string e = 5;
-  string use = 6;
-  string qi = 7;
-  string dp = 8;
-  string alg = 9;
-  string dq = 10;
-  string n = 11;
-}
-
-message Jwks {
-  repeated Jwk keys = 1;
 }
 
 message Empty {}
 
-message GetClientRequest {
+message GetRequest {
   string id = 1;
 }
 
-message CreateUserRequest {
-  string email = 1;
-  string password = 2;
+message PublicJWK {
+  string kid = 1;
+  string kty = 2;
+  string e = 3;
+  string use = 4;
+  string alg = 5;
+  string n = 6;
 }
 
-message AuthenticateUserRequest {
-  string email = 1;
-  string password = 2;
+message PrivateJWK {
+  string kid = 1;
+  string p = 2;
+  string kty = 3;
+  string q = 4;
+  string d = 5;
+  string e = 6;
+  string use = 7;
+  string qi = 8;
+  string dp = 9;
+  string alg = 10;
+  string dq = 11;
+  string n = 12;
 }
 
-message AuthenticateUserResponse {
-  string id = 1;
-  string email = 2;
-  string initial_access_token = 3;
+message JWKS {
+  repeated PublicJWK keys = 1;
 }
 
-message CreateTokenRequest {
-  string client_id = 1;
-  string scope = 2;
-  string sub = 3;
-  string exp = 4;
-  repeated string aud = 5;
-  string typ = 6;
-}
-
-message CreateTokenResponse {
-  string token = 1;
-}
-
-message CreateAuthorizationCodeRequest {
-  string client_id = 1;
-  string sub = 2;
-  string code_challenge = 3;
-  string code_challenge_method = 4;
-  string redirect_uri = 5;
-  string scope = 6;
-  string exp = 7;
-  repeated string aud = 8;
-}
-
-message CreateAuthorizationCodeResponse {
-  string code = 1;
-}
-
-message ListScopesRequest {
+message ListRequest {
   string parent = 1;
   int32 page_size = 2;
   string page_token = 3;
 }
 
-message ListScopesResponse {
-  repeated Scope scopes = 1;
-  string next_page_token = 2;
+message Profile {
+  string id = 1;
+  string user_id = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string telephone = 5;
+  string created_at = 6;
+  string deleted_at = 7;
+  string updated_at = 8;
+}
+
+message Scope {
+  string id = 1;
+  string description = 2;
+  string display_name = 3;
+  string name = 4;
+  string created_at = 5;
+  string deleted_at = 6;
+  string updated_at = 7;
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  bool emailVerified = 3;
+  string password = 4;
+  string username = 5;
+  string created_at = 6;
+  string deleted_at = 7;
+  string updated_at = 8;
 }

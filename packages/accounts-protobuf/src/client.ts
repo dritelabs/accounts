@@ -5,7 +5,10 @@ import { ProtoGrpcType } from "./protobuf/accounts";
 
 const defaultHost = process.env.SERVER_HOST || "localhost:5000";
 const filename = path.resolve(__dirname, "../proto/accounts.proto");
-const packageDef = protoLoader.loadSync(filename);
+const packageDef = protoLoader.loadSync(filename, {
+  arrays: true,
+  defaults: true,
+});
 
 const proto = grpc.loadPackageDefinition(
   packageDef

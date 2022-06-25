@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package token;
+
+message CreateTokenRequest {
+  repeated string aud = 1;
+  string client_id = 2;
+  string exp = 3;
+  string scope = 4;
+  string sub = 5;
+  string typ = 6;
+}
+
+message CreateTokenResponse {
+  string token = 1;
+}

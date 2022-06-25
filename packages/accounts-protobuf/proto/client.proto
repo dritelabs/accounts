@@ -1,0 +1,41 @@
+
+syntax = "proto3";
+
+package client;
+
+import "core.proto";
+
+message CreateClientRequest {
+  string description = 1;
+  string name = 2;
+  string type = 3;
+}
+
+message ListClientsResponse {
+  repeated core.Client clients = 1;
+  string next_page_token = 2;
+}
+
+message UpdateClientSecretRequest {
+  string id = 1;
+}
+
+message UpdateClientRequest {
+  string id = 1;
+  repeated string contacts = 2;
+  string description = 3;
+  repeated string grant_types = 4;
+  string jwks_uri = 5;
+  string logo_uri = 6;
+  string name = 7;
+  string policy_uri = 8;
+  string public_keys_configuration = 9;
+  repeated string redirect_uris = 10;
+  repeated string response_types = 11;
+  string refresh_token_rotation_type = 12;
+  string software_id = 13;
+  string software_version = 14;
+  string tos_uri = 15;
+  string token_endpoint_auth_method = 16;
+  string uri = 17;
+}

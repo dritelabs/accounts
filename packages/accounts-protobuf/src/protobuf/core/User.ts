@@ -4,17 +4,21 @@
 export interface User {
   'id'?: (string);
   'email'?: (string);
-  'username'?: (string);
+  'emailVerified'?: (boolean);
   'password'?: (string);
+  'username'?: (string);
   'createdAt'?: (string);
+  'deletedAt'?: (string);
   'updatedAt'?: (string);
 }
 
 export interface User__Output {
   'id': (string);
   'email': (string);
-  'username': (string);
+  'emailVerified': (boolean);
   'password': (string);
+  'username': (string);
   'createdAt': (string);
+  'deletedAt': (string);
   'updatedAt': (string);
 }

@@ -1,0 +1,63 @@
+{
+  "private": true,
+  "name": "@driten/developers-frontend",
+  "version": "0.0.0",
+  "description": "developers frontend module",
+  "keywords": [
+    "developers",
+    "frontend",
+    "module"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/developers.git"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3001",
+    "generate:graphql": "graphql-codegen",
+    "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/developers/issues"
+  },
+  "dependencies": {
+    "@driten/accounts-protobuf": "*",
+    "@driten/accounts-utils": "*",
+    "@driten/h3-iron-session": "file:../../../h3-iron-session",
+    "@driten/apollo-server-h3": "*",
+    "@apollo/client": "^3.6.5",
+    "@vue/apollo-composable": "^4.0.0-alpha.17",
+    "apollo-datasource": "^3.3.1",
+    "bulma": "^0.9.4",
+    "bulma-extensions": "^6.2.7",
+    "bulma-list": "^1.2.0",
+    "graphql": "^16.5.0",
+    "iron-session": "^6.1.3",
+    "jose": "^4.8.1",
+    "nexus": "^1.3.0",
+    "sass": "^1.51.0",
+    "vee-validate": "^4.5.11"
+  },
+  "devDependencies": {
+    "@nuxt3/apollo-module": "^0.0.9",
+    "@nuxt3/graphql-codegen-module": "^0.0.7",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.11",
+    "@graphql-codegen/typescript-operations": "^2.4.0",
+    "@graphql-codegen/typescript-vue-apollo": "^3.2.12",
+    "@volar-plugins/prettier": "latest",
+    "nuxt": "3.0.0-rc.3"
+  }
+}

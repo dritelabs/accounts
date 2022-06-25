@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import { grpc } from "@driten/accounts-protobuf";
-import { ListScopesRequest } from "@driten/accounts-protobuf/dist/protobuf/core/ListScopesRequest";
-import { ListScopesResponse } from "@driten/accounts-protobuf/dist/protobuf/core/ListScopesResponse";
+import { ListRequest } from "@driten/accounts-protobuf/dist/protobuf/core/ListRequest";
+import { ListScopesResponse } from "@driten/accounts-protobuf/dist/protobuf/scope/ListScopesResponse";
 import { client } from "~/lib/client";
 
 interface Options {
@@ -26,7 +26,7 @@ export async function list(options?: Options) {
 }
 
 const listScopes = promisify<
-  ListScopesRequest,
+  ListRequest,
   grpc.Metadata | void,
   ListScopesResponse
 >(client.listScopes.bind(client));

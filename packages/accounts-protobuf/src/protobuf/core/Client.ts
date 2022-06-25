@@ -1,55 +1,61 @@
 // Original file: proto/core.proto
 
-import type { Jwks as _core_Jwks, Jwks__Output as _core_Jwks__Output } from '../core/Jwks';
+import type { JWKS as _core_JWKS, JWKS__Output as _core_JWKS__Output } from '../core/JWKS';
 
 export interface Client {
   'id'?: (string);
   'userId'?: (string);
-  'redirectUris'?: (string)[];
-  'tokenEndpointAuthMethod'?: (string);
-  'grantTypes'?: (string)[];
-  'responseTypes'?: (string)[];
-  'applicationType'?: (string);
-  'name'?: (string);
-  'description'?: (string);
-  'secret'?: (string);
-  'clientUri'?: (string);
-  'logoUri'?: (string);
-  'scope'?: (string);
+  'type'?: (string);
   'contacts'?: (string)[];
-  'tosUri'?: (string);
-  'policyUri'?: (string);
+  'description'?: (string);
+  'grantTypes'?: (string)[];
+  'isFirstParty'?: (boolean);
+  'jwks'?: (_core_JWKS | null);
   'jwksUri'?: (string);
-  'jwks'?: (_core_Jwks | null);
+  'logoUri'?: (string);
+  'name'?: (string);
+  'policyUri'?: (string);
+  'publicKeysConfiguration'?: (string);
+  'redirectUris'?: (string)[];
+  'responseTypes'?: (string)[];
+  'refreshTokenRotationType'?: (string);
+  'secret'?: (string);
+  'scope'?: (string);
   'softwareId'?: (string);
   'softwareVersion'?: (string);
-  'isFirstParty'?: (boolean);
+  'tosUri'?: (string);
+  'tokenEndpointAuthMethod'?: (string);
+  'uri'?: (string);
   'createdAt'?: (string);
+  'deletedAt'?: (string);
   'updatedAt'?: (string);
 }
 
 export interface Client__Output {
   'id': (string);
   'userId': (string);
-  'redirectUris': (string)[];
-  'tokenEndpointAuthMethod': (string);
-  'grantTypes': (string)[];
-  'responseTypes': (string)[];
-  'applicationType': (string);
-  'name': (string);
-  'description': (string);
-  'secret': (string);
-  'clientUri': (string);
-  'logoUri': (string);
-  'scope': (string);
+  'type': (string);
   'contacts': (string)[];
-  'tosUri': (string);
-  'policyUri': (string);
+  'description': (string);
+  'grantTypes': (string)[];
+  'isFirstParty': (boolean);
+  'jwks': (_core_JWKS__Output | null);
   'jwksUri': (string);
-  'jwks': (_core_Jwks__Output | null);
+  'logoUri': (string);
+  'name': (string);
+  'policyUri': (string);
+  'publicKeysConfiguration': (string);
+  'redirectUris': (string)[];
+  'responseTypes': (string)[];
+  'refreshTokenRotationType': (string);
+  'secret': (string);
+  'scope': (string);
   'softwareId': (string);
   'softwareVersion': (string);
-  'isFirstParty': (boolean);
+  'tosUri': (string);
+  'tokenEndpointAuthMethod': (string);
+  'uri': (string);
   'createdAt': (string);
+  'deletedAt': (string);
   'updatedAt': (string);
 }
