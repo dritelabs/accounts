@@ -1,7 +1,7 @@
 import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
+import { clientMessageReducer } from "../utils";
 
 export const getClient: AccountHandlers["GetClient"] = async (
   call,
@@ -23,38 +23,7 @@ export const getClient: AccountHandlers["GetClient"] = async (
       });
     }
 
-    callback(null, {
-      id: found.id,
-      userId: found.userId,
-      contacts: [],
-      description: found.description!,
-      grantTypes: found.grantTypes || [],
-      isFirstParty: found.isFirstParty,
-      jwks: found?.jwks?.length
-        ? {
-            keys: found?.jwks?.map((jwk) => jwk?.jwk as PublicJWK),
-          }
-        : undefined,
-      jwksUri: found.jwksUri!,
-      logoUri: found.logoUri!,
-      name: found.name! || "",
-      policyUri: found.policyUri!,
-      publicKeysConfiguration: found.publicKeysConfiguration as string,
-      redirectUris: found.redirectUris || [],
-      responseTypes: found.responseTypes || [],
-      scope: "",
-      secret: found.secret!,
-      softwareId: found.softwareId!,
-      softwareVersion: found.softwareVersion!,
-      tokenEndpointAuthMethod: found.tokenEndpointAuthMethod!,
-      tosUri: found.tosUri!,
-      type: found.type!,
-      uri: found.uri!,
-      refreshTokenRotationType: found.refreshTokenRotationType as string,
-      createdAt: found.createdAt.toISOString(),
-      deletedAt: found.deletedAt?.toISOString(),
-      updatedAt: found.updatedAt.toISOString(),
-    });
+    callback(null, clientMessageReducer(found));
   } catch (e) {
     const error = e as Error;
     callback({

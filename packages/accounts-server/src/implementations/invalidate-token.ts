@@ -1,7 +1,7 @@
 import { decodeToken } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { client as cache } from "../utils/cache";
+import { client as cache } from "../lib/cache";
 import { config } from "../config";
 
 export const invalidateToken: AccountHandlers["InvalidateToken"] = async (

@@ -74,17 +74,19 @@ export class ApolloServer extends ApolloServerBase {
             statusCode: 404,
           })
         );
-      } catch (errorObj: any) {
+      } catch (error: any) {
         if (!__testing__h3SuppressErrorLog) {
-          throw errorObj;
+          throw error;
         }
         // Like Micro's sendError but without the logging.
-        const statusCode = errorObj.statusCode || errorObj.status;
+        const statusCode = error.statusCode || error.status;
 
         return sendError(
           event,
           createError({
             statusCode,
+            statusMessage: (error as Error).message,
+            ...error,
           })
         );
       }
@@ -115,11 +117,13 @@ export class ApolloServer extends ApolloServerBase {
       if (onHealthCheck) {
         try {
           await onHealthCheck(event.req);
-        } catch (error) {
+        } catch (error: any) {
           sendError(
             event,
             createError({
               statusCode: 503,
+              statusMessage: (error as Error).message,
+              ...error,
             })
           );
 

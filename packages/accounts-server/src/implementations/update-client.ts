@@ -1,8 +1,8 @@
 import { client, prisma } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
-import { withAuth } from "../utils/with-auth";
+import { withAuth } from "../lib/with-auth";
+import { clientMessageReducer } from "../utils";
 
 export const updateClient = withAuth<AccountHandlers["UpdateClient"]>(
   ["clients"],
@@ -54,36 +54,7 @@ export const updateClient = withAuth<AccountHandlers["UpdateClient"]>(
         },
       });
 
-      callback(null, {
-        id: updated.id,
-        userId: updated.userId,
-        contacts: [],
-        description: updated.description!,
-        grantTypes: updated.grantTypes || [],
-        isFirstParty: updated.isFirstParty,
-        jwks: {
-          keys: updated.jwks.map((jwk) => jwk.jwk as PublicJWK),
-        },
-        jwksUri: updated.jwksUri!,
-        logoUri: updated.logoUri!,
-        name: updated.name! || "",
-        policyUri: updated.policyUri!,
-        publicKeysConfiguration: updated.publicKeysConfiguration as string,
-        redirectUris: updated.redirectUris || [],
-        responseTypes: updated.responseTypes || [],
-        scope: "",
-        secret: updated.secret!,
-        softwareId: updated.softwareId!,
-        softwareVersion: updated.softwareVersion!,
-        tokenEndpointAuthMethod: updated.tokenEndpointAuthMethod!,
-        tosUri: updated.tosUri!,
-        type: updated.type!,
-        uri: updated.uri!,
-        refreshTokenRotationType: updated.refreshTokenRotationType as string,
-        createdAt: updated.createdAt.toISOString(),
-        deletedAt: updated.deletedAt?.toISOString(),
-        updatedAt: updated.updatedAt.toISOString(),
-      });
+      callback(null, clientMessageReducer(updated));
     } catch (e) {
       const error = e as Error;
 

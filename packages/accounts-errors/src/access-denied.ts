@@ -10,6 +10,6 @@ export class AccessDeniedError extends Error {
     this.error_description = message;
     this.code = 301;
 
-    Error.captureStackTrace(this);
+    Error.captureStackTrace(this, AccessDeniedError);
   }
 }

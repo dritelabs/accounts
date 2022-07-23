@@ -3,7 +3,8 @@ import { decodeToken } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { randomBytes } from "@driten/accounts-utils";
-import { withAuth } from "../utils/with-auth";
+import { withAuth } from "../lib/with-auth";
+import { clientMessageReducer } from "../utils";
 
 export const createClient = withAuth<AccountHandlers["CreateClient"]>(
   ["clients:read"],
@@ -21,16 +22,7 @@ export const createClient = withAuth<AccountHandlers["CreateClient"]>(
         },
       });
 
-      callback(null, {
-        id: created.id,
-        userId: created.userId,
-        description: created.description!,
-        name: created.name!,
-        type: created.type!,
-        createdAt: created.createdAt.toISOString(),
-        deletedAt: created.deletedAt?.toISOString(),
-        updatedAt: created.updatedAt.toISOString(),
-      });
+      callback(null, clientMessageReducer(created));
     } catch (e) {
       const error = e as Error;
 

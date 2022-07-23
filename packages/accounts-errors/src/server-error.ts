@@ -10,6 +10,6 @@ export class ServerError extends Error {
     this.error_description = message;
     this.code = 500;
 
-    Error.captureStackTrace(this);
+    Error.captureStackTrace(this, ServerError);
   }
 }

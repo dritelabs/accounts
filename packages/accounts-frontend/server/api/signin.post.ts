@@ -10,7 +10,7 @@ export default withIronSession(async (event) => {
     const body = await useBody(event);
     const params = new URLSearchParams(body);
 
-    const response = await userService.authenticate({
+    const response = await userService.authenticateUser({
       email: params.get("email"),
       password: params.get("password"),
     });

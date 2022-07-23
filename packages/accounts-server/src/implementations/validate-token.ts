@@ -2,7 +2,7 @@ import { verifyToken, decodeToken } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 
-import { client as cache } from "../utils/cache";
+import { client as cache } from "../lib/cache";
 import { config } from "../config";
 
 export const validateToken: AccountHandlers["ValidateToken"] = async (
@@ -12,6 +12,8 @@ export const validateToken: AccountHandlers["ValidateToken"] = async (
   try {
     const decoded = await decodeToken(call.request.token);
     const { value: cached } = await cache.get(decoded?.jti!);
+
+    console.log(call.request.token);
 
     if (cached) {
       callback({

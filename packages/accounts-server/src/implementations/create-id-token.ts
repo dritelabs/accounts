@@ -73,7 +73,6 @@ export const createIdToken: AccountHandlers["CreateIDToken"] = async (
       exp: config.accessTokenExpirationTime,
       issuer: config.authorizationServerIssuerBaseUrl,
       key: privatekey,
-      typ: "it+jwt",
       subject: call.request.sub,
       ...claims,
     });

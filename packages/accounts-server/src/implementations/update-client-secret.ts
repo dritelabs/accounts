@@ -3,13 +3,13 @@ import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { randomBytes } from "@driten/accounts-utils";
 import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
-import { withAuth } from "../utils/with-auth";
+import { withAuth } from "../lib/with-auth";
 
 export const updateClientSecret = withAuth<
   AccountHandlers["UpdateClientSecret"]
 >(["clients:read"], async (call, callback) => {
   try {
-    const metadata = call.metadata.getMap();
+    // const metadata = call.metadata.getMap();
 
     const updated = await client.client.update({
       where: {

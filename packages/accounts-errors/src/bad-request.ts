@@ -1,15 +1,15 @@
-export class InvalidGrantError extends Error {
+export class BadRequest extends Error {
   error: string;
   error_description: string;
   code: number;
 
   constructor(message: string) {
     super(message);
-    this.name = "InvalidGrantError";
-    this.error = "invalid_grant";
+    this.name = this.constructor.name;
+    this.error = "bad_request";
     this.error_description = message;
     this.code = 400;
 
-    Error.captureStackTrace(this, InvalidGrantError);
+    Error.captureStackTrace(this, BadRequest);
   }
 }

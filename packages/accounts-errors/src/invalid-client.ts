@@ -10,6 +10,6 @@ export class InvalidClientError extends Error {
     this.error_description = message;
     this.code = 401;
 
-    Error.captureStackTrace(this);
+    Error.captureStackTrace(this, InvalidClientError);
   }
 }

@@ -10,6 +10,6 @@ export class TemporarilyUnavailableError extends Error {
     this.error_description = message;
     this.code = 503;
 
-    Error.captureStackTrace(this);
+    Error.captureStackTrace(this, TemporarilyUnavailableError);
   }
 }

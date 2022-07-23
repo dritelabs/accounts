@@ -25,6 +25,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --port 3001",
+    "generate": "nuxt generate",
     "generate:graphql": "graphql-codegen",
     "preview": "nuxt preview",
     "start": "node .output/server/index.mjs"

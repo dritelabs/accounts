@@ -13,7 +13,7 @@ export const createAuthorizationCode: AccountHandlers["CreateAuthorizationCode"]
         exp: config.authorizationCodeExpirationTime,
         issuer: config.authorizationServerIssuerBaseUrl,
         key: privatekey,
-        typ: "at+jwt",
+        typ: "ac+jwt",
         subject: call.request.sub,
         client_id: call.request.clientId,
         code_challenge: call.request.codeChallenge,

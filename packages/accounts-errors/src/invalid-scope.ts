@@ -10,6 +10,6 @@ export class InvalidScopeError extends Error {
     this.error_description = message;
     this.code = 400;
 
-    Error.captureStackTrace(this);
+    Error.captureStackTrace(this, InvalidScopeError);
   }
 }

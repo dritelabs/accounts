@@ -4,7 +4,7 @@ import {
   convertNodeHttpToRequest,
   isHttpQueryError,
 } from "apollo-server-core";
-import { send, EventHandler, useBody, sendError, createError } from "h3";
+import { EventHandler, useBody, sendError, createError } from "h3";
 import url from "url";
 import type { IncomingMessage, ServerResponse } from "http";
 
@@ -61,7 +61,7 @@ export function graphqlH3(
       // const statusCode = responseInit.status || 200;
 
       return graphqlResponse;
-    } catch (error) {
+    } catch (error: any) {
       if (isHttpQueryError(error) && error.headers) {
         setHeaders(event.res, error.headers);
       }
@@ -70,7 +70,8 @@ export function graphqlH3(
         event,
         createError({
           statusCode: (error as any).statusCode || 500,
-          message: (error as Error).message,
+          statusMessage: (error as Error).message,
+          ...error,
         })
       );
     }

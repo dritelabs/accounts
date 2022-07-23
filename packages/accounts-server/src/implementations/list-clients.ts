@@ -1,8 +1,8 @@
 import { client, prisma } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
-import { withAuth } from "../utils/with-auth";
+import { withAuth } from "../lib/with-auth";
+import { clientMessageReducer } from "../utils";
 
 export const listClients = withAuth<AccountHandlers["ListClients"]>(
   ["clients"],
@@ -32,36 +32,7 @@ export const listClients = withAuth<AccountHandlers["ListClients"]>(
       });
 
       callback(null, {
-        clients: found.map((item) => ({
-          id: item.id,
-          userId: item.userId,
-          contacts: item.contacts,
-          description: item.description!,
-          grantTypes: item.grantTypes,
-          isFirstParty: item.isFirstParty,
-          jwks: {
-            keys: item.jwks.map((jwk) => jwk.jwk as PublicJWK),
-          },
-          jwksUri: item.jwksUri!,
-          logoUri: item.logoUri!,
-          name: item.name!,
-          policyUri: item.policyUri!,
-          publicKeysConfiguration: item.publicKeysConfiguration as string,
-          redirectUris: item.redirectUris,
-          responseTypes: item.responseTypes,
-          scope: "",
-          secret: item.secret!,
-          softwareId: item.softwareId!,
-          softwareVersion: item.softwareVersion!,
-          tokenEndpointAuthMethod: item.tokenEndpointAuthMethod!,
-          tosUri: item.tosUri!,
-          type: item.type!,
-          uri: item.uri!,
-          refreshTokenRotationType: item.refreshTokenRotationType as string,
-          createdAt: item.createdAt.toISOString(),
-          deletedAt: item.deletedAt?.toISOString(),
-          updatedAt: item.updatedAt.toISOString(),
-        })),
+        clients: found.map(clientMessageReducer),
         nextPageToken: "",
       });
     } catch (e) {

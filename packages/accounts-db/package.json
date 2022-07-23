@@ -34,10 +34,10 @@
   "dependencies": {
     "@driten/accounts-utils": "*",
     "@driten/accounts-errors": "*",
-    "@prisma/client": "3.7.0",
+    "@prisma/client": "^4.1.0",
     "memjs": "^1.3.0"
   },
   "devDependencies": {
-    "prisma": "3.7.0"
+    "prisma": "^4.1.0"
   }
 }

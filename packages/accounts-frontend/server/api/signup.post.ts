@@ -1,49 +1,43 @@
-import { useBody, createError, sendError } from "h3";
+import { InvalidRequestError } from "@driten/accounts-errors";
 import { grpc } from "@driten/accounts-protobuf";
 import { withIronSession } from "~/lib/session";
 import { user as userService } from "~/services";
 
 export default withIronSession(async (event) => {
   try {
-    const body = await useBody(event);
-    const params = new URLSearchParams(body);
+    const body = await useRawBody(event);
+    const params = new URLSearchParams(body as string);
 
-    const response = await userService.create({
+    console.log({
       email: params.get("email"),
       password: params.get("password"),
     });
 
-    return response;
+    await userService.createUser({
+      email: params.get("email"),
+      password: params.get("password"),
+    });
+
+    return sendRedirect(event, "/signin");
   } catch (error) {
-    if (error.code === grpc.status.INVALID_ARGUMENT) {
-      sendError(
-        event,
-        createError({
-          ...error,
-          statusCode: 400,
-          statusMessage: error.details,
-        })
-      );
+    if (
+      [grpc.status.INVALID_ARGUMENT, grpc.status.ALREADY_EXISTS].includes(
+        error?.code
+      )
+    ) {
+      const err = new InvalidRequestError(error?.details);
+      const params = new URLSearchParams({
+        error: err.error,
+        error_description: err.error_description,
+      });
+
+      return sendRedirect(event, `/signup?${params}`);
     }
 
-    if (error.code === grpc.status.ALREADY_EXISTS) {
-      sendError(
-        event,
-        createError({
-          ...error,
-          statusCode: 409,
-          statusMessage: error.details,
-        })
-      );
-    }
+    const params = new URLSearchParams({
+      error_description: error?.message,
+    });
 
-    sendError(
-      event,
-      createError({
-        ...error,
-        statusCode: 500,
-        statusMessage: error.details,
-      })
-    );
+    return sendRedirect(event, `/signup?${params}`);
   }
 });

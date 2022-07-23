@@ -10,7 +10,7 @@ export async function validateRefreshToken(token: string) {
   try {
     await _validateToken({
       token,
-      tokenTypeHint: "refresh_token`",
+      tokenTypeHint: "refresh_token",
     });
 
     return decodeToken(token);
