@@ -5,6 +5,10 @@ package client;
 
 import "core.proto";
 
+message AuthenticateClientRequest {
+  string credential = 1;
+}
+
 message CreateClientRequest {
   string description = 1;
   string name = 2;

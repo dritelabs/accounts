@@ -14,10 +14,12 @@ model Address {
   userId     String
   city       String?
   country    String?
+  isDefault  Boolean   @default(false)
   line1      String?
   line2      String?
   mobile     String?
   postalCode String?
+  region     String?
   telephone  String?
   user       User      @relation(fields: [userId], references: [id])
   createdAt  DateTime  @default(now())
@@ -86,15 +88,23 @@ model JWK {
 }
 
 model Profile {
-  id        String    @id @default(cuid())
-  userId    String    @unique
-  firstName String?
-  lastName  String?
-  telephone String?
-  user      User      @relation(fields: [userId], references: [id])
-  createdAt DateTime  @default(now())
-  deletedAt DateTime?
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(cuid())
+  userId     String    @unique
+  birthdate  DateTime // YYYY-MM-DD
+  firstName  String?
+  gender     Gender
+  locale     String? //en-US or en_US
+  lastName   String?
+  middleName String?
+  nickname   String?
+  profile    String?
+  picture    String?
+  user       User      @relation(fields: [userId], references: [id])
+  website    String
+  zoneinfo   String // America/Los_Angeles
+  createdAt  DateTime  @default(now())
+  deletedAt  DateTime?
+  updatedAt  DateTime  @updatedAt
 
   @@map(name: "profiles")
 }
@@ -113,18 +123,20 @@ model Scope {
 }
 
 model User {
-  id              String           @id @default(cuid())
-  addresses       Address[]
-  clients         Client[]
-  clientApprovals ClientApproval[]
-  email           String           @unique
-  emailVerified   Boolean?         @default(false)
-  profile         Profile?
-  password        String
-  username        String?          @unique
-  createdAt       DateTime         @default(now())
-  deletedAt       DateTime?
-  updatedAt       DateTime         @updatedAt
+  id                  String           @id @default(cuid())
+  addresses           Address[]
+  clients             Client[]
+  clientApprovals     ClientApproval[]
+  email               String           @unique
+  emailVerified       Boolean?         @default(false)
+  profile             Profile?
+  phoneNumber         String?
+  phoneNumberVerified Boolean?         @default(false)
+  password            String
+  username            String?          @unique
+  createdAt           DateTime         @default(now())
+  deletedAt           DateTime?
+  updatedAt           DateTime         @updatedAt
 
   @@map(name: "users")
 }
@@ -133,6 +145,11 @@ enum ApplicationType {
   browser
   native
   web
+}
+
+enum Gender {
+  female
+  male
 }
 
 enum GrantType {

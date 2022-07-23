@@ -5,5 +5,4 @@ data:
   PORT: "80"
   SERVER_HOST: "accounts-server:80"
   MEMCACHED_HOST: localhost:11211
-  SECRET_COOKIE_PASSWORD: complex_password_at_least_32_characters_long
 {{- end -}}

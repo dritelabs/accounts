@@ -1,5 +1,4 @@
-import * as jose from "jose";
-import { cuid } from "@driten/accounts-utils";
+import { generateJWKPair } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 
@@ -8,19 +7,9 @@ export const createJwkPair: AccountHandlers["CreateJWKPair"] = async (
   callback
 ) => {
   try {
-    const { publicKey, privateKey } = await jose.generateKeyPair("RS256");
-    const privateJWK = await jose.exportJWK(privateKey);
-    const publicJWK = await jose.exportJWK(publicKey);
-    const kid = cuid();
+    const response = await generateJWKPair();
 
-    privateJWK.kid = kid;
-    privateJWK.alg = "RS256";
-    privateJWK.use = "sig";
-    publicJWK.kid = kid;
-    publicJWK.alg = "RS256";
-    publicJWK.use = "sig";
-
-    callback(null, { privateKey: privateJWK, publicKey: publicJWK });
+    callback(null, response);
   } catch (e) {
     const error = e as Error;
     callback({

@@ -1,6 +1,6 @@
 import { ApolloServer, cors } from "@driten/apollo-server-h3";
-import { withIronSession } from "~~/lib/session";
-import { context, dataSources, schema } from "~~/graphql";
+import { withIronSession } from "~/lib/session";
+import { context, dataSources, schema } from "~/graphql";
 
 const apolloServer = new ApolloServer({
   schema,

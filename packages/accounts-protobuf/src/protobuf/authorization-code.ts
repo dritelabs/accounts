@@ -10,6 +10,8 @@ export interface ProtoGrpcType {
   authorization_code: {
     CreateAuthorizationCodeRequest: MessageTypeDefinition
     CreateAuthorizationCodeResponse: MessageTypeDefinition
+    InvalidateAuthorizationCodeRequest: MessageTypeDefinition
+    InvalidateAuthorizationCodeResponse: MessageTypeDefinition
   }
 }
 

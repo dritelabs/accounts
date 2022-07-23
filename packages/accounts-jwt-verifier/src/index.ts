@@ -1,3 +1,1 @@
-export * from "./decode";
-export * from "./verify";
-export * from "./verify-scopes";
+export { verifyToken as verify } from "@driten/accounts-utils";

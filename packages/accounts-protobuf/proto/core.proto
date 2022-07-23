@@ -31,39 +31,41 @@ message Address {
   string user_id = 2;
   string city = 3;
   string country = 4;
-  string line1 = 5;
-  string line2 = 6;
-  string mobile = 7;
-  string postal_code = 8;
-  string telephone = 9;
-  string created_at = 10;
-  string deleted_at = 11;
-  string updated_at = 12;
+  bool isDefault = 5;
+  string line1 = 6;
+  string line2 = 7;
+  string mobile = 8;
+  string postal_code = 9;
+  string region = 10;
+  string telephone = 11;
+  string created_at = 12;
+  string deleted_at = 13;
+  string updated_at = 14;
 }
 
 message Client {
   string id = 1;
   string user_id = 2;
-  string type = 3;
-  repeated string contacts = 4;
-  string description = 5;
-  repeated string grant_types = 6;
-  bool is_first_party = 7;
-  JWKS jwks = 8;
-  string jwks_uri = 9;
-  string logo_uri = 10;
-  string name = 11;
-  string policy_uri = 12;
-  string public_keys_configuration = 13;
-  repeated string redirect_uris = 14;
-  repeated string response_types = 15;
-  string refresh_token_rotation_type = 16;
-  string secret = 17;
-  string scope = 18;
-  string software_id = 19;
-  string software_version = 20;
-  string tos_uri = 21;
-  string token_endpoint_auth_method = 22;
+  repeated string contacts = 3;
+  string description = 4;
+  repeated string grant_types = 5;
+  bool is_first_party = 6;
+  JWKS jwks = 7;
+  string jwks_uri = 8;
+  string logo_uri = 9;
+  string name = 10;
+  string policy_uri = 11;
+  string public_keys_configuration = 12;
+  repeated string redirect_uris = 13;
+  repeated string response_types = 14;
+  string refresh_token_rotation_type = 15;
+  string secret = 16;
+  string scope = 17;
+  string software_id = 18;
+  string software_version = 19;
+  string tos_uri = 20;
+  string token_endpoint_auth_method = 21;
+  string type = 22;
   string uri = 23;
   string created_at = 24;
   string deleted_at = 25;
@@ -78,6 +80,26 @@ message Empty {}
 
 message GetRequest {
   string id = 1;
+}
+
+message Profile {
+  string id = 1;
+  string user_id = 2;
+  string birthdate = 3;
+  string first_name = 4;
+  string gender = 5;
+  string locale = 6;
+  string last_name = 7;
+  string middle_name = 8;
+  string nickname = 9;
+  string profile = 10;
+  string picture = 11;
+  string user = 12;
+  string website = 13;
+  string zoneinfo = 14;
+  string created_at = 15;
+  string deleted_at = 16;
+  string updated_at = 17;
 }
 
 message PublicJWK {
@@ -114,17 +136,6 @@ message ListRequest {
   string page_token = 3;
 }
 
-message Profile {
-  string id = 1;
-  string user_id = 2;
-  string first_name = 3;
-  string last_name = 4;
-  string telephone = 5;
-  string created_at = 6;
-  string deleted_at = 7;
-  string updated_at = 8;
-}
-
 message Scope {
   string id = 1;
   string description = 2;
@@ -137,11 +148,15 @@ message Scope {
 
 message User {
   string id = 1;
-  string email = 2;
-  bool emailVerified = 3;
-  string password = 4;
-  string username = 5;
-  string created_at = 6;
-  string deleted_at = 7;
-  string updated_at = 8;
+  repeated Address addresses = 2;
+  string email = 3;
+  bool emailVerified = 4;
+  string phoneNumber = 5;
+  bool phoneNumberVerified = 6;
+  Profile profile = 7;
+  string password = 8;
+  string username = 9;
+  string created_at = 10;
+  string deleted_at = 11;
+  string updated_at = 12;
 }

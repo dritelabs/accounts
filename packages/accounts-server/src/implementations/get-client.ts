@@ -30,9 +30,11 @@ export const getClient: AccountHandlers["GetClient"] = async (
       description: found.description!,
       grantTypes: found.grantTypes || [],
       isFirstParty: found.isFirstParty,
-      jwks: {
-        keys: found.jwks.map((jwk) => jwk.jwk as PublicJWK),
-      },
+      jwks: found?.jwks?.length
+        ? {
+            keys: found?.jwks?.map((jwk) => jwk?.jwk as PublicJWK),
+          }
+        : undefined,
       jwksUri: found.jwksUri!,
       logoUri: found.logoUri!,
       name: found.name! || "",

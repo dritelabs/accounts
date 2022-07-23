@@ -40,7 +40,7 @@ export default defineNuxtConfig({
     host: process.env.HOST || `http://localhost:${port}`,
     redirectUri:
       process.env.REDIRECT_URI || `http://localhost:${port}/api/callback`,
-    scope: process.env.SCOPE || "clients",
+    scope: process.env.SCOPE || ["openid", "profile", "clients"].join(" "),
     resource: process.env.SERVER_HOST || "localhost:5000",
     secretCookiePassword:
       process.env.SECRET_COOKIE_PASSWORD ||

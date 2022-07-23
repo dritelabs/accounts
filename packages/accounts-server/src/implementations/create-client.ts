@@ -1,5 +1,5 @@
 import { client, prisma } from "@driten/accounts-db";
-import { decode } from "@driten/accounts-jwt-verifier";
+import { decodeToken } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { randomBytes } from "@driten/accounts-utils";
@@ -10,7 +10,7 @@ export const createClient = withAuth<AccountHandlers["CreateClient"]>(
   async (call, callback) => {
     try {
       const metadata = call.metadata.getMap();
-      const decoded = await decode(metadata.authorization as string);
+      const decoded = await decodeToken(metadata.authorization as string);
 
       const created = await client.client.create({
         data: {
@@ -33,8 +33,6 @@ export const createClient = withAuth<AccountHandlers["CreateClient"]>(
       });
     } catch (e) {
       const error = e as Error;
-
-      console.log(error);
 
       callback({
         ...error,

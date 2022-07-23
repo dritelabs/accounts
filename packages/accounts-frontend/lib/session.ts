@@ -1,15 +1,18 @@
 import { CompatibilityEvent } from "h3";
 import { IronSessionOptions } from "iron-session";
 import { withIronSessionApiRoute } from "@driten/h3-iron-session";
-import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
+import { AuthenticateUserResponse } from "@driten/accounts-protobuf/dist/protobuf/user/AuthenticateUserResponse";
 import { useRuntimeConfig } from "#imports";
 
 const config = useRuntimeConfig();
 declare module "iron-session" {
   interface IronSessionData {
-    user?: Partial<User> & {
-      initialAccessToken: string;
+    user?: Partial<AuthenticateUserResponse> & {
+      // accessToken: string;
+      // expiresIn: number;
       isAuthenticated: boolean;
+      // refreshToken: string;
+      // tokenType: string;
     };
   }
 }

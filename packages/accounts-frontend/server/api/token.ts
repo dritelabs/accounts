@@ -2,9 +2,9 @@ import {
   InvalidClientError,
   UnauthorizedClientError,
 } from "@driten/accounts-errors";
+import { Client } from "@driten/accounts-protobuf/dist/protobuf/core/Client";
 import { withIronSession } from "~/lib/session";
 import { withError } from "~/lib/with-error";
-import { useRuntimeConfig } from "#imports";
 
 import {
   authorizationCode as authorizationCodeService,
@@ -12,8 +12,6 @@ import {
   metadata as metadataService,
   token as tokenService,
 } from "~/services";
-
-const config = useRuntimeConfig();
 
 export default withError(
   withIronSession(async (event) => {
@@ -25,7 +23,7 @@ export default withError(
     const isAuthenticated =
       !!event.req.headers.authorization || !!jsonBody?.client_assertion;
 
-    let client: clientService.Client | undefined;
+    let client: Client;
 
     const tokenRequest = await tokenService.validateTokenRequest(
       jsonBody as tokenService.TokenRequest,
@@ -43,7 +41,7 @@ export default withError(
     }
 
     if (!isAuthenticated) {
-      client = await clientService.get(tokenRequest.client_id);
+      client = await clientService.getClient({ id: tokenRequest.client_id });
     }
 
     if (isAuthenticated && event.req.headers.authorization) {
@@ -58,7 +56,7 @@ export default withError(
       );
     }
 
-    if (!client.grant_types.includes(tokenRequest.grant_type)) {
+    if (!client.grantTypes.includes(tokenRequest.grant_type)) {
       throw new UnauthorizedClientError(
         "The authenticated client is not authorized to use this authorization grant type"
       );
@@ -68,67 +66,131 @@ export default withError(
       throw new UnauthorizedClientError("The client is not authenticated ");
     }
 
+    const metadata = await metadataService.getAuthorizationServerMetadata();
+
     if (tokenRequest.grant_type === "authorization_code") {
       const request = {
         ...jsonBody,
-        client_id: client.client_id,
+        client_id: client.id,
       } as authorizationCodeService.AuthorizationCodeGrantRequest;
 
-      return tokenService.createTokenResponse(request.code);
+      await authorizationCodeService.validateAuthorizationCodeGrantRequest(
+        request
+      );
+
+      const decoded = await authorizationCodeService.validateAuthorizationCode(
+        request.code
+      );
+
+      await authorizationCodeService.invalidateAuthorizationCode(request.code);
+
+      const payload = {
+        clientId: decoded.client_id as string,
+        scope: decoded.scope as string,
+        sub: decoded.sub,
+        aud: decoded.aud as string[],
+      };
+
+      const createAccessTokenResponse = await tokenService.createAccessToken({
+        ...payload,
+        aud: payload.aud.filter((resource) => resource !== metadata.issuer),
+      });
+
+      const createRefreshTokenResponse = await tokenService.createRefreshToken(
+        payload
+      );
+
+      const tokenResponse: tokenService.TokenResponse = {
+        access_token: createAccessTokenResponse.token,
+        token_type: createAccessTokenResponse.tokenType,
+        expires_in: createAccessTokenResponse.expiresIn,
+        scope: decoded.scope as string,
+        refresh_token: createRefreshTokenResponse.token,
+      };
+
+      if ((decoded.scope as string).includes("openid")) {
+        const createIDTokenResponse = await tokenService.createIDToken(payload);
+
+        tokenResponse.id_token = createIDTokenResponse.token;
+      }
+
+      return tokenResponse;
     }
 
     if (tokenRequest.grant_type === "client_credentials") {
       const request = jsonBody as tokenService.ClientCredentialsGrantRequest;
 
-      await tokenService.validateClientCredentialsGrantRequest(
-        jsonBody as tokenService.ClientCredentialsGrantRequest
-      );
+      await tokenService.validateClientCredentialsGrantRequest(request);
 
-      return tokenService.createClientCredentialsGrantResponse({
-        client_id: client.client_id,
-        user_id: client.user_id,
-        resource: request.resource,
-        grant_type: request.grant_type,
+      const createAccessTokenResponse = await tokenService.createAccessToken({
+        clientId: request.client_id,
         scope: request.scope,
+        sub: client.userId,
+        aud: Array.isArray(request.resource)
+          ? request.resource
+          : [request.resource],
       });
+
+      return {
+        access_token: createAccessTokenResponse.token,
+        token_type: createAccessTokenResponse.tokenType,
+        expires_in: createAccessTokenResponse.expiresIn,
+        scope: request.scope,
+      };
     }
 
     if (tokenRequest.grant_type === "refresh_token") {
-      const request = jsonBody as tokenService.RefreshTokenRequest;
-      const decoded = await tokenService.validateRefreshToken(request);
-      const metadata = await metadataService.get();
+      const request = jsonBody as tokenService.RefreshTokenGrantRequest;
 
-      const token = await tokenService.create({
-        typ: "at+jwt",
-        clientId: decoded?.payload.clientId as string,
-        scope: decoded?.payload.scope as string,
-        sub: decoded?.payload.sub,
-        aud: [...(decoded?.payload.aud as string[])].filter(
-          (resource) => resource !== metadata.issuer
-        ),
-        exp: `${config.accessTokenExpirationTime}s`,
+      const validation = await tokenService.validateRefreshTokenGrantRequest(
+        request
+      );
+
+      const decoded = await tokenService.validateRefreshToken(
+        validation.refresh_token
+      );
+
+      const payload = {
+        clientId: decoded.clientId as string,
+        scope: decoded.scope as string,
+        sub: decoded.sub,
+        aud: decoded.aud as string[],
+      };
+
+      const createAccessTokenResponse = await tokenService.createAccessToken({
+        ...payload,
+        aud: payload.aud.filter((resource) => resource !== metadata.issuer),
       });
 
       let refreshToken = request.refresh_token;
 
-      if (client.refresh_token_rotation_type === "rotate") {
-        refreshToken = await tokenService.create({
-          typ: "rt+jwt",
-          clientId: decoded.payload.clientId as string,
-          scope: decoded.payload.scope as string,
-          sub: decoded.payload.sub,
-          aud: [...decoded.payload.aud],
-          exp: `${config.refreshTokenExpirationTime}s`,
+      if (client.refreshTokenRotationType === "rotate") {
+        await tokenService.invalidateToken({
+          token: refreshToken,
+          tokenTypeHint: "refresh_token",
         });
+
+        const createRefreshTokenResponse =
+          await tokenService.createRefreshToken(payload);
+
+        refreshToken = createRefreshTokenResponse.token;
       }
 
-      return {
-        access_token: token,
-        token_type: "Bearer",
-        expires_in: config.accessTokenExpirationTime,
-        scope: decoded.payload.scope,
+      const tokenResponse: tokenService.TokenResponse = {
+        access_token: createAccessTokenResponse.token,
+        token_type: createAccessTokenResponse.tokenType,
+        expires_in: createAccessTokenResponse.expiresIn,
+        scope: payload.scope,
         refresh_token: refreshToken,
       };
+
+      if (payload.scope.includes("openid")) {
+        const createIDTokenResponse = await tokenService.createIDToken(payload);
+
+        tokenResponse.id_token = createIDTokenResponse.token;
+      }
+
+      return tokenResponse;
     }
   })
 );

@@ -1,6 +1,5 @@
-import * as jose from "jose";
 import { useQuery, sendRedirect } from "h3";
-import { cuid } from "@driten/accounts-utils";
+import { importJWK, signToken } from "@driten/accounts-utils";
 import { withIronSession } from "~/lib/session";
 
 export default withIronSession(async (event) => {
@@ -15,17 +14,15 @@ export default withIronSession(async (event) => {
       };
     }
 
-    const privatekey = await jose.importJWK(config.privateKey);
+    const privatekey = await importJWK(config.privateKey);
 
-    const clientAssertion = await new jose.SignJWT({})
-      .setProtectedHeader({ alg: "RS256" })
-      .setIssuer(config.host)
-      .setExpirationTime(`${config.clientAssertionExpirationTime}s`)
-      .setAudience([config.authorizationServerHost])
-      .setSubject(config.clientId)
-      .setIssuedAt()
-      .setJti(cuid())
-      .sign(privatekey);
+    const clientAssertion = await signToken({
+      audience: config.authorizationServerHost,
+      exp: config.clientAssertionExpirationTime,
+      issuer: config.host,
+      key: privatekey,
+      subject: config.clientId,
+    });
 
     const body = new URLSearchParams({
       grant_type: "authorization_code",
@@ -53,6 +50,6 @@ export default withIronSession(async (event) => {
 
     return sendRedirect(event, "/applications");
   } catch (error) {
-    return error.data;
+    return error?.data;
   }
 });

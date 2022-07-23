@@ -14,8 +14,11 @@ export interface ProtoGrpcType {
   authorization_code: {
     CreateAuthorizationCodeRequest: MessageTypeDefinition
     CreateAuthorizationCodeResponse: MessageTypeDefinition
+    InvalidateAuthorizationCodeRequest: MessageTypeDefinition
+    InvalidateAuthorizationCodeResponse: MessageTypeDefinition
   }
   client: {
+    AuthenticateClientRequest: MessageTypeDefinition
     CreateClientRequest: MessageTypeDefinition
     ListClientsResponse: MessageTypeDefinition
     UpdateClientRequest: MessageTypeDefinition
@@ -47,6 +50,10 @@ export interface ProtoGrpcType {
   token: {
     CreateTokenRequest: MessageTypeDefinition
     CreateTokenResponse: MessageTypeDefinition
+    InvalidateTokenRequest: MessageTypeDefinition
+    InvalidateTokenResponse: MessageTypeDefinition
+    ValidateTokenRequest: MessageTypeDefinition
+    ValidateTokenResponse: MessageTypeDefinition
   }
   user: {
     AuthenticateUserRequest: MessageTypeDefinition

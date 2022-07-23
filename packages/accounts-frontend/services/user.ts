@@ -3,6 +3,7 @@ import { grpc } from "@driten/accounts-protobuf";
 import { AuthenticateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/user/AuthenticateUserRequest";
 import { AuthenticateUserResponse } from "@driten/accounts-protobuf/dist/protobuf/user/AuthenticateUserResponse";
 import { CreateUserRequest } from "@driten/accounts-protobuf/dist/protobuf/user/CreateUserRequest";
+import { GetRequest } from "@driten/accounts-protobuf/dist/protobuf/core/GetRequest";
 import { User } from "@driten/accounts-protobuf/dist/protobuf/core/User";
 import { client } from "~/lib/client";
 
@@ -14,6 +15,12 @@ export async function authenticate(request: AuthenticateUserRequest) {
 
 export async function create(request: CreateUserRequest) {
   const response = await createUser(request);
+
+  return response;
+}
+
+export async function get(request: GetRequest) {
+  const response = await getUser(request);
 
   return response;
 }
@@ -30,4 +37,8 @@ const authenticateUser = promisify<
 
 const createUser = promisify<CreateUserRequest, grpc.Metadata | void, User>(
   client.createUser.bind(client)
+);
+
+const getUser = promisify<GetRequest, grpc.Metadata | void, User>(
+  client.getUser.bind(client)
 );

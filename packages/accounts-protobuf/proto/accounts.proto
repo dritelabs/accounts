@@ -12,19 +12,26 @@ import "user.proto";
 
 service Account {
   rpc AuthenticateUser(user.AuthenticateUserRequest) returns (user.AuthenticateUserResponse);
+  rpc AuthenticateClientWithBasic(client.AuthenticateClientRequest) returns (core.Client);
+  rpc AuthenticateClientWithPrivateKey(client.AuthenticateClientRequest) returns (core.Client);
   rpc AddJWKToClient(jwk.AddJWKToClientRequest) returns (core.Client);
   rpc CreateAuthorizationCode(authorization_code.CreateAuthorizationCodeRequest) returns (authorization_code.CreateAuthorizationCodeResponse);
-  rpc CreateToken(token.CreateTokenRequest) returns (token.CreateTokenResponse);
+  rpc CreateAccessToken(token.CreateTokenRequest) returns (token.CreateTokenResponse);
   rpc CreateClient(client.CreateClientRequest) returns (core.Client);
-  rpc CreateUser(user.CreateUserRequest) returns (core.User);
+  rpc CreateIDToken(token.CreateTokenRequest) returns (token.CreateTokenResponse);
   rpc CreateJWKPair(core.Empty) returns (jwk.CreateJWKPairResponse);
+  rpc CreateRefreshToken(token.CreateTokenRequest) returns (token.CreateTokenResponse);
+  rpc CreateUser(user.CreateUserRequest) returns (core.User);
   rpc DeleteClient(core.DeleteRequest) returns (core.Client);
   rpc DeleteJWK(core.DeleteRequest) returns (core.PublicJWK);
   rpc GetAuthorizationServerMetadata(core.Empty) returns (core.AuthorizationServerMetadata);
   rpc GetClient(core.GetRequest) returns (core.Client);
   rpc GetJWKS(core.Empty) returns (core.JWKS);
+  rpc GetUser(core.GetRequest) returns (core.User);
+  rpc InvalidateToken(token.InvalidateTokenRequest) returns (token.InvalidateTokenResponse);
   rpc ListClients(core.ListRequest) returns (client.ListClientsResponse);
   rpc ListScopes(core.ListRequest) returns (scope.ListScopesResponse);
   rpc UpdateClient(client.UpdateClientRequest) returns (core.Client);
   rpc UpdateClientSecret(client.UpdateClientSecretRequest) returns (core.Client);
+  rpc ValidateToken(token.ValidateTokenRequest) returns (token.ValidateTokenResponse);
 }

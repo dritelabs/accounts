@@ -10,11 +10,15 @@ message AuthenticateUserRequest {
 
 message AuthenticateUserResponse {
   string id = 1;
+  string access_token = 3;
   string email = 2;
-  string initial_access_token = 3;
+  int32 expires_in = 6;
+  string refresh_token = 4;
+  string token_type = 5;
 }
 
 message CreateUserRequest {
   string email = 1;
   string password = 2;
 }
+

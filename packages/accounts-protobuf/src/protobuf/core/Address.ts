@@ -6,10 +6,12 @@ export interface Address {
   'userId'?: (string);
   'city'?: (string);
   'country'?: (string);
+  'isDefault'?: (boolean);
   'line1'?: (string);
   'line2'?: (string);
   'mobile'?: (string);
   'postalCode'?: (string);
+  'region'?: (string);
   'telephone'?: (string);
   'createdAt'?: (string);
   'deletedAt'?: (string);
@@ -21,10 +23,12 @@ export interface Address__Output {
   'userId': (string);
   'city': (string);
   'country': (string);
+  'isDefault': (boolean);
   'line1': (string);
   'line2': (string);
   'mobile': (string);
   'postalCode': (string);
+  'region': (string);
   'telephone': (string);
   'createdAt': (string);
   'deletedAt': (string);

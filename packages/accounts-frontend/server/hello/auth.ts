@@ -1,5 +1,5 @@
 import { useQuery, sendRedirect } from "h3";
-import { withIronSession } from "~~/lib/session";
+import { withIronSession } from "~/lib/session";
 
 export default withIronSession(async (event) => {
   const isAuthenticated = event.req?.session?.user;
@@ -12,7 +12,8 @@ export default withIronSession(async (event) => {
     "/",
   ];
 
-  const url = new URL(event.req.url, `http://${event.req.headers.host}`);
+  // const url = new URL(event.req.url, `http://${event.req.headers.host}`);
+  const url = { pathname: "" };
 
   if (urls2.includes(url.pathname)) {
     // return next();

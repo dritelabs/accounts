@@ -2,19 +2,21 @@
 
 
 export interface CreateTokenRequest {
+  'authTime'?: (string);
+  'acr'?: (string);
+  'amr'?: (string);
   'aud'?: (string)[];
   'clientId'?: (string);
-  'exp'?: (string);
-  'scope'?: (string);
   'sub'?: (string);
-  'typ'?: (string);
+  'scope'?: (string);
 }
 
 export interface CreateTokenRequest__Output {
+  'authTime': (string);
+  'acr': (string);
+  'amr': (string);
   'aud': (string)[];
   'clientId': (string);
-  'exp': (string);
-  'scope': (string);
   'sub': (string);
-  'typ': (string);
+  'scope': (string);
 }

@@ -1,19 +1,19 @@
-import * as jose from "jose";
+import { importJWK, signToken } from "@driten/accounts-utils";
 import { withIronSession } from "~/lib/session";
 
 export default withIronSession(async (event) => {
   try {
-    const privatekey = await jose.importJWK(privateKey);
+    const config = useRuntimeConfig();
 
-    const clientAssertion = await new jose.SignJWT({})
-      .setProtectedHeader({ alg: "RS256", typ: "at+jwt" })
-      .setIssuer("http://localhost:3001")
-      .setExpirationTime("1m")
-      .setAudience(["http://localhost:3000"])
-      .setSubject("cl05amov600137o9kit49f4cz")
-      .setIssuedAt()
-      .setJti("")
-      .sign(privatekey);
+    const privatekey = await importJWK(config.privateKey);
+
+    const clientAssertion = await signToken({
+      audience: config.authorizationServerHost,
+      exp: config.clientAssertionExpirationTime,
+      issuer: config.host,
+      key: privatekey,
+      subject: config.clientId,
+    });
 
     const body = new URLSearchParams({
       grant_type: "client_credentials",

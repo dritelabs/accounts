@@ -6,12 +6,12 @@ import {
   ServerError,
   UnauthorizedClientError,
 } from "@driten/accounts-errors";
-import { ValidationError } from "~/schemas";
+import { ValidationError } from "yup";
 
 export function withError<T>(
   handler: (event: CompatibilityEvent) => Promise<T>
 ) {
-  return async function _withError(event: CompatibilityEvent) {
+  return async function withErrorHOC(event: CompatibilityEvent) {
     try {
       const res = await handler(event);
 
@@ -34,7 +34,7 @@ export function withError<T>(
         error instanceof InvalidGrantError ||
         error instanceof UnauthorizedClientError
       ) {
-        event.res.statusCode = error.code;
+        event.res.statusCode = 400;
 
         return {
           error: error.error,

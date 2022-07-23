@@ -1,29 +1,27 @@
+import { readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const publicKey = readFileSync(join(__dirname, "../config/public-key.json"));
+const privateKey = readFileSync(join(__dirname, "../config/private-key.json"));
+
 export const config = {
   host: process.env.HOST || "localhost",
   port: process.env.PORT || "5000",
   authorizationServerIssuerBaseUrl:
     process.env.AUTHORIZATION_SERVER_ISSUER_BASE_URL || "http://localhost:3000",
+  authorizationCodeExpirationTime:
+    process.env.AUTHORIZATION_CODE_EXPIRATION_TIME || 30,
+  accessTokenExpirationTime:
+    process.env.ACCESS_TOKEN_EXPIRATION_TIME || 60 * 10,
+  refreshTokenExpirationTime:
+    process.env.REFRESH_TOKEN_EXPIRATION_TIME || 60 * 60 * 24 * 10,
   databaseUrl:
     process.env.DATABASE_URL ||
     "postgresql://driten:driten@localhost:5432/accounts",
-  publicKey: {
-    kty: "RSA",
-    e: "AQAB",
-    use: "sig",
-    alg: "RS256",
-    n: "goCfUUNl5jNUA_XMbtw3JXKYxeumDHQjWgHhCG_Qcj3N9w8aEE9OBVL-wSc-eYhW1u3q1eBEvt2TySmHW6fndP_G7FN-QkzINIvVN5wQVrX6P2V-y71GcazLXVgNw73IPo_1tvnivHpd3vSHC09ih_9vXFou8rVOS1mnWeR8rR7Mxjs0zf74E15H7_dh-NEQVsqDGMqsnB-E0Ki_JCBLgvAIlc0WCGmOIk0ithUnH-wQamWXqobHa8KJNJ4_esoZVoegbgZgRV1sb8x4jG1fKxAeNW0a-9B0GV7mSFGPSCTQ8jYaCalnWqdeEvFg7QrfQxReKWVyf42hk1CibS4vbw",
-  },
-  privateKey: {
-    p: "00xlOZD9FeJD07ELVWmQ1XEBMTpgqU3FR3YNNNIq5MFeE6b0cCIp6cQnX2ZAEBebRiZVVS6_L1LaBnGNBh-L9q3Iw9NZyL0M4XKfQ8RoVlV8lN2dDRn33_tm4pqUHQYlI6uVL3ogAAAZjmpaqZj_3R3gJ8hhm0HKXKgavpQIQ_s",
-    kty: "RSA",
-    q: "nhxwDZ4MjnsIaTRp9n8dGVzY9WpPlXqpaIOmAh9_S73lqBRFAIKcWOPmV6Y_x7DJHtiHt3GLZTO1bKwVAG8VKFNLnUpqwmN0IxhMQ550vnAkTuLjlUKfRw_xUMwkUqF4DaScolY8e_KBzuWzZ-o3Riy_S6Gzn-ilxk1ZBUy2tB0",
-    d: "Fmnw8wwYXElEjMmSqxe3gP8Frjii9FCeIb9g3woVSwnCbkRxvYthYxi2GIac_FKmV5PVWZaDOCTmVQ6E6QEVh8rGZ6CPduOpHx1FKZ_sTnhC2tCbznJbvvpmk0mkU5Is6lHfaeXRQ33g0YI-D3s6-RCuF7aFiboKEHb9fzr3DuST5J61CTApiIPg0ZU2JN9jyxk9R9OiOVGNvL2-_qu6SA83w_LH3S0WsZBi9WVnkykCEB4Lg16Df0oe6SO4wxbmp_Z7UVV9Pi98yJq50OGvZWyNJbfXn8E_ssEDyCt8ex3QFQuXPAAyDlTBbLeN1CdBiZLLHsCwQDYooQRmVMhlQQ",
-    e: "AQAB",
-    use: "sig",
-    qi: "cPXWo9XLkEWvJ4YjgP0N30Wl9F19o3fzzFK9zl9DNzq5S504v-sm_gCn-iU29sJj6s4VgOSPs6UuxA6lcHyOfQyNBY3RGBHt9gyfDJkpT1ig29RVeslQNP-3iSoobLOnsgrpQLslcWBCCoVkkclyzDfsZ8OM6A1q2rF3Y2eHwto",
-    dp: "TMQampmEeWjk_4n49iUOS51ss3fkGl546AeJsMESeF2QUk97yyl-VMHBFDXP3IjXDttqcTI0n3rYXzLt62WWsh5dLFgi7H1Sqq28EyDOT19rjaIeJt5iYeuya22BljHfWGBEKSWTbqyanFUjby549tqdz5ZLb96tKJCids7NWfU",
-    alg: "RS256",
-    dq: "jMPOsyDyFuvMejWS3UUgOBNkiWIDxpY1OvpyEtPN9jXzv-eD40dlQPJtgb1ebT-kX1Txx01MiGY38K9n50H-eS9nU3sMf1Ih9JjOVSk-0MlwWddAPQPaYF7-PivxbquZAbR7S0AxizxFe1kfl7V7TnvKN-CX1hc_d8QnLEO3KbU",
-    n: "goCfUUNl5jNUA_XMbtw3JXKYxeumDHQjWgHhCG_Qcj3N9w8aEE9OBVL-wSc-eYhW1u3q1eBEvt2TySmHW6fndP_G7FN-QkzINIvVN5wQVrX6P2V-y71GcazLXVgNw73IPo_1tvnivHpd3vSHC09ih_9vXFou8rVOS1mnWeR8rR7Mxjs0zf74E15H7_dh-NEQVsqDGMqsnB-E0Ki_JCBLgvAIlc0WCGmOIk0ithUnH-wQamWXqobHa8KJNJ4_esoZVoegbgZgRV1sb8x4jG1fKxAeNW0a-9B0GV7mSFGPSCTQ8jYaCalnWqdeEvFg7QrfQxReKWVyf42hk1CibS4vbw",
-  },
+  memcachedHost: process.env.MEMCACHED_HOST || "localhost:11211",
+  publicKey: JSON.parse(publicKey.toString("utf-8")),
+  privateKey: JSON.parse(privateKey.toString("utf-8")),
 };

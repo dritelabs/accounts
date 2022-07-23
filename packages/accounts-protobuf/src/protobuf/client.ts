@@ -8,6 +8,7 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 
 export interface ProtoGrpcType {
   client: {
+    AuthenticateClientRequest: MessageTypeDefinition
     CreateClientRequest: MessageTypeDefinition
     ListClientsResponse: MessageTypeDefinition
     UpdateClientRequest: MessageTypeDefinition

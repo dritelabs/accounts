@@ -1,5 +1,5 @@
-import { genSalt, hash } from "bcrypt";
 import { client } from "@driten/accounts-db";
+import { hash } from "@driten/accounts-utils";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 
@@ -9,8 +9,7 @@ export const createUser: AccountHandlers["CreateUser"] = async (
 ) => {
   try {
     const payload = call.request;
-    const salt = await genSalt();
-    const hashed = await hash(payload.password, salt);
+    const hashed = await hash(payload.password);
     const found = await client.user.findFirst({
       where: {
         email: payload.email,

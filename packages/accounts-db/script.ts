@@ -16,9 +16,29 @@ async function main() {
   await client.scope.createMany({
     data: [
       {
+        displayName: "OpenID",
+        name: "openid",
+        description: "openid description",
+      },
+      {
         displayName: "View profile information",
         name: "profile",
         description: "Create update profile information",
+      },
+      {
+        displayName: "email",
+        name: "email",
+        description: "email description",
+      },
+      {
+        displayName: "address",
+        name: "address",
+        description: "address description",
+      },
+      {
+        displayName: "phone",
+        name: "phone",
+        description: "phone description",
       },
       {
         displayName: "Create, update and view clients",

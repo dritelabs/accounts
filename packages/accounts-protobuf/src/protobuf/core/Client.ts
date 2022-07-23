@@ -5,7 +5,6 @@ import type { JWKS as _core_JWKS, JWKS__Output as _core_JWKS__Output } from '../
 export interface Client {
   'id'?: (string);
   'userId'?: (string);
-  'type'?: (string);
   'contacts'?: (string)[];
   'description'?: (string);
   'grantTypes'?: (string)[];
@@ -25,6 +24,7 @@ export interface Client {
   'softwareVersion'?: (string);
   'tosUri'?: (string);
   'tokenEndpointAuthMethod'?: (string);
+  'type'?: (string);
   'uri'?: (string);
   'createdAt'?: (string);
   'deletedAt'?: (string);
@@ -34,7 +34,6 @@ export interface Client {
 export interface Client__Output {
   'id': (string);
   'userId': (string);
-  'type': (string);
   'contacts': (string)[];
   'description': (string);
   'grantTypes': (string)[];
@@ -54,6 +53,7 @@ export interface Client__Output {
   'softwareVersion': (string);
   'tosUri': (string);
   'tokenEndpointAuthMethod': (string);
+  'type': (string);
   'uri': (string);
   'createdAt': (string);
   'deletedAt': (string);

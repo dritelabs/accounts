@@ -29,6 +29,8 @@ export default withIronSession(async (event) => {
   // params.append("resource", "http://localhost:3000");
   // params.append("resource", config.resource);
 
+  await event.req.session.destroy();
+
   event.req.session.code_verifier = _codeVerifier;
   event.req.session.state = state;
 

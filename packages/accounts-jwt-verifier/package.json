@@ -12,8 +12,8 @@
   "license": "ISC",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./*.js"
+    ".": "./dist/index.mjs",
+    "./*": "./*.mjs"
   },
   "directories": {
     "lib": "lib",
@@ -33,6 +33,6 @@
     "url": "https://github.com/driten-project/accounts/issues"
   },
   "dependencies": {
-    "jose": "^4.5.1"
+    "@driten/accounts-utils": "*"
   }
 }

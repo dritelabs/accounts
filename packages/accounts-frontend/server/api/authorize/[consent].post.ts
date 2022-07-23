@@ -20,21 +20,22 @@ export default withIronSession(async (event) => {
       );
     }
 
-    const metadata = await metadataService.get();
+    const metadata = await metadataService.getAuthorizationServerMetadata();
 
-    const code = await authorizationCodeService.create({
-      clientId: request.get("client_id"),
-      codeChallenge: request.get("code_challenge"),
-      codeChallengeMethod: request.get("code_challenge_method") || "plain",
-      redirectUri: request.get("redirect_uri"),
-      scope: request.get("scope") || "",
-      sub: event.req?.session?.user?.id,
-      aud: [metadata.issuer, ...request.getAll("resource")],
-      exp: `${config.authorizationCodeExpirationTime}s`,
-    });
+    const createAuthorizationCodeResponse =
+      await authorizationCodeService.createAuthorizationCode({
+        clientId: request.get("client_id"),
+        codeChallenge: request.get("code_challenge"),
+        codeChallengeMethod: request.get("code_challenge_method") || "plain",
+        redirectUri: request.get("redirect_uri"),
+        scope: request.get("scope") || "",
+        sub: event.req?.session?.user?.id,
+        aud: [metadata.issuer, ...request.getAll("resource")],
+        exp: `${config.authorizationCodeExpirationTime}s`,
+      });
 
     const params = new URLSearchParams({
-      code: code,
+      code: createAuthorizationCodeResponse.code,
     });
 
     if (request.get("state")) {

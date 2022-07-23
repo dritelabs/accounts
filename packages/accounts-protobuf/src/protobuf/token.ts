@@ -10,6 +10,10 @@ export interface ProtoGrpcType {
   token: {
     CreateTokenRequest: MessageTypeDefinition
     CreateTokenResponse: MessageTypeDefinition
+    InvalidateTokenRequest: MessageTypeDefinition
+    InvalidateTokenResponse: MessageTypeDefinition
+    ValidateTokenRequest: MessageTypeDefinition
+    ValidateTokenResponse: MessageTypeDefinition
   }
 }
 

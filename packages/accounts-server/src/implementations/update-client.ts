@@ -5,7 +5,7 @@ import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJW
 import { withAuth } from "../utils/with-auth";
 
 export const updateClient = withAuth<AccountHandlers["UpdateClient"]>(
-  ["clients:read"],
+  ["clients"],
   async (call, callback) => {
     try {
       const updated = await client.client.update({
@@ -20,11 +20,11 @@ export const updateClient = withAuth<AccountHandlers["UpdateClient"]>(
           grantTypes: call.request?.grantTypes?.length
             ? (call.request?.grantTypes as prisma.GrantType[])
             : undefined,
-          jwks: {
-            deleteMany: {
-              clientId: call.request.id,
-            },
-          },
+          // jwks: {
+          //   deleteMany: {
+          //     clientId: call.request.id,
+          //   },
+          // },
           jwksUri: call.request?.jwksUri || undefined,
           logoUri: call.request?.logoUri || undefined,
           name: call.request?.name || undefined,
@@ -86,8 +86,6 @@ export const updateClient = withAuth<AccountHandlers["UpdateClient"]>(
       });
     } catch (e) {
       const error = e as Error;
-
-      console.log(error);
 
       callback({
         ...error,

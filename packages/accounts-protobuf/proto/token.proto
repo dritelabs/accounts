@@ -3,14 +3,35 @@ syntax = "proto3";
 package token;
 
 message CreateTokenRequest {
-  repeated string aud = 1;
-  string client_id = 2;
-  string exp = 3;
-  string scope = 4;
-  string sub = 5;
-  string typ = 6;
+  string auth_time = 1;
+  string acr = 2;
+  string amr = 3;
+  repeated string aud = 4;
+  string client_id = 5;
+  string sub = 6;
+  string scope = 7;
 }
 
 message CreateTokenResponse {
+  int32 expires_in = 1;
+  string token = 2;
+  string token_type = 3;
+}
+
+message InvalidateTokenRequest {
+  string token = 1;
+  string token_type_hint = 2;
+}
+
+message InvalidateTokenResponse {
+  string token = 1;
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+  string token_type_hint = 2;
+}
+
+message ValidateTokenResponse {
   string token = 1;
 }

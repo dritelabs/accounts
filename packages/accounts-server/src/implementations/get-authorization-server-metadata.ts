@@ -1,62 +1,11 @@
+import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { config } from "../config";
 
 export const getAuthorizationServerMetadata: AccountHandlers["GetAuthorizationServerMetadata"] =
   async (_, callback) => {
     try {
-      const host = config.authorizationServerIssuerBaseUrl;
-
-      const response = {
-        authorizationEndpoint: `${host}/authorize`,
-        codeChallengeMethodsSupported: ["plain", "S256"],
-        deviceAuthorizationEndpoint: `${host}/device/authorize`,
-        end_session_endpoint: `${host}/api/logout`,
-        grantTypesSupported: [
-          "authorization_code",
-          "refresh_token",
-          "client_credentials",
-          "urn:ietf:params:oauth:grant-type:device_code",
-        ],
-        issuer: `${host}`,
-        introspectionEndpoint: `${host}/api/introspect`,
-        introspectionEndpointAuthMethodsSupported: [
-          "client_secret_basic",
-          "private_key_jwt",
-          "node",
-        ],
-        jwksUri: `${host}/api/jwks`,
-        opPolicyUri: `${host}/policy`,
-        opTosUri: `${host}/tos`,
-        registrationEndpoint: `${host}/api/clients`,
-        responseTypesSupported: ["code"],
-        responseModes: ["query", "web_message"],
-        revocationEndpoint: `${host}/api/revoke`,
-        revocationEndpointAuthMethodsSupported: [
-          "client_secret_basic",
-          "private_key_jwt",
-          "node",
-        ],
-        serviceDocumentation: `${host}/service_documentation`,
-        scopes_supported: [
-          "openid",
-          "profile",
-          "email",
-          "address",
-          "phone",
-          "offline_access",
-          "device_sso",
-        ],
-        tokenEndpoint: `${host}/api/token`,
-        tokenEndpointAuthMethodsSupported: [
-          "client_secret_basic",
-          "private_key_jwt",
-          "none",
-        ],
-        tokenEndpointAuthSigningAlgValuesSupported: ["RS256"],
-        userinfoEndpoint: `${host}/api/userinfo`,
-        uiLocalesSupported: ["en-US"],
-      };
+      const response = await client.metadata.getAuthorizationServerMetadata();
 
       callback(null, response);
     } catch (e) {

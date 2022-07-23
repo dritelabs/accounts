@@ -10,7 +10,7 @@ declare module "iron-session" {
     user?: {
       access_token: string;
       refresh_token: string;
-      token_type: "Bearer";
+      token_type: string;
       expires_in: number;
       scope: string;
     };

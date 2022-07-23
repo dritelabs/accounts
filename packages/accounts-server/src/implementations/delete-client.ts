@@ -1,7 +1,6 @@
 import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
-import { JWK } from "@driten/accounts-protobuf/dist/protobuf/core/JWK";
 
 export const deleteClient: AccountHandlers["DeleteClient"] = async (
   call,
@@ -23,8 +22,8 @@ export const deleteClient: AccountHandlers["DeleteClient"] = async (
       grantTypes: deleted.grantTypes || [],
       isFirstParty: deleted.isFirstParty,
       jwks: JSON.stringify({
-        keys: deleted.jwks.map((jwk) => jwk.jwk as JWK),
-      }),
+        keys: deleted.jwks.map((jwk) => jwk.jwk),
+      }) as any,
       jwksUri: deleted.jwksUri!,
       logoUri: deleted.logoUri!,
       name: deleted.name! || "",

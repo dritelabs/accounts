@@ -1,10 +1,16 @@
 // Original file: proto/core.proto
 
+import type { Address as _core_Address, Address__Output as _core_Address__Output } from '../core/Address';
+import type { Profile as _core_Profile, Profile__Output as _core_Profile__Output } from '../core/Profile';
 
 export interface User {
   'id'?: (string);
+  'addresses'?: (_core_Address)[];
   'email'?: (string);
   'emailVerified'?: (boolean);
+  'phoneNumber'?: (string);
+  'phoneNumberVerified'?: (boolean);
+  'profile'?: (_core_Profile | null);
   'password'?: (string);
   'username'?: (string);
   'createdAt'?: (string);
@@ -14,8 +20,12 @@ export interface User {
 
 export interface User__Output {
   'id': (string);
+  'addresses': (_core_Address__Output)[];
   'email': (string);
   'emailVerified': (boolean);
+  'phoneNumber': (string);
+  'phoneNumberVerified': (boolean);
+  'profile': (_core_Profile__Output | null);
   'password': (string);
   'username': (string);
   'createdAt': (string);

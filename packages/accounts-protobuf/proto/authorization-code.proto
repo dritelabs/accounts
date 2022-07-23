@@ -16,3 +16,11 @@ message CreateAuthorizationCodeRequest {
 message CreateAuthorizationCodeResponse {
   string code = 1;
 }
+
+message InvalidateAuthorizationCodeRequest {
+  string code = 1;
+}
+
+message InvalidateAuthorizationCodeResponse {
+  string code = 1;
+}

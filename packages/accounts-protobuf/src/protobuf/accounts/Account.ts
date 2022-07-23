@@ -3,6 +3,7 @@
 import type * as grpc from '@grpc/grpc-js'
 import type { MethodDefinition } from '@grpc/proto-loader'
 import type { AddJWKToClientRequest as _jwk_AddJWKToClientRequest, AddJWKToClientRequest__Output as _jwk_AddJWKToClientRequest__Output } from '../jwk/AddJWKToClientRequest';
+import type { AuthenticateClientRequest as _client_AuthenticateClientRequest, AuthenticateClientRequest__Output as _client_AuthenticateClientRequest__Output } from '../client/AuthenticateClientRequest';
 import type { AuthenticateUserRequest as _user_AuthenticateUserRequest, AuthenticateUserRequest__Output as _user_AuthenticateUserRequest__Output } from '../user/AuthenticateUserRequest';
 import type { AuthenticateUserResponse as _user_AuthenticateUserResponse, AuthenticateUserResponse__Output as _user_AuthenticateUserResponse__Output } from '../user/AuthenticateUserResponse';
 import type { AuthorizationServerMetadata as _core_AuthorizationServerMetadata, AuthorizationServerMetadata__Output as _core_AuthorizationServerMetadata__Output } from '../core/AuthorizationServerMetadata';
@@ -17,6 +18,8 @@ import type { CreateUserRequest as _user_CreateUserRequest, CreateUserRequest__O
 import type { DeleteRequest as _core_DeleteRequest, DeleteRequest__Output as _core_DeleteRequest__Output } from '../core/DeleteRequest';
 import type { Empty as _core_Empty, Empty__Output as _core_Empty__Output } from '../core/Empty';
 import type { GetRequest as _core_GetRequest, GetRequest__Output as _core_GetRequest__Output } from '../core/GetRequest';
+import type { InvalidateTokenRequest as _token_InvalidateTokenRequest, InvalidateTokenRequest__Output as _token_InvalidateTokenRequest__Output } from '../token/InvalidateTokenRequest';
+import type { InvalidateTokenResponse as _token_InvalidateTokenResponse, InvalidateTokenResponse__Output as _token_InvalidateTokenResponse__Output } from '../token/InvalidateTokenResponse';
 import type { JWKS as _core_JWKS, JWKS__Output as _core_JWKS__Output } from '../core/JWKS';
 import type { ListClientsResponse as _client_ListClientsResponse, ListClientsResponse__Output as _client_ListClientsResponse__Output } from '../client/ListClientsResponse';
 import type { ListRequest as _core_ListRequest, ListRequest__Output as _core_ListRequest__Output } from '../core/ListRequest';
@@ -25,6 +28,8 @@ import type { PublicJWK as _core_PublicJWK, PublicJWK__Output as _core_PublicJWK
 import type { UpdateClientRequest as _client_UpdateClientRequest, UpdateClientRequest__Output as _client_UpdateClientRequest__Output } from '../client/UpdateClientRequest';
 import type { UpdateClientSecretRequest as _client_UpdateClientSecretRequest, UpdateClientSecretRequest__Output as _client_UpdateClientSecretRequest__Output } from '../client/UpdateClientSecretRequest';
 import type { User as _core_User, User__Output as _core_User__Output } from '../core/User';
+import type { ValidateTokenRequest as _token_ValidateTokenRequest, ValidateTokenRequest__Output as _token_ValidateTokenRequest__Output } from '../token/ValidateTokenRequest';
+import type { ValidateTokenResponse as _token_ValidateTokenResponse, ValidateTokenResponse__Output as _token_ValidateTokenResponse__Output } from '../token/ValidateTokenResponse';
 
 export interface AccountClient extends grpc.Client {
   AddJWKToClient(argument: _jwk_AddJWKToClientRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
@@ -36,6 +41,24 @@ export interface AccountClient extends grpc.Client {
   addJwkToClient(argument: _jwk_AddJWKToClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   addJwkToClient(argument: _jwk_AddJWKToClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   
+  AuthenticateClientWithBasic(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithBasic(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithBasic(argument: _client_AuthenticateClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithBasic(argument: _client_AuthenticateClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithBasic(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithBasic(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithBasic(argument: _client_AuthenticateClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithBasic(argument: _client_AuthenticateClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  
+  AuthenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  AuthenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  authenticateClientWithPrivateKey(argument: _client_AuthenticateClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
+  
   AuthenticateUser(argument: _user_AuthenticateUserRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
   AuthenticateUser(argument: _user_AuthenticateUserRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
   AuthenticateUser(argument: _user_AuthenticateUserRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
@@ -44,6 +67,15 @@ export interface AccountClient extends grpc.Client {
   authenticateUser(argument: _user_AuthenticateUserRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
   authenticateUser(argument: _user_AuthenticateUserRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
   authenticateUser(argument: _user_AuthenticateUserRequest, callback: grpc.requestCallback<_user_AuthenticateUserResponse__Output>): grpc.ClientUnaryCall;
+  
+  CreateAccessToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateAccessToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateAccessToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateAccessToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createAccessToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createAccessToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createAccessToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createAccessToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
   
   CreateAuthorizationCode(argument: _authorization_code_CreateAuthorizationCodeRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_authorization_code_CreateAuthorizationCodeResponse__Output>): grpc.ClientUnaryCall;
   CreateAuthorizationCode(argument: _authorization_code_CreateAuthorizationCodeRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_authorization_code_CreateAuthorizationCodeResponse__Output>): grpc.ClientUnaryCall;
@@ -63,6 +95,15 @@ export interface AccountClient extends grpc.Client {
   createClient(argument: _client_CreateClientRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   createClient(argument: _client_CreateClientRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   
+  CreateIDToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateIDToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateIDToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateIDToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createIdToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createIdToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createIdToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createIdToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  
   CreateJWKPair(argument: _core_Empty, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_jwk_CreateJWKPairResponse__Output>): grpc.ClientUnaryCall;
   CreateJWKPair(argument: _core_Empty, metadata: grpc.Metadata, callback: grpc.requestCallback<_jwk_CreateJWKPairResponse__Output>): grpc.ClientUnaryCall;
   CreateJWKPair(argument: _core_Empty, options: grpc.CallOptions, callback: grpc.requestCallback<_jwk_CreateJWKPairResponse__Output>): grpc.ClientUnaryCall;
@@ -72,14 +113,14 @@ export interface AccountClient extends grpc.Client {
   createJwkPair(argument: _core_Empty, options: grpc.CallOptions, callback: grpc.requestCallback<_jwk_CreateJWKPairResponse__Output>): grpc.ClientUnaryCall;
   createJwkPair(argument: _core_Empty, callback: grpc.requestCallback<_jwk_CreateJWKPairResponse__Output>): grpc.ClientUnaryCall;
   
-  CreateToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  CreateToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  CreateToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  CreateToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  createToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  createToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  createToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
-  createToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateRefreshToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateRefreshToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateRefreshToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  CreateRefreshToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createRefreshToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createRefreshToken(argument: _token_CreateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createRefreshToken(argument: _token_CreateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
+  createRefreshToken(argument: _token_CreateTokenRequest, callback: grpc.requestCallback<_token_CreateTokenResponse__Output>): grpc.ClientUnaryCall;
   
   CreateUser(argument: _user_CreateUserRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
   CreateUser(argument: _user_CreateUserRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
@@ -135,6 +176,24 @@ export interface AccountClient extends grpc.Client {
   getJwks(argument: _core_Empty, options: grpc.CallOptions, callback: grpc.requestCallback<_core_JWKS__Output>): grpc.ClientUnaryCall;
   getJwks(argument: _core_Empty, callback: grpc.requestCallback<_core_JWKS__Output>): grpc.ClientUnaryCall;
   
+  GetUser(argument: _core_GetRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  GetUser(argument: _core_GetRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  GetUser(argument: _core_GetRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  GetUser(argument: _core_GetRequest, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  getUser(argument: _core_GetRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  getUser(argument: _core_GetRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  getUser(argument: _core_GetRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  getUser(argument: _core_GetRequest, callback: grpc.requestCallback<_core_User__Output>): grpc.ClientUnaryCall;
+  
+  InvalidateToken(argument: _token_InvalidateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  InvalidateToken(argument: _token_InvalidateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  InvalidateToken(argument: _token_InvalidateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  InvalidateToken(argument: _token_InvalidateTokenRequest, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  invalidateToken(argument: _token_InvalidateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  invalidateToken(argument: _token_InvalidateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  invalidateToken(argument: _token_InvalidateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  invalidateToken(argument: _token_InvalidateTokenRequest, callback: grpc.requestCallback<_token_InvalidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  
   ListClients(argument: _core_ListRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_client_ListClientsResponse__Output>): grpc.ClientUnaryCall;
   ListClients(argument: _core_ListRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_client_ListClientsResponse__Output>): grpc.ClientUnaryCall;
   ListClients(argument: _core_ListRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_client_ListClientsResponse__Output>): grpc.ClientUnaryCall;
@@ -171,20 +230,37 @@ export interface AccountClient extends grpc.Client {
   updateClientSecret(argument: _client_UpdateClientSecretRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   updateClientSecret(argument: _client_UpdateClientSecretRequest, callback: grpc.requestCallback<_core_Client__Output>): grpc.ClientUnaryCall;
   
+  ValidateToken(argument: _token_ValidateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  ValidateToken(argument: _token_ValidateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  ValidateToken(argument: _token_ValidateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  ValidateToken(argument: _token_ValidateTokenRequest, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  validateToken(argument: _token_ValidateTokenRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  validateToken(argument: _token_ValidateTokenRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  validateToken(argument: _token_ValidateTokenRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  validateToken(argument: _token_ValidateTokenRequest, callback: grpc.requestCallback<_token_ValidateTokenResponse__Output>): grpc.ClientUnaryCall;
+  
 }
 
 export interface AccountHandlers extends grpc.UntypedServiceImplementation {
   AddJWKToClient: grpc.handleUnaryCall<_jwk_AddJWKToClientRequest__Output, _core_Client>;
   
+  AuthenticateClientWithBasic: grpc.handleUnaryCall<_client_AuthenticateClientRequest__Output, _core_Client>;
+  
+  AuthenticateClientWithPrivateKey: grpc.handleUnaryCall<_client_AuthenticateClientRequest__Output, _core_Client>;
+  
   AuthenticateUser: grpc.handleUnaryCall<_user_AuthenticateUserRequest__Output, _user_AuthenticateUserResponse>;
+  
+  CreateAccessToken: grpc.handleUnaryCall<_token_CreateTokenRequest__Output, _token_CreateTokenResponse>;
   
   CreateAuthorizationCode: grpc.handleUnaryCall<_authorization_code_CreateAuthorizationCodeRequest__Output, _authorization_code_CreateAuthorizationCodeResponse>;
   
   CreateClient: grpc.handleUnaryCall<_client_CreateClientRequest__Output, _core_Client>;
   
+  CreateIDToken: grpc.handleUnaryCall<_token_CreateTokenRequest__Output, _token_CreateTokenResponse>;
+  
   CreateJWKPair: grpc.handleUnaryCall<_core_Empty__Output, _jwk_CreateJWKPairResponse>;
   
-  CreateToken: grpc.handleUnaryCall<_token_CreateTokenRequest__Output, _token_CreateTokenResponse>;
+  CreateRefreshToken: grpc.handleUnaryCall<_token_CreateTokenRequest__Output, _token_CreateTokenResponse>;
   
   CreateUser: grpc.handleUnaryCall<_user_CreateUserRequest__Output, _core_User>;
   
@@ -198,6 +274,10 @@ export interface AccountHandlers extends grpc.UntypedServiceImplementation {
   
   GetJWKS: grpc.handleUnaryCall<_core_Empty__Output, _core_JWKS>;
   
+  GetUser: grpc.handleUnaryCall<_core_GetRequest__Output, _core_User>;
+  
+  InvalidateToken: grpc.handleUnaryCall<_token_InvalidateTokenRequest__Output, _token_InvalidateTokenResponse>;
+  
   ListClients: grpc.handleUnaryCall<_core_ListRequest__Output, _client_ListClientsResponse>;
   
   ListScopes: grpc.handleUnaryCall<_core_ListRequest__Output, _scope_ListScopesResponse>;
@@ -206,23 +286,32 @@ export interface AccountHandlers extends grpc.UntypedServiceImplementation {
   
   UpdateClientSecret: grpc.handleUnaryCall<_client_UpdateClientSecretRequest__Output, _core_Client>;
   
+  ValidateToken: grpc.handleUnaryCall<_token_ValidateTokenRequest__Output, _token_ValidateTokenResponse>;
+  
 }
 
 export interface AccountDefinition extends grpc.ServiceDefinition {
   AddJWKToClient: MethodDefinition<_jwk_AddJWKToClientRequest, _core_Client, _jwk_AddJWKToClientRequest__Output, _core_Client__Output>
+  AuthenticateClientWithBasic: MethodDefinition<_client_AuthenticateClientRequest, _core_Client, _client_AuthenticateClientRequest__Output, _core_Client__Output>
+  AuthenticateClientWithPrivateKey: MethodDefinition<_client_AuthenticateClientRequest, _core_Client, _client_AuthenticateClientRequest__Output, _core_Client__Output>
   AuthenticateUser: MethodDefinition<_user_AuthenticateUserRequest, _user_AuthenticateUserResponse, _user_AuthenticateUserRequest__Output, _user_AuthenticateUserResponse__Output>
+  CreateAccessToken: MethodDefinition<_token_CreateTokenRequest, _token_CreateTokenResponse, _token_CreateTokenRequest__Output, _token_CreateTokenResponse__Output>
   CreateAuthorizationCode: MethodDefinition<_authorization_code_CreateAuthorizationCodeRequest, _authorization_code_CreateAuthorizationCodeResponse, _authorization_code_CreateAuthorizationCodeRequest__Output, _authorization_code_CreateAuthorizationCodeResponse__Output>
   CreateClient: MethodDefinition<_client_CreateClientRequest, _core_Client, _client_CreateClientRequest__Output, _core_Client__Output>
+  CreateIDToken: MethodDefinition<_token_CreateTokenRequest, _token_CreateTokenResponse, _token_CreateTokenRequest__Output, _token_CreateTokenResponse__Output>
   CreateJWKPair: MethodDefinition<_core_Empty, _jwk_CreateJWKPairResponse, _core_Empty__Output, _jwk_CreateJWKPairResponse__Output>
-  CreateToken: MethodDefinition<_token_CreateTokenRequest, _token_CreateTokenResponse, _token_CreateTokenRequest__Output, _token_CreateTokenResponse__Output>
+  CreateRefreshToken: MethodDefinition<_token_CreateTokenRequest, _token_CreateTokenResponse, _token_CreateTokenRequest__Output, _token_CreateTokenResponse__Output>
   CreateUser: MethodDefinition<_user_CreateUserRequest, _core_User, _user_CreateUserRequest__Output, _core_User__Output>
   DeleteClient: MethodDefinition<_core_DeleteRequest, _core_Client, _core_DeleteRequest__Output, _core_Client__Output>
   DeleteJWK: MethodDefinition<_core_DeleteRequest, _core_PublicJWK, _core_DeleteRequest__Output, _core_PublicJWK__Output>
   GetAuthorizationServerMetadata: MethodDefinition<_core_Empty, _core_AuthorizationServerMetadata, _core_Empty__Output, _core_AuthorizationServerMetadata__Output>
   GetClient: MethodDefinition<_core_GetRequest, _core_Client, _core_GetRequest__Output, _core_Client__Output>
   GetJWKS: MethodDefinition<_core_Empty, _core_JWKS, _core_Empty__Output, _core_JWKS__Output>
+  GetUser: MethodDefinition<_core_GetRequest, _core_User, _core_GetRequest__Output, _core_User__Output>
+  InvalidateToken: MethodDefinition<_token_InvalidateTokenRequest, _token_InvalidateTokenResponse, _token_InvalidateTokenRequest__Output, _token_InvalidateTokenResponse__Output>
   ListClients: MethodDefinition<_core_ListRequest, _client_ListClientsResponse, _core_ListRequest__Output, _client_ListClientsResponse__Output>
   ListScopes: MethodDefinition<_core_ListRequest, _scope_ListScopesResponse, _core_ListRequest__Output, _scope_ListScopesResponse__Output>
   UpdateClient: MethodDefinition<_client_UpdateClientRequest, _core_Client, _client_UpdateClientRequest__Output, _core_Client__Output>
   UpdateClientSecret: MethodDefinition<_client_UpdateClientSecretRequest, _core_Client, _client_UpdateClientSecretRequest__Output, _core_Client__Output>
+  ValidateToken: MethodDefinition<_token_ValidateTokenRequest, _token_ValidateTokenResponse, _token_ValidateTokenRequest__Output, _token_ValidateTokenResponse__Output>
 }

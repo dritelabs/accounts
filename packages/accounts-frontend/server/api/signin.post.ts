@@ -2,15 +2,10 @@ import { useBody, useQuery, sendRedirect } from "h3";
 import { grpc } from "@driten/accounts-protobuf";
 import { InvalidRequestError } from "@driten/accounts-errors";
 import { withIronSession } from "~/lib/session";
-import {
-  user as userService,
-  token as tokenService,
-  metadata as metadataService,
-} from "~/services";
+import { user as userService } from "~/services";
 
 export default withIronSession(async (event) => {
   try {
-    const config = useRuntimeConfig();
     const query = useQuery(event);
     const body = await useBody(event);
     const params = new URLSearchParams(body);
@@ -20,20 +15,8 @@ export default withIronSession(async (event) => {
       password: params.get("password"),
     });
 
-    const metadata = await metadataService.get();
-
-    const token = await tokenService.create({
-      typ: "at+jwt",
-      clientId: "",
-      scope: "clients:read",
-      sub: response.id,
-      aud: [metadata.issuer],
-      exp: `${config.accessTokenExpirationTime}s`,
-    });
-
     event.req.session.user = {
       ...response,
-      initialAccessToken: token,
       isAuthenticated: true,
     };
 

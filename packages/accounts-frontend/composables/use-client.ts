@@ -1,5 +1,5 @@
-import { Client } from "~/services/client";
+import { Client } from "@driten/accounts-protobuf/dist/protobuf/core/Client";
 
 export function useClient(id: string) {
-  return useFetch<Client>(`/api/clients/${id}`);
+  return useFetch<Client, any>(`/api/clients/${id}`);
 }

@@ -1,4 +1,4 @@
-import { client, prisma } from "@driten/accounts-db";
+import { client } from "@driten/accounts-db";
 import { grpc } from "@driten/accounts-protobuf";
 import { AccountHandlers } from "@driten/accounts-protobuf/dist/protobuf/accounts/Account";
 import { PublicJWK } from "@driten/accounts-protobuf/dist/protobuf/core/PublicJWK";
@@ -58,8 +58,6 @@ export const addJwkToClient: AccountHandlers["AddJWKToClient"] = async (
     });
   } catch (e) {
     const error = e as Error;
-
-    console.log(error);
 
     callback({
       ...error,
