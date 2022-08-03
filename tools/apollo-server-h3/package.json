@@ -1,0 +1,46 @@
+{
+  "name": "@drite/apollo-server-h3",
+  "version": "0.0.0",
+  "description": "Apollo server h3 integration",
+  "keywords": [
+    "nuxt",
+    "iron-session"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/h3-iron-session.git"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/h3-iron-session/issues"
+  },
+  "dependencies": {
+    "@hapi/accept": "^6.0.0",
+    "apollo-server-core": "^3.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.19",
+    "@rushstack/heft": "0.47.0",
+    "typescript": "4.5.5",
+    "tsup": "5.11.13"
+  },
+  "peerDependencies": {
+    "h3": "^0.7.8"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "private": true,
+  "name": "@drite/developers-frontend",
+  "version": "0.0.0",
+  "description": "developers frontend module",
+  "keywords": [
+    "developers",
+    "frontend",
+    "module"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/developers.git"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3001",
+    "generate:graphql": "graphql-codegen",
+    "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/developers/issues"
+  },
+  "dependencies": {
+    "@drite/accounts-protobuf": "*",
+    "@drite/accounts-utils": "*",
+    "@drite/h3-iron-session": "*",
+    "@drite/apollo-server-h3": "*",
+    "apollo-datasource": "^3.3.1",
+    "bulma": "^0.9.4",
+    "bulma-extensions": "^6.2.7",
+    "bulma-list": "^1.2.0",
+    "graphql": "^16.5.0",
+    "iron-session": "^6.1.3",
+    "nexus": "^1.3.0",
+    "sass": "^1.51.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.19",
+    "@volar-plugins/prettier": "latest",
+    "nuxt": "3.0.0-rc.6"
+  }
+}
