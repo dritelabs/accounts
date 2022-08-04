@@ -25,7 +25,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --port 3001",
-    "generate:graphql": "graphql-codegen",
+    "gen": "graphql-codegen",
     "preview": "nuxt preview",
     "start": "node .output/server/index.mjs"
   },
@@ -47,6 +47,19 @@
     "sass": "^1.51.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/fragment-matcher": "^3.2.1",
+    "@graphql-codegen/near-operation-file-preset": "^2.2.14",
+    "@graphql-codegen/typed-document-node": "^2.2.13",
+    "@graphql-codegen/typescript": "^2.5.1",
+    "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.20",
+    "@graphql-codegen/typescript-operations": "^2.4.2",
+    "@graphql-codegen/typescript-urql": "^3.5.12",
+    "@graphql-codegen/typescript-urql-graphcache": "^2.2.16",
+    "@graphql-codegen/typescript-vue-urql": "^2.2.14",
+    "@graphql-codegen/urql-introspection": "^2.1.1",
+    "@urql/exchange-graphcache": "^4.4.3",
+    "@urql/vue": "^0.6.3",
     "@types/node": "16.11.19",
     "@volar-plugins/prettier": "latest",
     "nuxt": "3.0.0-rc.6"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGetClientQuery } from '~/generated/operations';
+import { useGetClientQuery } from '~/graphql/operations/get-client';
 
 const route = useRoute();
 
@@ -8,23 +8,23 @@ useProvideModal('applicationJWKPairModal');
 
 const headers = useRequestHeaders();
 
-const { result, loading } = await useGetClientQuery(
-  {
+const { data, fetching } = await useGetClientQuery({
+  variables: {
     id: route.params.id as string
   },
-  {
-    context: {
-      headers
+  context: {
+    fetchOptions: {
+      headers: useRequestHeaders()
     }
   }
-);
+});
 </script>
 
 <template>
   <div class="container">
-    <div class="columns mt-5 is-justify-content-center" v-if="!loading">
+    <div class="columns mt-5 is-justify-content-center" v-if="!fetching">
       <div class="column is-12">
-        <ApplicationDetailsForm :client="result.client" />
+        <ApplicationDetailsForm :client="data.client" />
         <!-- <ApplicationGeneralSettingsForm :client="result?.client" /> -->
         <hr />
         <!-- <ApplicationClientCredentialsForm :client="result?.client" /> -->

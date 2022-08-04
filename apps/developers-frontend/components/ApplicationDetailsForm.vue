@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import {
-  Client,
-  useAddJwkToClientMutation,
-  useCreateJwkPairMutation,
-  useUpdateClientMutation,
-  useUpdateClientSecretMutation
-} from '~/generated/operations';
+import { Client } from '~/graphql/operations/schema';
+import { useAddJwkToClientMutation } from '~/graphql/operations/add-jwk-to-client';
+import { useCreateJwkPairMutation } from '~/graphql/operations/create-jwk-pair';
+import { useUpdateClientMutation } from '~/graphql/operations/update-client';
+import { useUpdateClientSecretMutation } from '~/graphql/operations/update-client-secret';
 
 const props = defineProps<{ client: Client }>();
 const modal = useModal('applicationPublicKeyDetailsModal');
 const applicationJWKPairModal = useModal('applicationJWKPairModal');
+const { executeMutation: addJWKToClient } = useAddJwkToClientMutation();
+const { executeMutation: createJWKPair } = useCreateJwkPairMutation();
+const { executeMutation: updateClient } = useUpdateClientMutation();
+const { executeMutation: updateClientSecret } = useUpdateClientSecretMutation();
 
-const client = ref<Client>(JSON.parse(JSON.stringify(props.client)));
+const client = useState<Client>(() => JSON.parse(JSON.stringify(props.client)));
 const currentPrivateKey = ref('');
 const currentPublicKey = ref('');
 
-const { mutate: updateClient } = useUpdateClientMutation(() => ({
-  variables: {
+function handleUpdateClient() {
+  updateClient({
     input: {
       id: client.value.id,
       contacts: client.value.contacts,
@@ -36,34 +38,19 @@ const { mutate: updateClient } = useUpdateClientMutation(() => ({
       tosUri: client.value.tosUri,
       uri: client.value.uri
     }
-  }
-}));
+  });
+}
 
-const { mutate: updateClientSecret } = useUpdateClientSecretMutation(() => ({
-  refetchQueries: 'active',
-  variables: {
+function handleUpdateClientSecret() {
+  updateClientSecret({
     input: {
       id: client.value.id
     }
-  }
-}));
+  });
+}
 
-const { mutate: createJWKPairMutation } = useCreateJwkPairMutation(() => ({
-  refetchQueries: 'active'
-}));
-
-const { mutate: addJWKToClientMutation } = useAddJwkToClientMutation(() => ({
-  refetchQueries: 'active',
-  variables: {
-    input: {
-      clientId: client.value.id,
-      jwk: currentPublicKey.value
-    }
-  }
-}));
-
-async function handleCreateJWKPairMutationClick() {
-  const response = await createJWKPairMutation();
+async function handleCreateJWKPair() {
+  const response = await createJWKPair({});
 
   currentPrivateKey.value = response.data.createJWKPair.privateKey;
   currentPublicKey.value = response.data.createJWKPair.publicKey;
@@ -71,13 +58,18 @@ async function handleCreateJWKPairMutationClick() {
   applicationJWKPairModal.toggle();
 }
 
-async function handleJWKPairSave() {
-  await addJWKToClientMutation();
+async function handleAddJWKToClient() {
+  await addJWKToClient({
+    input: {
+      clientId: client.value.id,
+      jwk: currentPublicKey.value as never
+    }
+  });
 
   applicationJWKPairModal.toggle();
 }
 
-async function handleSetPublicKeyClick(jwk: any) {
+async function handleSetPublicKey(jwk: any) {
   currentPublicKey.value = jwk;
 
   modal.toggle();
@@ -112,6 +104,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               class="is-checkradio is-small is-link"
               id="client_secret_basic"
               type="radio"
+              name="token_endpoint_auth_method"
               value="client_secret_basic"
               :checked="client.tokenEndpointAuthMethod === 'client_secret_basic'"
               v-model="client.tokenEndpointAuthMethod"
@@ -122,6 +115,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               id="private_key_jwt"
               type="radio"
               value="private_key_jwt"
+              name="token_endpoint_auth_method"
               :checked="client.tokenEndpointAuthMethod === 'private_key_jwt'"
               v-model="client.tokenEndpointAuthMethod"
             />
@@ -141,7 +135,7 @@ async function handleSetPublicKeyClick(jwk: any) {
             <header class="card-header is-shadowless p-3 has-background-white-ter">
               <p class="card-header-title" />
               <div class="buttons">
-                <button type="button" class="button is-ghost" @click="updateClientSecret()">
+                <button type="button" class="button is-ghost" @click="handleUpdateClientSecret()">
                   Generate new secret
                 </button>
               </div>
@@ -185,6 +179,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               id="local"
               type="radio"
               value="local"
+              name="public_keys_configuration"
               v-model="client.publicKeysConfiguration"
             />
             <label for="local"> Save keys local </label>
@@ -193,6 +188,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               id="remote"
               type="radio"
               value="remote"
+              name="public_keys_configuration"
               v-model="client.publicKeysConfiguration"
             />
             <label for="remote"> Use a URL to fetch keys dynamically </label>
@@ -232,7 +228,7 @@ async function handleSetPublicKeyClick(jwk: any) {
           <div class="card is-shadowless is-bordered">
             <header class="card-header is-shadowless p-3 has-background-white-ter">
               <p class="card-header-title" />
-              <button type="button" class="button is-link is-light" @click="handleCreateJWKPairMutationClick">
+              <button type="button" class="button is-link is-light" @click="handleCreateJWKPair">
                 Generate new key
               </button>
             </header>
@@ -246,7 +242,7 @@ async function handleSetPublicKeyClick(jwk: any) {
                 <tbody>
                   <tr v-for="jwk in props?.client?.jwks?.keys">
                     <td>
-                      <a @click="handleSetPublicKeyClick(jwk)">
+                      <a @click="handleSetPublicKey(jwk)">
                         {{ jwk.kid }}
                       </a>
                     </td>
@@ -273,6 +269,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               class="is-checkradio is-small is-link"
               id="rotate"
               type="radio"
+              name="refresh_token_rotation_type"
               :checked="client.refreshTokenRotationType === 'rotate'"
               value="rotate"
               v-model="client.refreshTokenRotationType"
@@ -282,6 +279,7 @@ async function handleSetPublicKeyClick(jwk: any) {
               class="is-checkradio is-small is-link"
               id="static"
               type="radio"
+              name="refresh_token_rotation_type"
               :checked="client.refreshTokenRotationType === 'static'"
               value="static"
               v-model="client.refreshTokenRotationType"
@@ -462,12 +460,12 @@ async function handleSetPublicKeyClick(jwk: any) {
 
     <div class="buttons is-justify-content-end">
       <button type="button" class="button is-link is-light">Cancel</button>
-      <button type="button" class="button is-link" @click="updateClient()">Save</button>
+      <button type="button" class="button is-link" @click="handleUpdateClient()">Save</button>
     </div>
     <ApplicationJWKPairModal
       :private-key="currentPrivateKey"
       :public-key="currentPublicKey"
-      @save="handleJWKPairSave"
+      @save="handleAddJWKToClient"
     />
   </article>
 </template>

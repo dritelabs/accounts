@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useGetClientsQuery } from '~/generated/operations';
+import { useGetClientsQuery } from '~/graphql/operations/get-clients';
 
 useProvideModal('createApplicationModal');
 
-const headers = useRequestHeaders();
-
-const { result } = useGetClientsQuery({
+const { data } = await useGetClientsQuery({
   context: {
-    headers
+    fetchOptions: {
+      headers: useRequestHeaders()
+    }
   }
 });
 </script>
@@ -15,7 +15,7 @@ const { result } = useGetClientsQuery({
 <template>
   <div class="container">
     <ApplicationListViewHeader />
-    <ApplicationListItem v-for="client in result?.clients" :key="client.id" :client="client" />
+    <ApplicationListItem v-for="client in data?.clients" :key="client.id" :client="client" />
     <CreateApplicationModal />
   </div>
 </template>

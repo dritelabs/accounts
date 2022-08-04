@@ -1,14 +1,29 @@
 schema: ./schema.graphql
 documents: ./graphql/**/*.graphql
+#hooks:
+#  afterOneFileWrite:
+#    - eslint --fix
+config:
+  scalars:
+    Long: number
+  defaultScalarType: never
+  useTypeImports: true
 generates:
-  generated/schema.d.ts:
+  graphql/operations/schema.ts:
     plugins:
       - typescript
-  generated/operations.ts:
+      - typescript-urql-graphcache
+  graphql/operations/:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: schema.ts
+      extension: .ts
     config:
-      documentMode: documentNode
-      vueCompositionApiImportFrom: 'vue'
+      preResolveTypes: false
     plugins:
-      - typescript
       - typescript-operations
-      - typescript-vue-apollo
+      # - typed-document-node
+      - typescript-vue-urql
+  graphql/operations/introspection.ts:
+    plugins:
+      - urql-introspection

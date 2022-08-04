@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { useCreateClientMutation, CreateClientInput } from '~/generated/operations';
+import { useCreateClientMutation, CreateClientMutationVariables } from '~/graphql/operations/create-client';
 
+const { executeMutation } = useCreateClientMutation();
 const modal = useModal('createApplicationModal');
-
-const input = ref<CreateClientInput>({
-  name: '',
-  description: '',
-  type: ''
-});
-
-const { mutate } = useCreateClientMutation({
-  refetchQueries: 'active'
+const variables = ref<CreateClientMutationVariables>({
+  input: {
+    name: '',
+    description: '',
+    type: ''
+  }
 });
 
 async function handleSubmit() {
-  await mutate({ input: input.value });
+  await executeMutation(variables.value, {
+    fetchOptions: {
+      headers: useRequestHeaders()
+    }
+  });
 
-  input.value.name = '';
-  input.value.description = '';
-  input.value.type = '';
+  variables.value.input.name = '';
+  variables.value.input.description = '';
+  variables.value.input.type = '';
 
   modal.toggle();
 }
@@ -29,13 +31,24 @@ async function handleSubmit() {
     <div class="field">
       <label class="label"> Name </label>
       <div class="control">
-        <input class="input" type="text" name="name" placeholder="Text input" v-model="input.name" />
+        <input
+          class="input"
+          type="text"
+          name="name"
+          placeholder="Text input"
+          v-model="variables.input.name"
+        />
       </div>
     </div>
     <div class="field">
       <label class="label"> Description </label>
       <div class="control">
-        <textarea class="textarea" name="description" placeholder="Textarea" v-model="input.description" />
+        <textarea
+          class="textarea"
+          name="description"
+          placeholder="Textarea"
+          v-model="variables.input.description"
+        />
       </div>
     </div>
     <div class="field">
@@ -44,7 +57,7 @@ async function handleSubmit() {
         id="web"
         type="radio"
         name="type"
-        v-model="input.type"
+        v-model="variables.input.type"
         value="web"
       />
       <label for="web">
@@ -61,7 +74,7 @@ async function handleSubmit() {
         id="browser"
         type="radio"
         name="type"
-        v-model="input.type"
+        v-model="variables.input.type"
         value="browser"
       />
       <label for="browser">
@@ -78,7 +91,7 @@ async function handleSubmit() {
         id="native"
         type="radio"
         name="type"
-        v-model="input.type"
+        v-model="variables.input.type"
         value="native"
       />
       <label for="native">

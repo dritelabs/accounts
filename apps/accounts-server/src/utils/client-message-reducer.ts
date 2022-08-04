@@ -1,10 +1,11 @@
 import { prisma } from '@drite/accounts-db';
+import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
 
 type Payload = prisma.Client & {
   jwks?: prisma.JWK[];
 };
 
-export function clientMessageReducer(payload: Payload) {
+export function clientMessageReducer(payload: Payload): Client {
   return {
     id: payload.id,
     userId: payload.userId,
@@ -19,6 +20,7 @@ export function clientMessageReducer(payload: Payload) {
     logoUri: payload.logoUri!,
     name: payload.name! || '',
     policyUri: payload.policyUri!,
+    publicKeysConfiguration: payload.publicKeysConfiguration as string,
     redirectUris: payload.redirectUris || [],
     responseTypes: payload.responseTypes || [],
     scope: '',
