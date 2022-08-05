@@ -1,6 +1,6 @@
-import { verifyToken, verifyTokenScopes } from '@drite/accounts-utils';
-import { grpc } from '@drite/accounts-protobuf';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
+import { verifyToken, verifyTokenScopes } from '@dritelabs/accounts-utils';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 import { config } from '../config';
 
 type K = keyof AccountHandlers;

@@ -5,7 +5,7 @@ import {
   InvalidRequestError,
   ServerError,
   UnauthorizedClientError
-} from '@drite/accounts-errors';
+} from '@dritelabs/accounts-errors';
 import { ValidationError } from 'yup';
 
 export function withError<T>(handler: (event: CompatibilityEvent) => Promise<T>) {

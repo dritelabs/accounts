@@ -1,5 +1,5 @@
-import { InvalidClientError } from '@drite/accounts-errors';
-import { decodeBasic } from '@drite/accounts-utils';
+import { InvalidClientError } from '@dritelabs/accounts-errors';
+import { decodeBasic } from '@dritelabs/accounts-utils';
 import { client } from '../prisma';
 
 export async function authenticateWithBasic(authorization: string) {

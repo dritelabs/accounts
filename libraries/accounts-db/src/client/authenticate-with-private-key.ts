@@ -1,5 +1,5 @@
-import { InvalidClientError } from '@drite/accounts-errors';
-import { decodeToken, verifyToken } from '@drite/accounts-utils';
+import { InvalidClientError } from '@dritelabs/accounts-errors';
+import { decodeToken, verifyToken } from '@dritelabs/accounts-utils';
 import { getAuthorizationServerMetadata } from '../metadata/get-authorization-server-metadata';
 import { client } from '../prisma';
 

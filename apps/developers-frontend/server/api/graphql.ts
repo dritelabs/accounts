@@ -1,4 +1,4 @@
-import { ApolloServer, cors } from '@drite/apollo-server-h3';
+import { ApolloServer, cors } from '@dritelabs/apollo-server-h3';
 import { withIronSession } from '~/lib/session';
 import { context, dataSources, schema } from '~/graphql';
 

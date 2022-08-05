@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@drite/developers-frontend",
+  "name": "@dritelabs/developers-frontend",
   "version": "0.0.0",
   "description": "developers frontend module",
   "keywords": [
@@ -33,10 +33,10 @@
     "url": "https://github.com/driten-project/developers/issues"
   },
   "dependencies": {
-    "@drite/accounts-protobuf": "*",
-    "@drite/accounts-utils": "*",
-    "@drite/h3-iron-session": "*",
-    "@drite/apollo-server-h3": "*",
+    "@dritelabs/accounts-protobuf": "*",
+    "@dritelabs/accounts-utils": "*",
+    "@dritelabs/iron-session-h3": "0.0.1",
+    "@dritelabs/apollo-server-h3": "0.0.1",
     "apollo-datasource": "^3.3.1",
     "bulma": "^0.9.4",
     "bulma-extensions": "^6.2.7",

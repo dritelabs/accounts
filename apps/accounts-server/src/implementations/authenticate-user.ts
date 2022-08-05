@@ -1,7 +1,7 @@
-import { client } from '@drite/accounts-db';
-import { grpc } from '@drite/accounts-protobuf';
-import { importJWK, signToken } from '@drite/accounts-utils';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
+import { client } from '@dritelabs/accounts-db';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { importJWK, signToken } from '@dritelabs/accounts-utils';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 import { config } from '../config';
 
 export const authenticateUser: AccountHandlers['AuthenticateUser'] = async (call, callback) => {

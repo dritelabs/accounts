@@ -1,8 +1,8 @@
-import { client, prisma } from '@drite/accounts-db';
-import { grpc } from '@drite/accounts-protobuf';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
-import { randomBytes } from '@drite/accounts-utils';
-import { PublicJWK } from '@drite/accounts-protobuf/dist/protobuf/core/PublicJWK';
+import { client, prisma } from '@dritelabs/accounts-db';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
+import { randomBytes } from '@dritelabs/accounts-utils';
+import { PublicJWK } from '@dritelabs/accounts-protobuf/dist/protobuf/core/PublicJWK';
 import { withAuth } from '../lib/with-auth';
 
 export const updateClientSecret = withAuth<AccountHandlers['UpdateClientSecret']>(

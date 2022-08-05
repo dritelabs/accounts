@@ -1,4 +1,4 @@
-import { createClient } from '@drite/accounts-protobuf/dist/client';
+import { createClient } from '@dritelabs/accounts-protobuf/dist/client';
 import { useRuntimeConfig } from '#imports';
 
 const config = useRuntimeConfig();

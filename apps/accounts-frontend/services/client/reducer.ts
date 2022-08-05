@@ -1,4 +1,4 @@
-import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
+import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 
 export function reducer(payload: Client) {
   return {

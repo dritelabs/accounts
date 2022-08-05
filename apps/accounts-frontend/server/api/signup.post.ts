@@ -1,5 +1,5 @@
-import { InvalidRequestError } from '@drite/accounts-errors';
-import { grpc } from '@drite/accounts-protobuf';
+import { InvalidRequestError } from '@dritelabs/accounts-errors';
+import { grpc } from '@dritelabs/accounts-protobuf';
 import { withIronSession } from '~/lib/session';
 import { user as userService } from '~/services';
 

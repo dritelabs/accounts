@@ -1,5 +1,5 @@
 {
-  "name": "@drite/accounts-db",
+  "name": "@dritelabs/accounts-db",
   "version": "0.0.0",
   "description": "Accounts database module",
   "keywords": [
@@ -32,8 +32,8 @@
     "url": "https://github.com/driten-project/accounts/issues"
   },
   "dependencies": {
-    "@drite/accounts-utils": "*",
-    "@drite/accounts-errors": "*",
+    "@dritelabs/accounts-utils": "*",
+    "@dritelabs/accounts-errors": "*",
     "@prisma/client": "^4.1.0",
     "memjs": "^1.3.0"
   },

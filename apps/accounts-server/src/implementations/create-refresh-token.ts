@@ -1,6 +1,6 @@
-import { importJWK, signToken } from '@drite/accounts-utils';
-import { grpc } from '@drite/accounts-protobuf';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
+import { importJWK, signToken } from '@dritelabs/accounts-utils';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 import { config } from '../config';
 
 export const createRefreshToken: AccountHandlers['CreateRefreshToken'] = async (call, callback) => {

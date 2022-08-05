@@ -1,7 +1,7 @@
 import { promisify } from 'util';
-import { grpc } from '@drite/accounts-protobuf';
-import { InvalidateTokenRequest } from '@drite/accounts-protobuf/dist/protobuf/token/InvalidateTokenRequest';
-import { InvalidateTokenResponse } from '@drite/accounts-protobuf/dist/protobuf/token/InvalidateTokenResponse';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { InvalidateTokenRequest } from '@dritelabs/accounts-protobuf/dist/protobuf/token/InvalidateTokenRequest';
+import { InvalidateTokenResponse } from '@dritelabs/accounts-protobuf/dist/protobuf/token/InvalidateTokenResponse';
 import { client } from '~/lib/client';
 
 export const invalidateToken = promisify<

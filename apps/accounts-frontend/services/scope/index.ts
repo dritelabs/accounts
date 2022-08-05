@@ -1,7 +1,7 @@
 import { promisify } from 'util';
-import { grpc } from '@drite/accounts-protobuf';
-import { ListRequest } from '@drite/accounts-protobuf/dist/protobuf/core/ListRequest';
-import { ListScopesResponse } from '@drite/accounts-protobuf/dist/protobuf/scope/ListScopesResponse';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { ListRequest } from '@dritelabs/accounts-protobuf/dist/protobuf/core/ListRequest';
+import { ListScopesResponse } from '@dritelabs/accounts-protobuf/dist/protobuf/scope/ListScopesResponse';
 import { client } from '~/lib/client';
 
 interface Options {

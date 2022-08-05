@@ -1,5 +1,5 @@
 import { sendRedirect } from 'h3';
-import { codeChallenge, codeVerifier, randomBytes } from '@drite/accounts-utils';
+import { codeChallenge, codeVerifier, randomBytes } from '@dritelabs/accounts-utils';
 import { withIronSession } from '~/lib/session';
 
 export default withIronSession(async (event) => {

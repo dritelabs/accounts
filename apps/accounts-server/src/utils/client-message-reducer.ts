@@ -1,5 +1,5 @@
-import { prisma } from '@drite/accounts-db';
-import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
+import { prisma } from '@dritelabs/accounts-db';
+import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 
 type Payload = prisma.Client & {
   jwks?: prisma.JWK[];

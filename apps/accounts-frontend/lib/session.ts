@@ -1,7 +1,7 @@
 import { CompatibilityEvent } from 'h3';
 import { IronSessionOptions } from 'iron-session';
-import { withIronSessionApiRoute } from '@drite/h3-iron-session';
-import { AuthenticateUserResponse } from '@drite/accounts-protobuf/dist/protobuf/user/AuthenticateUserResponse';
+import { withIronSessionApiRoute } from '@dritelabs/iron-session-h3';
+import { AuthenticateUserResponse } from '@dritelabs/accounts-protobuf/dist/protobuf/user/AuthenticateUserResponse';
 import { useRuntimeConfig } from '#imports';
 
 const config = useRuntimeConfig();

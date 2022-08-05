@@ -1,6 +1,6 @@
 import { useBody, useQuery, sendRedirect } from 'h3';
-import { grpc } from '@drite/accounts-protobuf';
-import { InvalidRequestError } from '@drite/accounts-errors';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { InvalidRequestError } from '@dritelabs/accounts-errors';
 import { withIronSession } from '~/lib/session';
 import { user as userService } from '~/services';
 

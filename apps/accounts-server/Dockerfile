@@ -63,4 +63,4 @@ ENV HOST 0.0.0.0
 ENV PORT 5000
 ENV NODE_ENV production
 
-CMD [ "npm", "start", "-w", "@drite/accounts-server"]
+CMD [ "npm", "start", "-w", "@dritelabs/accounts-server"]

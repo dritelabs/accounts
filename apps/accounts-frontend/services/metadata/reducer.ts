@@ -1,4 +1,4 @@
-import { AuthorizationServerMetadata } from '@drite/accounts-protobuf/dist/protobuf/core/AuthorizationServerMetadata';
+import { AuthorizationServerMetadata } from '@dritelabs/accounts-protobuf/dist/protobuf/core/AuthorizationServerMetadata';
 
 export function reducer(obj: AuthorizationServerMetadata) {
   return {

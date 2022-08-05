@@ -1,4 +1,4 @@
-import { compareHash } from '@drite/accounts-utils';
+import { compareHash } from '@dritelabs/accounts-utils';
 import { client } from '../prisma';
 
 interface AuthenticateUserOptions {

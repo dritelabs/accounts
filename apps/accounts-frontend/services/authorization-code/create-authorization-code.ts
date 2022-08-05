@@ -1,7 +1,7 @@
 import { promisify } from 'util';
-import { grpc } from '@drite/accounts-protobuf';
-import { CreateAuthorizationCodeRequest } from '@drite/accounts-protobuf/dist/protobuf/authorization_code/CreateAuthorizationCodeRequest';
-import { CreateAuthorizationCodeResponse } from '@drite/accounts-protobuf/dist/protobuf/authorization_code/CreateAuthorizationCodeResponse';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { CreateAuthorizationCodeRequest } from '@dritelabs/accounts-protobuf/dist/protobuf/authorization_code/CreateAuthorizationCodeRequest';
+import { CreateAuthorizationCodeResponse } from '@dritelabs/accounts-protobuf/dist/protobuf/authorization_code/CreateAuthorizationCodeResponse';
 import { client } from '~/lib/client';
 
 export const createAuthorizationCode = promisify<

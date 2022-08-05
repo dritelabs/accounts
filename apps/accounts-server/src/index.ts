@@ -1,5 +1,5 @@
-import { grpc } from '@drite/accounts-protobuf';
-import { createServer, proto } from '@drite/accounts-protobuf/dist/server';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { createServer, proto } from '@dritelabs/accounts-protobuf/dist/server';
 import * as implementations from './implementations';
 import { config } from './config';
 

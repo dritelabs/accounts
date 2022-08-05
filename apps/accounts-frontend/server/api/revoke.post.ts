@@ -1,6 +1,6 @@
-import { InvalidClientError, UnauthorizedClientError } from '@drite/accounts-errors';
-import { decodeToken } from '@drite/accounts-utils';
-import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
+import { InvalidClientError, UnauthorizedClientError } from '@dritelabs/accounts-errors';
+import { decodeToken } from '@dritelabs/accounts-utils';
+import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 import { withIronSession } from '~/lib/session';
 import { client as clientService, token as tokenService } from '~/services';
 

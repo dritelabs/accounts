@@ -1,5 +1,5 @@
-import { InvalidClientError, UnauthorizedClientError } from '@drite/accounts-errors';
-import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
+import { InvalidClientError, UnauthorizedClientError } from '@dritelabs/accounts-errors';
+import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 import { withIronSession } from '~/lib/session';
 import { withError } from '~/lib/with-error';
 

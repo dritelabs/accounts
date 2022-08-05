@@ -1,4 +1,4 @@
-import { grpc } from '@drite/accounts-protobuf';
+import { grpc } from '@dritelabs/accounts-protobuf';
 import { withIronSession } from '~/lib/session';
 import { client as clientService } from '~/services';
 

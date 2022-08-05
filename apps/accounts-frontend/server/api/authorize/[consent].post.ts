@@ -1,5 +1,5 @@
 import { sendRedirect } from 'h3';
-import { AccessDeniedError, ServerError } from '@drite/accounts-errors';
+import { AccessDeniedError, ServerError } from '@dritelabs/accounts-errors';
 import { useRuntimeConfig } from '#imports';
 import { withIronSession } from '~/lib/session';
 import { authorizationCode as authorizationCodeService, metadata as metadataService } from '~/services';

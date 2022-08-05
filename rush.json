@@ -392,44 +392,32 @@
    */
   "projects": [
     {
-      "packageName": "@drite/accounts-frontend",
+      "packageName": "@dritelabs/accounts-frontend",
       "projectFolder": "apps/accounts-frontend"
     },
     {
-      "packageName": "@drite/developers-frontend",
+      "packageName": "@dritelabs/developers-frontend",
       "projectFolder": "apps/developers-frontend"
     },
     {
-      "packageName": "@drite/accounts-server",
+      "packageName": "@dritelabs/accounts-server",
       "projectFolder": "apps/accounts-server"
     },
     {
-      "packageName": "@drite/accounts-db",
+      "packageName": "@dritelabs/accounts-db",
       "projectFolder": "libraries/accounts-db"
     },
     {
-      "packageName": "@drite/accounts-errors",
+      "packageName": "@dritelabs/accounts-errors",
       "projectFolder": "libraries/accounts-errors"
     },
     {
-      "packageName": "@drite/accounts-protobuf",
+      "packageName": "@dritelabs/accounts-protobuf",
       "projectFolder": "libraries/accounts-protobuf"
     },
     {
-      "packageName": "@drite/accounts-utils",
+      "packageName": "@dritelabs/accounts-utils",
       "projectFolder": "libraries/accounts-utils"
-    },
-    {
-      "packageName": "@drite/jwt-verifier",
-      "projectFolder": "tools/jwt-verifier"
-    },
-    {
-      "packageName": "@drite/apollo-server-h3",
-      "projectFolder": "tools/apollo-server-h3"
-    },
-    {
-      "packageName": "@drite/h3-iron-session",
-      "projectFolder": "tools/h3-iron-session"
     }
     // {
     //   /**

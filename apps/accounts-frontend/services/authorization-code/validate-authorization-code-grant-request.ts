@@ -1,7 +1,7 @@
 import * as yup from 'yup';
-import { InvalidClientError, InvalidGrantError } from '@drite/accounts-errors';
-import { decodeToken } from '@drite/accounts-utils';
-import { codeChallenge } from '@drite/accounts-utils';
+import { InvalidClientError, InvalidGrantError } from '@dritelabs/accounts-errors';
+import { decodeToken } from '@dritelabs/accounts-utils';
+import { codeChallenge } from '@dritelabs/accounts-utils';
 
 export async function validateAuthorizationCodeGrantRequest(request: AuthorizationCodeGrantRequest) {
   const validation = await authorizationCodeGrantRequestSchema.validate(request);

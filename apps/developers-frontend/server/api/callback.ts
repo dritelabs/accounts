@@ -1,5 +1,5 @@
 import { useQuery, sendRedirect } from 'h3';
-import { importJWK, signToken } from '@drite/accounts-utils';
+import { importJWK, signToken } from '@dritelabs/accounts-utils';
 import { withIronSession } from '~/lib/session';
 
 export default withIronSession(async (event) => {

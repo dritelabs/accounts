@@ -1,6 +1,6 @@
-import { decodeToken } from '@drite/accounts-utils';
-import { grpc } from '@drite/accounts-protobuf';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
+import { decodeToken } from '@dritelabs/accounts-utils';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 import { client as cache } from '../lib/cache';
 import { config } from '../config';
 

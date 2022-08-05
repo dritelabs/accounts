@@ -1,6 +1,6 @@
-import { client, prisma } from '@drite/accounts-db';
-import { grpc } from '@drite/accounts-protobuf';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
+import { client, prisma } from '@dritelabs/accounts-db';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 
 export const listScopes: AccountHandlers['ListScopes'] = async (call, callback) => {
   try {

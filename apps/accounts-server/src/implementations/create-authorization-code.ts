@@ -1,6 +1,6 @@
-import { importJWK, signToken } from '@drite/accounts-utils';
-import { AccountHandlers } from '@drite/accounts-protobuf/dist/protobuf/accounts/Account';
-import { grpc } from '@drite/accounts-protobuf';
+import { importJWK, signToken } from '@dritelabs/accounts-utils';
+import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
+import { grpc } from '@dritelabs/accounts-protobuf';
 import { config } from '../config';
 
 export const createAuthorizationCode: AccountHandlers['CreateAuthorizationCode'] = async (call, callback) => {

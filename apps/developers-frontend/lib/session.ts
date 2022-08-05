@@ -1,6 +1,6 @@
 import { CompatibilityEvent } from 'h3';
 import type { IronSessionOptions } from 'iron-session';
-import { withIronSessionApiRoute } from '@drite/h3-iron-session';
+import { withIronSessionApiRoute } from '@dritelabs/iron-session-h3';
 import { useRuntimeConfig } from '#imports';
 
 declare module 'iron-session' {

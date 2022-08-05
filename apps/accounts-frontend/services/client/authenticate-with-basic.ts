@@ -1,8 +1,8 @@
 import { promisify } from 'util';
-import { InvalidClientError } from '@drite/accounts-errors';
-import { grpc } from '@drite/accounts-protobuf';
-import { AuthenticateClientRequest } from '@drite/accounts-protobuf/dist/protobuf/client/AuthenticateClientRequest';
-import { Client } from '@drite/accounts-protobuf/dist/protobuf/core/Client';
+import { InvalidClientError } from '@dritelabs/accounts-errors';
+import { grpc } from '@dritelabs/accounts-protobuf';
+import { AuthenticateClientRequest } from '@dritelabs/accounts-protobuf/dist/protobuf/client/AuthenticateClientRequest';
+import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 import { client } from '~/lib/client';
 
 export async function authenticateWithBasic(authorization: string) {
