@@ -1,63 +1,118 @@
-version: '3.7'
+version: '3.5'
 
 services:
   accounts-server:
     container_name: accounts-server
     build:
       context: .
-      dockerfile: ./packages/accounts-server/Dockerfile
+      dockerfile: Dockerfile.dev
+      args:
+        APP_DIR: accounts-server
+        APP_NAME: '@dritelabs/accounts-server'
       # restart: on-failure
     ports:
-      - 5000:5000
-    command: >
-      /bin/sh -c "npm i && npm run dev -w @driten/accounts-server"
+      - 4000:4000
     environment:
       NODE_ENV: development
-      PORT: 5000
+      HOST: 0.0.0.0
+      PORT: 4000
       DATABASE_URL: postgresql://driten:driten@postgres:5432/accounts?schema=public
-      AUTHORIZATION_SERVER_ISSUER_BASE_URL: http://localhost:8000
+      MEMCACHED_HOST: memcached:11211
+      AUTHORIZATION_SERVER_ISSUER_BASE_URL: http://localhost:3000
+      BASE_URL: accounts-server:4000
     volumes:
-      - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
-      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
-      - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
-      - server_node_modules:/usr/src/accounts/node_modules
+      - ./apps/accounts-server:/usr/src/accounts/apps/accounts-server
+      - /usr/src/accounts/apps/accounts-server/node_modules/
+      - /usr/src/accounts/apps/accounts-server/dist/
+      - /usr/src/accounts/common/temp/node_modules/
+
+    #   - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
+    #   - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
+    #   - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
+    #   - server_node_modules:/usr/src/accounts/node_modules
     networks:
       - accounts_net
       - postgres_net
+      - memcached_net
+
+  developers-frontend:
+    container_name: developers-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        APP_DIR: developers-frontend
+        APP_NAME: '@dritelabs/developers-frontend'
+      # restart: on-failure
+    ports:
+      - 3001:3001
+      - 24679:24679
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      SERVER_HOST: accounts-server:4000
+      MEMCACHED_HOST: memcached:11211
+      SECRET_COOKIE_PASSWORD: complex_password_at_least_32_characters_long
+      TOKEN_ENDPOINT: http://accounts-frontend:3000/api/token
+    volumes:
+      - ./apps/developers-frontend:/usr/src/accounts/apps/developers-frontend
+      - /usr/src/accounts/apps/developers-frontend/node_modules/
+      - /usr/src/accounts/apps/developers-frontend/.nuxt/
+      - /usr/src/accounts/common/temp/node_modules/
+      # - .:/usr/src/accounts
+      # - /usr/src/accounts/apps/accounts-frontend/node_modules
+      # - /usr/src/accounts/common/temp
+      # - /usr/src/accounts/apps/accounts-frontend/.nuxt
+      # - ./libraries/accounts-errors:/usr/src/accounts/libraries/accounts-errors
+      # - ./libraries/accounts-protobuf:/usr/src/accounts/libraries/accounts-protobuf
+      # - ./libraries/accounts-utils:/usr/src/accounts/libraries/accounts-utils
+      # - ./common:/usr/src/accounts/common
+      # - ./rush.json:/usr/src/accounts/rush.json
+      # - ./apps/accounts-frontend:/usr/src/accounts/apps/accounts-frontend
+      # - /usr/src/accounts/packages/accounts-frontend/.nuxt
+      # - frontend_node_modules:/usr/src/accounts/apps/accounts-frontend/node_modules
+    networks:
+      - accounts_net
       - memcached_net
 
   accounts-frontend:
     container_name: accounts-frontend
     build:
       context: .
-      dockerfile: ./packages/accounts-frontend/Dockerfile
+      dockerfile: Dockerfile.dev
+      args:
+        APP_DIR: accounts-frontend
+        APP_NAME: '@dritelabs/accounts-frontend'
       # restart: on-failure
     ports:
-      - 8000:8000
+      - 3000:3000
       - 24678:24678
-    command: >
-      /bin/sh -c "npm i && npm run dev -w @driten/accounts-frontend"
-
     environment:
       NODE_ENV: development
-      PORT: 8000
-      SERVER_HOST: accounts-server:5000
+      PORT: 3000
+      SERVER_HOST: accounts-server:4000
       MEMCACHED_HOST: memcached:11211
       SECRET_COOKIE_PASSWORD: complex_password_at_least_32_characters_long
     volumes:
-      - ./packages/accounts-errors:/usr/src/accounts/packages/accounts-errors
-      - ./packages/accounts-jwt-verifier:/usr/src/accounts/packages/accounts-jwt-verifier
-      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
-      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
-      - ./packages/accounts-frontend:/usr/src/accounts/packages/accounts-frontend
+      - ./apps/accounts-frontend:/usr/src/accounts/apps/accounts-frontend/
+      - /usr/src/accounts/apps/accounts-frontend/node_modules/
+      - /usr/src/accounts/apps/accounts-frontend/.nuxt/
+      - /usr/src/accounts/common/temp/node_modules/
+
+      # - ./libraries/accounts-errors:/usr/src/accounts/libraries/accounts-errors
+      # - ./libraries/accounts-protobuf:/usr/src/accounts/libraries/accounts-protobuf
+      # - ./libraries/accounts-utils:/usr/src/accounts/libraries/accounts-utils
+      # - ./common:/usr/src/accounts/common
+      # - ./rush.json:/usr/src/accounts/rush.json
+      # - ./apps/accounts-frontend:/usr/src/accounts/apps/accounts-frontend
       # - /usr/src/accounts/packages/accounts-frontend/.nuxt
-      - frontend_node_modules:/usr/src/accounts/node_modules
+      # - frontend_node_modules:/usr/src/accounts/apps/accounts-frontend/node_modules
     networks:
       - accounts_net
       - memcached_net
-volumes:
-  frontend_node_modules:
-  server_node_modules:
+# volumes:
+#   frontend_node_modules:
+#   server_node_modules:
 
 networks:
   accounts_net:

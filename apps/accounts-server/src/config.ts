@@ -10,6 +10,7 @@ const privateKey = readFileSync(join(__dirname, '../config/private-key.json'));
 export const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT || '5000',
+  baseUrl: process.env.BASE_URL || 'localhost:5000',
   authorizationServerIssuerBaseUrl:
     process.env.AUTHORIZATION_SERVER_ISSUER_BASE_URL || 'http://localhost:3000',
   authorizationCodeExpirationTime: process.env.AUTHORIZATION_CODE_EXPIRATION_TIME || 30,

@@ -44,5 +44,12 @@ export default defineNuxtConfig({
   },
   typescript: {
     shim: false
+  },
+  vite: {
+    server: {
+      hmr: {
+        port: 24679
+      }
+    }
   }
 });

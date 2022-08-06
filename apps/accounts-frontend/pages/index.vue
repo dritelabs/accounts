@@ -14,7 +14,7 @@ definePageMeta({
               <h1 class="title is-1 has-text-weight-bold mb-6" :style="{ fontSize: '6rem', lineHeight: 1 }">
                 All of Drite,
                 <br />
-                <span> working for you </span>
+                <span> working for you</span>
               </h1>
               <p class="subtitle is-3">
                 Sign in to your Drite Account, and get the most out of all the Drite services you use. Your

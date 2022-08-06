@@ -7,7 +7,6 @@ type K = keyof AccountHandlers;
 
 export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnaryCall<any, any> {
   return async (call, _callback) => {
-    const authorizationServerApi = `${config.host}:${config.port}`;
     const metadata = call.metadata.getMap();
     const jwks = {
       keys: [config.publicKey]
@@ -16,7 +15,7 @@ export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnary
     const token = await verifyToken(metadata?.authorization as string, {
       typ: 'at+jwt',
       issuer: config.authorizationServerIssuerBaseUrl,
-      audience: authorizationServerApi,
+      audience: config.baseUrl,
       jwks
     }).catch((err) => {
       _callback({

@@ -34,6 +34,14 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "bulk",
+      "name": "build",
+      "summary": "Build the projects",
+      "enableParallelism": true,
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
       "name": "prettier",
       "commandKind": "global",
       "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",

@@ -35,7 +35,6 @@ export const listClients = withAuth<AccountHandlers['ListClients']>(['clients'],
     });
   } catch (e) {
     const error = e as Error;
-
     callback({
       ...error,
       code: grpc.status.UNKNOWN
