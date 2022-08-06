@@ -3,24 +3,19 @@
  * Do not make changes to this file directly
  */
 
-import type { Context } from './graphql/context';
-import type { core } from 'nexus';
+
+import type { Context } from "./graphql/context"
+import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
      * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "JSON";
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSON";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    jsonObject<FieldName extends string>(
-      fieldName: FieldName,
-      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
-    ): void; // "JSONObject";
+    jsonObject<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSONObject";
   }
 }
 declare global {
@@ -28,38 +23,30 @@ declare global {
     /**
      * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    json<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "JSON";
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSON";
     /**
      * The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
-    jsonObject<FieldName extends string>(
-      fieldName: FieldName,
-      ...opts: core.ScalarOutSpread<TypeName, FieldName>
-    ): void; // "JSONObject";
+    jsonObject<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSONObject";
   }
 }
+
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
-  AddJWKToClientInput: {
-    // input type
+  AddJWKToClientInput: { // input type
     clientId: string; // String!
     jwk: NexusGenScalars['JSONObject']; // JSONObject!
-  };
-  CreateClientInput: {
-    // input type
+  }
+  CreateClientInput: { // input type
     description: string; // String!
     name: string; // String!
     type: string; // String!
-  };
-  UpdateClientInput: {
-    // input type
+  }
+  UpdateClientInput: { // input type
     contacts?: Array<string | null> | null; // [String]
     description?: string | null; // String
     grantTypes?: Array<string | null> | null; // [String]
@@ -77,28 +64,27 @@ export interface NexusGenInputs {
     tokenEndpointAuthMethod?: string | null; // String
     tosUri?: string | null; // String
     uri?: string | null; // String
-  };
-  UpdateClientSecretInput: {
-    // input type
+  }
+  UpdateClientSecretInput: { // input type
     id: string; // String!
-  };
+  }
 }
 
-export interface NexusGenEnums {}
+export interface NexusGenEnums {
+}
 
 export interface NexusGenScalars {
-  String: string;
-  Int: number;
-  Float: number;
-  Boolean: boolean;
-  ID: string;
-  JSON: any;
-  JSONObject: any;
+  String: string
+  Int: number
+  Float: number
+  Boolean: boolean
+  ID: string
+  JSON: any
+  JSONObject: any
 }
 
 export interface NexusGenObjects {
-  Client: {
-    // root type
+  Client: { // root type
     contacts?: Array<string | null> | null; // [String]
     createdAt?: string | null; // String
     description?: string | null; // String
@@ -124,31 +110,30 @@ export interface NexusGenObjects {
     updatedAt?: string | null; // String
     uri?: string | null; // String
     userId?: string | null; // String
-  };
-  JWKPair: {
-    // root type
+  }
+  JWKPair: { // root type
     privateKey?: NexusGenScalars['JSONObject'] | null; // JSONObject
     publicKey?: NexusGenScalars['JSONObject'] | null; // JSONObject
-  };
+  }
   Mutation: {};
   Query: {};
-  Viewer: {
-    // root type
+  Viewer: { // root type
     id?: string | null; // String
-  };
+  }
 }
 
-export interface NexusGenInterfaces {}
+export interface NexusGenInterfaces {
+}
 
-export interface NexusGenUnions {}
+export interface NexusGenUnions {
+}
 
-export type NexusGenRootTypes = NexusGenObjects;
+export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars;
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Client: {
-    // field return type
+  Client: { // field return type
     contacts: Array<string | null> | null; // [String]
     createdAt: string | null; // String
     description: string | null; // String
@@ -174,122 +159,109 @@ export interface NexusGenFieldTypes {
     updatedAt: string | null; // String
     uri: string | null; // String
     userId: string | null; // String
-  };
-  JWKPair: {
-    // field return type
+  }
+  JWKPair: { // field return type
     privateKey: NexusGenScalars['JSONObject'] | null; // JSONObject
     publicKey: NexusGenScalars['JSONObject'] | null; // JSONObject
-  };
-  Mutation: {
-    // field return type
+  }
+  Mutation: { // field return type
     addJWKToClient: NexusGenRootTypes['Client'] | null; // Client
     createClient: NexusGenRootTypes['Client'] | null; // Client
     createJWKPair: NexusGenRootTypes['JWKPair'] | null; // JWKPair
     deleteClient: NexusGenRootTypes['Client'] | null; // Client
     updateClient: NexusGenRootTypes['Client'] | null; // Client
     updateClientSecret: NexusGenRootTypes['Client'] | null; // Client
-  };
-  Query: {
-    // field return type
+  }
+  Query: { // field return type
     client: NexusGenRootTypes['Client'] | null; // Client
     clients: Array<NexusGenRootTypes['Client'] | null>; // [Client]!
     viewer: NexusGenRootTypes['Viewer'] | null; // Viewer
-  };
-  Viewer: {
-    // field return type
+  }
+  Viewer: { // field return type
     id: string | null; // String
-  };
+  }
 }
 
 export interface NexusGenFieldTypeNames {
-  Client: {
-    // field return type name
-    contacts: 'String';
-    createdAt: 'String';
-    description: 'String';
-    grantTypes: 'String';
-    id: 'String';
-    isFirstParty: 'Boolean';
-    jwks: 'JSONObject';
-    jwksUri: 'String';
-    logoUri: 'String';
-    name: 'String';
-    policyUri: 'String';
-    publicKeysConfiguration: 'String';
-    redirectUris: 'String';
-    refreshTokenRotationType: 'String';
-    responseTypes: 'String';
-    scope: 'String';
-    secret: 'String';
-    softwareId: 'String';
-    softwareVersion: 'String';
-    tokenEndpointAuthMethod: 'String';
-    tosUri: 'String';
-    type: 'String';
-    updatedAt: 'String';
-    uri: 'String';
-    userId: 'String';
-  };
-  JWKPair: {
-    // field return type name
-    privateKey: 'JSONObject';
-    publicKey: 'JSONObject';
-  };
-  Mutation: {
-    // field return type name
-    addJWKToClient: 'Client';
-    createClient: 'Client';
-    createJWKPair: 'JWKPair';
-    deleteClient: 'Client';
-    updateClient: 'Client';
-    updateClientSecret: 'Client';
-  };
-  Query: {
-    // field return type name
-    client: 'Client';
-    clients: 'Client';
-    viewer: 'Viewer';
-  };
-  Viewer: {
-    // field return type name
-    id: 'String';
-  };
+  Client: { // field return type name
+    contacts: 'String'
+    createdAt: 'String'
+    description: 'String'
+    grantTypes: 'String'
+    id: 'String'
+    isFirstParty: 'Boolean'
+    jwks: 'JSONObject'
+    jwksUri: 'String'
+    logoUri: 'String'
+    name: 'String'
+    policyUri: 'String'
+    publicKeysConfiguration: 'String'
+    redirectUris: 'String'
+    refreshTokenRotationType: 'String'
+    responseTypes: 'String'
+    scope: 'String'
+    secret: 'String'
+    softwareId: 'String'
+    softwareVersion: 'String'
+    tokenEndpointAuthMethod: 'String'
+    tosUri: 'String'
+    type: 'String'
+    updatedAt: 'String'
+    uri: 'String'
+    userId: 'String'
+  }
+  JWKPair: { // field return type name
+    privateKey: 'JSONObject'
+    publicKey: 'JSONObject'
+  }
+  Mutation: { // field return type name
+    addJWKToClient: 'Client'
+    createClient: 'Client'
+    createJWKPair: 'JWKPair'
+    deleteClient: 'Client'
+    updateClient: 'Client'
+    updateClientSecret: 'Client'
+  }
+  Query: { // field return type name
+    client: 'Client'
+    clients: 'Client'
+    viewer: 'Viewer'
+  }
+  Viewer: { // field return type name
+    id: 'String'
+  }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    addJWKToClient: {
-      // args
+    addJWKToClient: { // args
       input?: NexusGenInputs['AddJWKToClientInput'] | null; // AddJWKToClientInput
-    };
-    createClient: {
-      // args
+    }
+    createClient: { // args
       input?: NexusGenInputs['CreateClientInput'] | null; // CreateClientInput
-    };
-    deleteClient: {
-      // args
+    }
+    deleteClient: { // args
       id?: string | null; // String
-    };
-    updateClient: {
-      // args
+    }
+    updateClient: { // args
       input?: NexusGenInputs['UpdateClientInput'] | null; // UpdateClientInput
-    };
-    updateClientSecret: {
-      // args
+    }
+    updateClientSecret: { // args
       input?: NexusGenInputs['UpdateClientSecretInput'] | null; // UpdateClientSecretInput
-    };
-  };
+    }
+  }
   Query: {
-    client: {
-      // args
+    client: { // args
       id?: string | null; // String
-    };
-  };
+    }
+  }
 }
 
-export interface NexusGenAbstractTypeMembers {}
+export interface NexusGenAbstractTypeMembers {
+}
 
-export interface NexusGenTypeInterfaces {}
+export interface NexusGenTypeInterfaces {
+}
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
@@ -309,11 +281,11 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: false;
-    resolveType: true;
-    __typename: false;
-  };
-};
+    isTypeOf: false
+    resolveType: true
+    __typename: false
+  }
+}
 
 export interface NexusGenTypes {
   context: Context;
@@ -332,13 +304,8 @@ export interface NexusGenTypes {
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
   allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
-  allOutputTypes:
-    | NexusGenTypes['objectNames']
-    | NexusGenTypes['enumNames']
-    | NexusGenTypes['unionNames']
-    | NexusGenTypes['interfaceNames']
-    | NexusGenTypes['scalarNames'];
-  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes'];
+  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
+  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractTypeMembers: NexusGenAbstractTypeMembers;
   objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
@@ -346,11 +313,18 @@ export interface NexusGenTypes {
   features: NexusGenFeaturesConfig;
 }
 
+
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
-  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {}
-  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {}
-  interface NexusGenPluginSchemaConfig {}
-  interface NexusGenPluginArgConfig {}
+  interface NexusGenPluginTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
+  }
+  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+  }
+  interface NexusGenPluginSchemaConfig {
+  }
+  interface NexusGenPluginArgConfig {
+  }
 }
