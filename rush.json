@@ -409,15 +409,18 @@
     },
     {
       "packageName": "@dritelabs/accounts-errors",
-      "projectFolder": "libraries/accounts-errors"
+      "projectFolder": "libraries/accounts-errors",
+      "shouldPublish": true
     },
     {
       "packageName": "@dritelabs/accounts-protobuf",
-      "projectFolder": "libraries/accounts-protobuf"
+      "projectFolder": "libraries/accounts-protobuf",
+      "shouldPublish": true
     },
     {
       "packageName": "@dritelabs/accounts-utils",
-      "projectFolder": "libraries/accounts-utils"
+      "projectFolder": "libraries/accounts-utils",
+      "shouldPublish": true
     }
     // {
     //   /**
