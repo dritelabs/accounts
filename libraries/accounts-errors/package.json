@@ -1,12 +1,15 @@
 {
   "name": "@dritelabs/accounts-errors",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "Accounts utils module",
   "keywords": [
     "accounts",
     "errors",
     "module"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Guillermo <guillermolopez2529@gmail.com>",
   "homepage": "https://driten.com",
   "license": "ISC",
@@ -19,7 +22,8 @@
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "dist",
+    "package.json"
   ],
   "repository": {
     "type": "git",
