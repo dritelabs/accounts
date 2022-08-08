@@ -3,7 +3,7 @@ import { defineNuxtConfig } from 'nuxt';
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  css: ['bulma', '@/assets/css/main.scss'],
+  css: ['@/assets/css/main.scss'],
   runtimeConfig: {
     serverHost: process.env.SERVER_HOST || 'localhost:5000',
     memcachedHost: process.env.MEMCACHED_HOST || 'localhost:11211',
@@ -16,9 +16,4 @@ export default defineNuxtConfig({
   typescript: {
     shim: false
   }
-
-  // modulesDir: [
-  //   resolve(__dirname, "../../node_modules"),
-  //   resolve(__dirname, "node_modules"),
-  // ],
 });

@@ -1,425 +1,449 @@
 import type { IntrospectionQuery } from 'graphql';
 export default {
-  __schema: {
-    queryType: {
-      name: 'Query'
+  "__schema": {
+    "queryType": {
+      "name": "Query"
     },
-    mutationType: {
-      name: 'Mutation'
+    "mutationType": {
+      "name": "Mutation"
     },
-    subscriptionType: null,
-    types: [
+    "subscriptionType": null,
+    "types": [
       {
-        kind: 'OBJECT',
-        name: 'Client',
-        fields: [
+        "kind": "OBJECT",
+        "name": "Client",
+        "fields": [
           {
-            name: 'contacts',
-            type: {
-              kind: 'LIST',
-              ofType: {
-                kind: 'SCALAR',
-                name: 'Any'
+            "name": "contacts",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
             },
-            args: []
+            "args": []
           },
           {
-            name: 'createdAt',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'description',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "description",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'grantTypes',
-            type: {
-              kind: 'LIST',
-              ofType: {
-                kind: 'SCALAR',
-                name: 'Any'
+            "name": "grantTypes",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
             },
-            args: []
+            "args": []
           },
           {
-            name: 'id',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'isFirstParty',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "isFirstParty",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'jwks',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "jwks",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'jwksUri',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "jwksUri",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'logoUri',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "logoUri",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'name',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'policyUri',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "policyUri",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'publicKeysConfiguration',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "publicKeysConfiguration",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'redirectUris',
-            type: {
-              kind: 'LIST',
-              ofType: {
-                kind: 'SCALAR',
-                name: 'Any'
+            "name": "redirectUris",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
             },
-            args: []
+            "args": []
           },
           {
-            name: 'refreshTokenRotationType',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "refreshTokenRotationType",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'responseTypes',
-            type: {
-              kind: 'LIST',
-              ofType: {
-                kind: 'SCALAR',
-                name: 'Any'
+            "name": "responseTypes",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
               }
             },
-            args: []
+            "args": []
           },
           {
-            name: 'scope',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "scope",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'secret',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "secret",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'softwareId',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "softwareId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'softwareVersion',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "softwareVersion",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'tokenEndpointAuthMethod',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "tokenEndpointAuthMethod",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'tosUri',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "tosUri",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'type',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'updatedAt',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'uri',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "uri",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'userId',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           }
         ],
-        interfaces: []
+        "interfaces": []
       },
       {
-        kind: 'OBJECT',
-        name: 'JWKPair',
-        fields: [
+        "kind": "OBJECT",
+        "name": "JWKPair",
+        "fields": [
           {
-            name: 'privateKey',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "privateKey",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           },
           {
-            name: 'publicKey',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "publicKey",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
           }
         ],
-        interfaces: []
+        "interfaces": []
       },
       {
-        kind: 'OBJECT',
-        name: 'Mutation',
-        fields: [
+        "kind": "OBJECT",
+        "name": "Mutation",
+        "fields": [
           {
-            name: 'addJWKToClient',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "addJWKToClient",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'input',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "input",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           },
           {
-            name: 'createClient',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "createClient",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'input',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "input",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           },
           {
-            name: 'createJWKPair',
-            type: {
-              kind: 'OBJECT',
-              name: 'JWKPair',
-              ofType: null
+            "name": "createJWKPair",
+            "type": {
+              "kind": "OBJECT",
+              "name": "JWKPair",
+              "ofType": null
             },
-            args: []
+            "args": []
           },
           {
-            name: 'deleteClient',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "deleteClient",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'id',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "id",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           },
           {
-            name: 'updateClient',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "updateClient",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'input',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "input",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           },
           {
-            name: 'updateClientSecret',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "updateClientSecret",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'input',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "input",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           }
         ],
-        interfaces: []
+        "interfaces": []
       },
       {
-        kind: 'OBJECT',
-        name: 'Query',
-        fields: [
+        "kind": "OBJECT",
+        "name": "Query",
+        "fields": [
           {
-            name: 'client',
-            type: {
-              kind: 'OBJECT',
-              name: 'Client',
-              ofType: null
+            "name": "client",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Client",
+              "ofType": null
             },
-            args: [
+            "args": [
               {
-                name: 'id',
-                type: {
-                  kind: 'SCALAR',
-                  name: 'Any'
+                "name": "id",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
                 }
               }
             ]
           },
           {
-            name: 'clients',
-            type: {
-              kind: 'NON_NULL',
-              ofType: {
-                kind: 'LIST',
-                ofType: {
-                  kind: 'OBJECT',
-                  name: 'Client',
-                  ofType: null
+            "name": "clients",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Client",
+                  "ofType": null
                 }
               }
             },
-            args: []
+            "args": []
           },
           {
-            name: 'viewer',
-            type: {
-              kind: 'OBJECT',
-              name: 'Viewer',
-              ofType: null
+            "name": "viewer",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Viewer",
+              "ofType": null
             },
-            args: []
+            "args": []
           }
         ],
-        interfaces: []
+        "interfaces": []
       },
       {
-        kind: 'OBJECT',
-        name: 'Viewer',
-        fields: [
+        "kind": "OBJECT",
+        "name": "Viewer",
+        "fields": [
           {
-            name: 'id',
-            type: {
-              kind: 'SCALAR',
-              name: 'Any'
+            "name": "email",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
-            args: []
+            "args": []
+          },
+          {
+            "name": "firstName",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "lastName",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
           }
         ],
-        interfaces: []
+        "interfaces": []
       },
       {
-        kind: 'SCALAR',
-        name: 'Any'
+        "kind": "SCALAR",
+        "name": "Any"
       }
     ],
-    directives: []
+    "directives": []
   }
 } as unknown as IntrospectionQuery;

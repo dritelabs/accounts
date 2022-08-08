@@ -1,9 +1,10 @@
 // Original file: proto/token.proto
 
+
 export interface InvalidateTokenResponse {
-  token?: string;
+  'token'?: (string);
 }
 
 export interface InvalidateTokenResponse__Output {
-  token: string;
+  'token': (string);
 }

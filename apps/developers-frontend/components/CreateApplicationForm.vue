@@ -103,8 +103,8 @@ async function handleSubmit() {
       </p>
     </div>
     <footer class="buttons is-flex is-justify-content-end">
-      <button class="button is-link is-light" @click="modal.toggle">Cancel</button>
-      <button class="button is-link">Create</button>
+      <button type="button" class="button is-link is-light" @click="modal.toggle">Cancel</button>
+      <button type="submit" class="button is-link">Create</button>
     </footer>
   </form>
 </template>

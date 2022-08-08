@@ -1,12 +1,35 @@
 <script setup lang="ts">
-import { Client } from '~/generated/operations';
+import { Client } from '~/graphql/operations/schema';
 
 const router = useRouter();
 const props = defineProps<{ client: Client }>();
 </script>
 
 <template>
-  <article class="media is-align-items-center is-clickable is-hoverable">
+  <div
+    class="card is-shadowless is-clickable is-hoverable"
+    @click="router.push(`/applications/${props.client.id}`)"
+  >
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">
+            {{ props.client?.name }}
+          </p>
+          <p class="subtitle is-6">Client ID: {{ props?.client?.id }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- <template>
+  <article class="media is-align-items-center is-clickable">
     <figure class="media-left">
       <p class="image is-48x48">
         <img src="https://bulma.io/images/placeholders/96x96.png" />
@@ -24,20 +47,8 @@ const props = defineProps<{ client: Client }>();
               <span> Client ID: {{ props?.client?.id }} </span>
             </p>
           </div>
-          <div class="column is-flex is-justify-content-end">
-            <div class="dropdown is-right is-hoverable">
-              <div class="dropdown-trigger">
-                <i class="mdi mdi-dots-vertical is-size-4" />
-              </div>
-              <div class="dropdown-menu" id="dropdown-menu6" role="menu">
-                <div class="dropdown-content">
-                  <a href="#" class="dropdown-item"> Delete </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </article>
-</template>
+</template> -->

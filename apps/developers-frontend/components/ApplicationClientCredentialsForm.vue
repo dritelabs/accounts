@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Client } from '~/generated/operations';
+import { Client } from '~/graphql/operations/schema';
 
 const props = defineProps<{ client: Client }>();
 const modal = useModal('applicationPublicKeyDetailsModal');

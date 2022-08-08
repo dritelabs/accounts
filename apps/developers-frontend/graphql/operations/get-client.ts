@@ -8,50 +8,24 @@ export type GetClientQueryVariables = Types.Exact<{
   id: Types.Scalars['String'];
 }>;
 
-export type GetClientQuery = { __typename?: 'Query' } & {
-  client?: Types.Maybe<
-    { __typename?: 'Client' } & Pick<
-      Types.Client,
-      | 'id'
-      | 'userId'
-      | 'contacts'
-      | 'description'
-      | 'grantTypes'
-      | 'isFirstParty'
-      | 'jwks'
-      | 'jwksUri'
-      | 'logoUri'
-      | 'name'
-      | 'policyUri'
-      | 'publicKeysConfiguration'
-      | 'redirectUris'
-      | 'responseTypes'
-      | 'refreshTokenRotationType'
-      | 'scope'
-      | 'secret'
-      | 'softwareId'
-      | 'softwareVersion'
-      | 'tokenEndpointAuthMethod'
-      | 'tosUri'
-      | 'type'
-      | 'uri'
-      | 'createdAt'
-      | 'updatedAt'
-    >
-  >;
-};
+
+export type GetClientQuery = (
+  { __typename?: 'Query' }
+  & { client?: Types.Maybe<(
+    { __typename?: 'Client' }
+    & Pick<Types.Client, 'id' | 'userId' | 'contacts' | 'description' | 'grantTypes' | 'isFirstParty' | 'jwks' | 'jwksUri' | 'logoUri' | 'name' | 'policyUri' | 'publicKeysConfiguration' | 'redirectUris' | 'responseTypes' | 'refreshTokenRotationType' | 'scope' | 'secret' | 'softwareId' | 'softwareVersion' | 'tokenEndpointAuthMethod' | 'tosUri' | 'type' | 'uri' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 
 export const GetClientDocument = gql`
-  query GetClient($id: String!) {
-    client(id: $id) {
-      ...Client
-    }
+    query GetClient($id: String!) {
+  client(id: $id) {
+    ...Client
   }
-  ${ClientFragmentDoc}
-`;
-
-export function useGetClientQuery(
-  options: Omit<Urql.UseQueryArgs<never, GetClientQueryVariables>, 'query'> = {}
-) {
-  return Urql.useQuery<GetClientQuery>({ query: GetClientDocument, ...options });
 }
+    ${ClientFragmentDoc}`;
+
+export function useGetClientQuery(options: Omit<Urql.UseQueryArgs<never, GetClientQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetClientQuery>({ query: GetClientDocument, ...options });
+};

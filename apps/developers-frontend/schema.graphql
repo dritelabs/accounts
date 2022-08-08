@@ -96,5 +96,8 @@ input UpdateClientSecretInput {
 }
 
 type Viewer {
+  email: String
+  firstName: String
   id: String
+  lastName: String
 }

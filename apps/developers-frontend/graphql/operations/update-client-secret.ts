@@ -8,50 +8,24 @@ export type UpdateClientSecretMutationVariables = Types.Exact<{
   input: Types.UpdateClientSecretInput;
 }>;
 
-export type UpdateClientSecretMutation = { __typename?: 'Mutation' } & {
-  updateClientSecret?: Types.Maybe<
-    { __typename?: 'Client' } & Pick<
-      Types.Client,
-      | 'id'
-      | 'userId'
-      | 'contacts'
-      | 'description'
-      | 'grantTypes'
-      | 'isFirstParty'
-      | 'jwks'
-      | 'jwksUri'
-      | 'logoUri'
-      | 'name'
-      | 'policyUri'
-      | 'publicKeysConfiguration'
-      | 'redirectUris'
-      | 'responseTypes'
-      | 'refreshTokenRotationType'
-      | 'scope'
-      | 'secret'
-      | 'softwareId'
-      | 'softwareVersion'
-      | 'tokenEndpointAuthMethod'
-      | 'tosUri'
-      | 'type'
-      | 'uri'
-      | 'createdAt'
-      | 'updatedAt'
-    >
-  >;
-};
+
+export type UpdateClientSecretMutation = (
+  { __typename?: 'Mutation' }
+  & { updateClientSecret?: Types.Maybe<(
+    { __typename?: 'Client' }
+    & Pick<Types.Client, 'id' | 'userId' | 'contacts' | 'description' | 'grantTypes' | 'isFirstParty' | 'jwks' | 'jwksUri' | 'logoUri' | 'name' | 'policyUri' | 'publicKeysConfiguration' | 'redirectUris' | 'responseTypes' | 'refreshTokenRotationType' | 'scope' | 'secret' | 'softwareId' | 'softwareVersion' | 'tokenEndpointAuthMethod' | 'tosUri' | 'type' | 'uri' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 
 export const UpdateClientSecretDocument = gql`
-  mutation UpdateClientSecret($input: UpdateClientSecretInput!) {
-    updateClientSecret(input: $input) {
-      ...Client
-    }
+    mutation UpdateClientSecret($input: UpdateClientSecretInput!) {
+  updateClientSecret(input: $input) {
+    ...Client
   }
-  ${ClientFragmentDoc}
-`;
+}
+    ${ClientFragmentDoc}`;
 
 export function useUpdateClientSecretMutation() {
-  return Urql.useMutation<UpdateClientSecretMutation, UpdateClientSecretMutationVariables>(
-    UpdateClientSecretDocument
-  );
-}
+  return Urql.useMutation<UpdateClientSecretMutation, UpdateClientSecretMutationVariables>(UpdateClientSecretDocument);
+};

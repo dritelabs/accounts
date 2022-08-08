@@ -1,9 +1,10 @@
 // Original file: proto/core.proto
 
+
 export interface DeleteRequest {
-  id?: string;
+  'id'?: (string);
 }
 
 export interface DeleteRequest__Output {
-  id: string;
+  'id': (string);
 }

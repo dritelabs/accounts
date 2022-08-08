@@ -118,7 +118,10 @@ export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   Viewer: { // root type
+    email?: string | null; // String
+    firstName?: string | null; // String
     id?: string | null; // String
+    lastName?: string | null; // String
   }
 }
 
@@ -178,7 +181,10 @@ export interface NexusGenFieldTypes {
     viewer: NexusGenRootTypes['Viewer'] | null; // Viewer
   }
   Viewer: { // field return type
+    email: string | null; // String
+    firstName: string | null; // String
     id: string | null; // String
+    lastName: string | null; // String
   }
 }
 
@@ -228,7 +234,10 @@ export interface NexusGenFieldTypeNames {
     viewer: 'Viewer'
   }
   Viewer: { // field return type name
+    email: 'String'
+    firstName: 'String'
     id: 'String'
+    lastName: 'String'
   }
 }
 

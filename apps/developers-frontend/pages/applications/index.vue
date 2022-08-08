@@ -14,8 +14,10 @@ const { data } = await useGetClientsQuery({
 
 <template>
   <div class="container">
-    <ApplicationListViewHeader />
-    <ApplicationListItem v-for="client in data?.clients" :key="client.id" :client="client" />
-    <CreateApplicationModal />
+    <div class="section">
+      <ApplicationListViewHeader />
+      <ApplicationListItem v-for="client in data?.clients" :key="client.id" :client="client" />
+      <CreateApplicationModal />
+    </div>
   </div>
 </template>

@@ -1,7 +1,8 @@
-import { ClientAPI } from './datasources/index';
+import { ClientAPI, UserAPI } from './datasources/index';
 
 export function dataSources() {
   return {
-    clientAPI: new ClientAPI()
+    clientAPI: new ClientAPI(),
+    userAPI: new UserAPI()
   };
 }

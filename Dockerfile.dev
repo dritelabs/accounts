@@ -13,7 +13,7 @@ WORKDIR /usr/src/accounts
 COPY . .
 
 RUN node ./common/scripts/install-run-rush.js update
-RUN node ./common/scripts/install-run-rush.js gen
+RUN node ./common/scripts/install-run-rush.js gen --to-except $APP_NAME
 RUN node ./common/scripts/install-run-rush.js build --to-except $APP_NAME
 
 EXPOSE 3000 3001 4000 24678

@@ -6,7 +6,7 @@ COPY ./ ./
 
 RUN node ./common/scripts/install-run-rush.js install
 RUN node ./common/scripts/install-run-rush.js gen
-RUN node ./common/scripts/install-run-rush.js build && echo 0
+RUN node ./common/scripts/install-run-rush.js build
 RUN node ./common/scripts/install-run-rush.js deploy --overwrite -s accounts-frontend
 
 FROM node:lts-alpine AS release

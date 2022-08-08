@@ -8,48 +8,24 @@ export type CreateClientMutationVariables = Types.Exact<{
   input: Types.CreateClientInput;
 }>;
 
-export type CreateClientMutation = { __typename?: 'Mutation' } & {
-  createClient?: Types.Maybe<
-    { __typename?: 'Client' } & Pick<
-      Types.Client,
-      | 'id'
-      | 'userId'
-      | 'contacts'
-      | 'description'
-      | 'grantTypes'
-      | 'isFirstParty'
-      | 'jwks'
-      | 'jwksUri'
-      | 'logoUri'
-      | 'name'
-      | 'policyUri'
-      | 'publicKeysConfiguration'
-      | 'redirectUris'
-      | 'responseTypes'
-      | 'refreshTokenRotationType'
-      | 'scope'
-      | 'secret'
-      | 'softwareId'
-      | 'softwareVersion'
-      | 'tokenEndpointAuthMethod'
-      | 'tosUri'
-      | 'type'
-      | 'uri'
-      | 'createdAt'
-      | 'updatedAt'
-    >
-  >;
-};
+
+export type CreateClientMutation = (
+  { __typename?: 'Mutation' }
+  & { createClient?: Types.Maybe<(
+    { __typename?: 'Client' }
+    & Pick<Types.Client, 'id' | 'userId' | 'contacts' | 'description' | 'grantTypes' | 'isFirstParty' | 'jwks' | 'jwksUri' | 'logoUri' | 'name' | 'policyUri' | 'publicKeysConfiguration' | 'redirectUris' | 'responseTypes' | 'refreshTokenRotationType' | 'scope' | 'secret' | 'softwareId' | 'softwareVersion' | 'tokenEndpointAuthMethod' | 'tosUri' | 'type' | 'uri' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 
 export const CreateClientDocument = gql`
-  mutation CreateClient($input: CreateClientInput!) {
-    createClient(input: $input) {
-      ...Client
-    }
+    mutation CreateClient($input: CreateClientInput!) {
+  createClient(input: $input) {
+    ...Client
   }
-  ${ClientFragmentDoc}
-`;
+}
+    ${ClientFragmentDoc}`;
 
 export function useCreateClientMutation() {
   return Urql.useMutation<CreateClientMutation, CreateClientMutationVariables>(CreateClientDocument);
-}
+};

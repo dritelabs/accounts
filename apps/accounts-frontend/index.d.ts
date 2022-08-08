@@ -10,5 +10,12 @@ declare module '@nuxt/schema' {
     refreshTokenExpirationTime: string | number;
   }
 }
+
+export type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
+  ...args: any
+) => Promise<infer R>
+  ? R
+  : any;
+
 // It is always important to ensure you import/export something when augmenting a type
 export {};

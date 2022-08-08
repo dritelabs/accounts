@@ -1,3 +1,7 @@
+@import 'bulma/sass/utilities/initial-variables.sass';
+
+$primary: $blue;
+
 @import 'bulma/sass/helpers/color.sass';
 
 $modal-card-title-size: $size-6;
@@ -8,9 +12,32 @@ $menu-item-active-color: $text;
 $menu-item-active-background-color: transparent;
 
 @import 'bulma/bulma.sass';
-@import 'bulma-list/sass/bulma-list.sass';
-@import 'bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.sass';
-@import 'bulma-extensions/bulma-divider/dist/css/bulma-divider.sass';
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.has-display-1 {
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.has-background-gradient {
+  background-image: linear-gradient(to right, rgb(239, 68, 68), rgb(59, 130, 246));
+  color: white;
+}
+
+.has-text-gradient {
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(to right, rgb(239, 68, 68), #485fc7);
+  color: transparent;
+}
+
+.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
 .is-100w {
   width: 100%;

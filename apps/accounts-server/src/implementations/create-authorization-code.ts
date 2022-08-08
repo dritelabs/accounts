@@ -1,3 +1,4 @@
+import { client } from '@dritelabs/accounts-db';
 import { importJWK, signToken } from '@dritelabs/accounts-utils';
 import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
 import { grpc } from '@dritelabs/accounts-protobuf';
@@ -20,6 +21,27 @@ export const createAuthorizationCode: AccountHandlers['CreateAuthorizationCode']
       redirect_uri: call.request.redirectUri,
       scope: call.request.scope
     });
+
+    const approval = await client.clientApproval.findFirst({
+      where: {
+        userId: call.request.sub,
+        clientId: call.request.clientId
+      }
+    });
+
+    if (!approval) {
+      await client.clientApproval.create({
+        data: {
+          userId: call.request.sub,
+          clientId: call.request.clientId,
+          scopes: {
+            connect: call.request.scope.split(' ').map((name) => ({
+              name
+            }))
+          }
+        }
+      });
+    }
 
     callback(null, { code });
   } catch (e) {

@@ -26,27 +26,11 @@ export function withError<T>(handler: (event: CompatibilityEvent) => Promise<T>)
         };
       }
 
-      if (
-        error instanceof InvalidRequestError ||
-        error instanceof InvalidClientError ||
-        error instanceof InvalidGrantError ||
-        error instanceof UnauthorizedClientError
-      ) {
-        event.res.statusCode = 400;
-
-        return {
-          error: error.error,
-          error_description: error.error_description
-        };
-      }
-
-      const e = new ServerError(error?.message);
-
       event.res.statusCode = error.code;
 
       return {
-        error: e.error,
-        error_description: e.error_description
+        error: error?.error || 'server_error',
+        error_description: error?.error_description || error?.message
       };
     }
   };

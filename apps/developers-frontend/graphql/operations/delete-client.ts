@@ -8,48 +8,24 @@ export type DeleteClientMutationVariables = Types.Exact<{
   id: Types.Scalars['String'];
 }>;
 
-export type DeleteClientMutation = { __typename?: 'Mutation' } & {
-  deleteClient?: Types.Maybe<
-    { __typename?: 'Client' } & Pick<
-      Types.Client,
-      | 'id'
-      | 'userId'
-      | 'contacts'
-      | 'description'
-      | 'grantTypes'
-      | 'isFirstParty'
-      | 'jwks'
-      | 'jwksUri'
-      | 'logoUri'
-      | 'name'
-      | 'policyUri'
-      | 'publicKeysConfiguration'
-      | 'redirectUris'
-      | 'responseTypes'
-      | 'refreshTokenRotationType'
-      | 'scope'
-      | 'secret'
-      | 'softwareId'
-      | 'softwareVersion'
-      | 'tokenEndpointAuthMethod'
-      | 'tosUri'
-      | 'type'
-      | 'uri'
-      | 'createdAt'
-      | 'updatedAt'
-    >
-  >;
-};
+
+export type DeleteClientMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteClient?: Types.Maybe<(
+    { __typename?: 'Client' }
+    & Pick<Types.Client, 'id' | 'userId' | 'contacts' | 'description' | 'grantTypes' | 'isFirstParty' | 'jwks' | 'jwksUri' | 'logoUri' | 'name' | 'policyUri' | 'publicKeysConfiguration' | 'redirectUris' | 'responseTypes' | 'refreshTokenRotationType' | 'scope' | 'secret' | 'softwareId' | 'softwareVersion' | 'tokenEndpointAuthMethod' | 'tosUri' | 'type' | 'uri' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 
 export const DeleteClientDocument = gql`
-  mutation DeleteClient($id: String!) {
-    deleteClient(id: $id) {
-      ...Client
-    }
+    mutation DeleteClient($id: String!) {
+  deleteClient(id: $id) {
+    ...Client
   }
-  ${ClientFragmentDoc}
-`;
+}
+    ${ClientFragmentDoc}`;
 
 export function useDeleteClientMutation() {
   return Urql.useMutation<DeleteClientMutation, DeleteClientMutationVariables>(DeleteClientDocument);
-}
+};

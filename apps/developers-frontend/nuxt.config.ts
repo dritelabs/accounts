@@ -11,12 +11,6 @@ const publicKey = JSON.parse(publicFile.toString('utf-8'));
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  // buildModules: ["@nuxt3/apollo-module"],
-  apollo: {
-    default: {
-      uri: 'http://localhost:3001/api/graphql'
-    }
-  },
   css: ['~/assets/scss/index.scss'],
   meta: {
     link: [

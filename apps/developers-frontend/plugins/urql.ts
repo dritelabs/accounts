@@ -2,7 +2,7 @@ import { createClient, ssrExchange, dedupExchange, fetchExchange, Client } from 
 // import { cacheExchange as graphCacheExchange } from '@urql/exchange-graphcache';
 import { defineNuxtPlugin } from '#app';
 // import schema from '~/graphql/operations/introspection';
-// import { GraphCacheConfig } from '~/graphql/operations/schema';
+// import { GraphCacheConfig } from ''~/graphql/operations/schema';
 
 const ssrKey = '__URQL_DATA__';
 

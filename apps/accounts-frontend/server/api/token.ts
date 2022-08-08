@@ -1,18 +1,19 @@
-import { InvalidClientError, UnauthorizedClientError } from '@dritelabs/accounts-errors';
+import { ValidationError } from 'yup';
+import { InvalidClientError, InvalidRequestError, UnauthorizedClientError } from '@dritelabs/accounts-errors';
 import { Client } from '@dritelabs/accounts-protobuf/dist/protobuf/core/Client';
 import { withIronSession } from '~/lib/session';
-import { withError } from '~/lib/with-error';
 
 import {
   authorizationCode as authorizationCodeService,
   client as clientService,
   metadata as metadataService,
-  token as tokenService
+  token as tokenService,
+  user as userService
 } from '~/services';
 
-export default withError(
-  withIronSession(async (event) => {
-    appendHeader(event, 'Cache-Control', 'no-store');
+export default withIronSession(async (event) => {
+  try {
+    // appendHeader(event, 'Cache-Control', 'no-store');
 
     const body = await useRawBody(event);
     const params = new URLSearchParams(body as string);
@@ -127,6 +128,15 @@ export default withError(
 
       const decoded = await tokenService.validateRefreshToken(validation.refresh_token);
 
+      const approval = await userService.verifyClientApproval({
+        clientId: decoded.clientId as string,
+        userId: decoded.sub
+      });
+
+      if (!approval) {
+        throw new InvalidClientError('The client is not authorized to refresh tokens');
+      }
+
       const payload = {
         clientId: decoded.clientId as string,
         scope: decoded.scope as string,
@@ -168,5 +178,23 @@ export default withError(
 
       return tokenResponse;
     }
-  })
-);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      const e = new InvalidRequestError(error?.errors?.[0]);
+
+      event.res.statusCode = e.code;
+
+      return {
+        error: e.error,
+        error_description: e.error_description
+      };
+    }
+
+    event.res.statusCode = error.code;
+
+    return {
+      error: error?.error || 'server_error',
+      error_description: error?.error_description || error?.message
+    };
+  }
+});

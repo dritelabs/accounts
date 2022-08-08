@@ -1,9 +1,10 @@
 // Original file: proto/authorization-code.proto
 
+
 export interface InvalidateAuthorizationCodeResponse {
-  code?: string;
+  'code'?: (string);
 }
 
 export interface InvalidateAuthorizationCodeResponse__Output {
-  code: string;
+  'code': (string);
 }

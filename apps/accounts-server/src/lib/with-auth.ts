@@ -18,7 +18,7 @@ export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnary
       audience: config.baseUrl,
       jwks
     }).catch((err) => {
-      _callback({
+      return _callback({
         code: grpc.status.PERMISSION_DENIED,
         name: err?.message,
         details: err?.message
@@ -30,13 +30,11 @@ export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnary
     }
 
     if (!verifyTokenScopes((token?.payload.scope as string)?.split(' '), scopes)) {
-      _callback({
+      return _callback({
         code: grpc.status.PERMISSION_DENIED,
         name: 'Invalid scope',
         details: 'Invalid scope'
       });
-
-      return;
     }
 
     // @ts-ignore

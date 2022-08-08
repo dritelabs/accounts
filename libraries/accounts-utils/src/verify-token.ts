@@ -25,7 +25,7 @@ export function verifyToken(token: string, options: JWTVerifyOptions) {
 
   return jose.jwtVerify(token, jwks!, {
     typ: options.typ,
-    algorithms: ['RS256'],
+    algorithms: options?.algorithms || ['RS256'],
     issuer: options.issuer,
     audience: options.audience,
     subject: options.subject

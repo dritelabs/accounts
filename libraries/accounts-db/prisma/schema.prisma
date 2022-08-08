@@ -67,10 +67,12 @@ model ClientApproval {
   clientId  String
   client    Client    @relation(fields: [clientId], references: [id])
   user      User      @relation(fields: [userId], references: [id])
+  scopes    Scope[]
   createdAt DateTime  @default(now())
   deletedAt DateTime?
   updatedAt DateTime  @updatedAt
 
+  @@unique([userId, clientId])
   @@map(name: "client_approvals")
 }
 
@@ -109,14 +111,15 @@ model Profile {
 }
 
 model Scope {
-  id          String    @id @default(cuid())
-  clients     Client[]
-  description String
-  displayName String
-  name        String    @unique
-  createdAt   DateTime  @default(now())
-  deletedAt   DateTime?
-  updatedAt   DateTime  @updatedAt
+  id              String           @id @default(cuid())
+  clients         Client[]
+  clientApprovals ClientApproval[]
+  description     String
+  displayName     String
+  name            String           @unique
+  createdAt       DateTime         @default(now())
+  deletedAt       DateTime?
+  updatedAt       DateTime         @updatedAt
 
   @@map(name: "scopes")
 }

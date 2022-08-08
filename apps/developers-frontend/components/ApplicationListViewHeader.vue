@@ -5,7 +5,7 @@ const modal = useModal('createApplicationModal');
 <template>
   <div class="columns">
     <div class="column is-narrow">
-      <p class="title">Applications</p>
+      <p class="title">My Apps</p>
     </div>
     <div class="column"></div>
     <div class="column is-narrow">

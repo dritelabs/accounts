@@ -8,48 +8,24 @@ export type AddJwkToClientMutationVariables = Types.Exact<{
   input: Types.AddJwkToClientInput;
 }>;
 
-export type AddJwkToClientMutation = { __typename?: 'Mutation' } & {
-  addJWKToClient?: Types.Maybe<
-    { __typename?: 'Client' } & Pick<
-      Types.Client,
-      | 'id'
-      | 'userId'
-      | 'contacts'
-      | 'description'
-      | 'grantTypes'
-      | 'isFirstParty'
-      | 'jwks'
-      | 'jwksUri'
-      | 'logoUri'
-      | 'name'
-      | 'policyUri'
-      | 'publicKeysConfiguration'
-      | 'redirectUris'
-      | 'responseTypes'
-      | 'refreshTokenRotationType'
-      | 'scope'
-      | 'secret'
-      | 'softwareId'
-      | 'softwareVersion'
-      | 'tokenEndpointAuthMethod'
-      | 'tosUri'
-      | 'type'
-      | 'uri'
-      | 'createdAt'
-      | 'updatedAt'
-    >
-  >;
-};
+
+export type AddJwkToClientMutation = (
+  { __typename?: 'Mutation' }
+  & { addJWKToClient?: Types.Maybe<(
+    { __typename?: 'Client' }
+    & Pick<Types.Client, 'id' | 'userId' | 'contacts' | 'description' | 'grantTypes' | 'isFirstParty' | 'jwks' | 'jwksUri' | 'logoUri' | 'name' | 'policyUri' | 'publicKeysConfiguration' | 'redirectUris' | 'responseTypes' | 'refreshTokenRotationType' | 'scope' | 'secret' | 'softwareId' | 'softwareVersion' | 'tokenEndpointAuthMethod' | 'tosUri' | 'type' | 'uri' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 
 export const AddJwkToClientDocument = gql`
-  mutation AddJWKToClient($input: AddJWKToClientInput!) {
-    addJWKToClient(input: $input) {
-      ...Client
-    }
+    mutation AddJWKToClient($input: AddJWKToClientInput!) {
+  addJWKToClient(input: $input) {
+    ...Client
   }
-  ${ClientFragmentDoc}
-`;
+}
+    ${ClientFragmentDoc}`;
 
 export function useAddJwkToClientMutation() {
   return Urql.useMutation<AddJwkToClientMutation, AddJwkToClientMutationVariables>(AddJwkToClientDocument);
-}
+};
