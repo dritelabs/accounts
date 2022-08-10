@@ -6,7 +6,7 @@ COPY . .
 
 RUN node ./common/scripts/install-run-rush.js change -v
 RUN node ./common/scripts/install-run-rush.js install
-RUN node ./common/scripts/install-run-rush.js gen --to @dritelabs/developers-frontend
+# RUN node ./common/scripts/install-run-rush.js gen --to @dritelabs/developers-frontend
 RUN node ./common/scripts/install-run-rush.js build --to @dritelabs/developers-frontend
 RUN node ./common/scripts/install-run-rush.js deploy --overwrite -s developers-frontend
 
