@@ -1,4 +1,4 @@
-name: Transcoder CI, CD
+name: Accounts CI, CD
 
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
         with:
           # semantic_version: 17  # It is recommended to specify specifying version range
           branch: main
+          working_directory: ./common/autoinstallers/rush-semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
