@@ -19,7 +19,8 @@
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "dist",
+    "config"
   ],
   "repository": {
     "type": "git",

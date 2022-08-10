@@ -6,9 +6,9 @@ COPY . .
 
 RUN node ./common/scripts/install-run-rush.js change -v
 RUN node ./common/scripts/install-run-rush.js install
-RUN node ./common/scripts/install-run-rush.js gen --to @dritelabs/accounts-frontend
-RUN node ./common/scripts/install-run-rush.js build --to @dritelabs/accounts-frontend
-RUN node ./common/scripts/install-run-rush.js deploy --overwrite -s accounts-frontend
+RUN node ./common/scripts/install-run-rush.js gen --to @dritelabs/developers-frontend
+RUN node ./common/scripts/install-run-rush.js build --to @dritelabs/developers-frontend
+RUN node ./common/scripts/install-run-rush.js deploy --overwrite -s developers-frontend
 
 FROM node:lts-alpine AS release
 
@@ -20,4 +20,4 @@ ENV HOST 0.0.0.0
 ENV PORT 8000
 ENV NODE_ENV production
 
-CMD [ "node", "/usr/src/accounts/apps/accounts-frontend/.output/server/index.mjs"]
+CMD [ "node", "/usr/src/accounts/apps/developers-frontend/.output/server/index.mjs"]

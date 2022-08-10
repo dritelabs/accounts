@@ -56,8 +56,14 @@
       "summary": "Used by the commit-msg Git hook. This command invokes commitlint to validate the commit messages.",
       "safeForSimultaneousRushProcesses": true,
       "autoinstallerName": "rush-commitlint",
-      // This will invoke common/autoinstallers/rush-prettier/node_modules/.bin/pretty-quick
       "shellCommand": "commitlint"
+    },
+    {
+      "name": "changefiles",
+      "commandKind": "global",
+      "summary": "",
+      "autoinstallerName": "rush-changemanager",
+      "shellCommand": "node common/scripts/rush-changefiles.js"
     }
     // {
     //   /**

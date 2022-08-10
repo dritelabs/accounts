@@ -25,6 +25,7 @@
   },
   "files": [
     "dist",
+    "proto",
     "package.json"
   ],
   "repository": {
