@@ -1,0 +1,17 @@
+{
+  "name": "@dritelabs/accounts-errors",
+  "entries": [
+    {
+      "version": "0.0.4",
+      "tag": "@dritelabs/accounts-errors_v0.0.4",
+      "date": "Wed, 10 Aug 2022 18:25:24 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "upgrade version"
+          }
+        ]
+      }
+    }
+  ]
+}

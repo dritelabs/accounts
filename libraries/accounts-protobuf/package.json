@@ -1,6 +1,6 @@
 {
   "name": "@dritelabs/accounts-protobuf",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Accounts database module",
   "keywords": [
     "Accounts",
