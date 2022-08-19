@@ -1,8 +1,0 @@
-query GetViewer {
-  viewer {
-    id
-    email
-    firstName
-    lastName
-  }
-}

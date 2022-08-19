@@ -24,6 +24,9 @@ const { data: scopes } = await useScopes({
   }
 });
 
+definePageMeta({
+  middleware: ['auth']
+});
 // onMounted(() => {
 //   if (client.value?.isFirstParty) {
 //     const form = document.querySelector<HTMLFormElement>("#form-allow");

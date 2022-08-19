@@ -6,16 +6,18 @@ import { authorizationCode as authorizationCodeService, metadata as metadataServ
 
 export default withIronSession(async (event) => {
   const config = useRuntimeConfig();
+
+  const body = await readRawBody(event.req);
+
   const consent = event.context.params.consent;
-  const body = await useRawBody(event.req);
   const request = new URLSearchParams(body as string);
+
+  const metadata = await metadataService.getAuthorizationServerMetadata();
 
   try {
     if (!consent || consent === 'cancel') {
       throw new AccessDeniedError('The resource owner or authorization server denied the request.');
     }
-
-    const metadata = await metadataService.getAuthorizationServerMetadata();
 
     const createAuthorizationCodeResponse = await authorizationCodeService.createAuthorizationCode({
       clientId: request.get('client_id'),
@@ -29,7 +31,8 @@ export default withIronSession(async (event) => {
     });
 
     const params = new URLSearchParams({
-      code: createAuthorizationCodeResponse.code
+      code: createAuthorizationCodeResponse.code,
+      iss: metadata.issuer
     });
 
     if (request.get('state')) {
@@ -43,8 +46,13 @@ export default withIronSession(async (event) => {
     if (error instanceof AccessDeniedError) {
       const params = new URLSearchParams({
         error: error.error,
-        error_description: error.error_description
+        error_description: error.error_description,
+        iss: metadata.issuer
       });
+
+      if (request.get('state')) {
+        params.set('state', request.get('state'));
+      }
 
       const redirectUri = `${request.get('redirect_uri')}?${params.toString()}`;
 

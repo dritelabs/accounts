@@ -396,10 +396,6 @@
       "projectFolder": "apps/accounts-frontend"
     },
     {
-      "packageName": "@dritelabs/developers-frontend",
-      "projectFolder": "apps/developers-frontend"
-    },
-    {
       "packageName": "@dritelabs/accounts-server",
       "projectFolder": "apps/accounts-server"
     },

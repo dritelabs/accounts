@@ -15,34 +15,34 @@ export default withIronSession(async (event) => {
   try {
     // appendHeader(event, 'Cache-Control', 'no-store');
 
-    const body = await useRawBody(event);
+    const body = await readRawBody(event);
     const params = new URLSearchParams(body as string);
     const jsonBody = Object.fromEntries(params);
-    const isAuthenticated = !!event.req.headers.authorization || !!jsonBody?.client_assertion;
+    const hasClientCredentials = !!event.req.headers.authorization || !!jsonBody?.client_assertion;
 
     let client: Client;
 
     const tokenRequest = await tokenService.validateTokenRequest(jsonBody as tokenService.TokenRequest, {
-      context: { isAuthenticated }
+      context: { hasClientCredentials }
     });
 
     if (event.req.headers.authorization && tokenRequest?.client_assertion) {
-      throw new UnauthorizedClientError('The authentication method is invalid');
+      throw new InvalidRequestError('The authentication method is invalid');
     }
 
-    if (!isAuthenticated && !tokenRequest?.client_id) {
+    if (!hasClientCredentials && !tokenRequest?.client_id) {
       throw new InvalidClientError('The client_id is required field');
     }
 
-    if (!isAuthenticated) {
+    if (!hasClientCredentials) {
       client = await clientService.getClient({ id: tokenRequest.client_id });
     }
 
-    if (isAuthenticated && event.req.headers.authorization) {
+    if (hasClientCredentials && event.req.headers.authorization) {
       client = await clientService.authenticateWithBasic(event.req.headers.authorization);
     }
 
-    if (isAuthenticated && tokenRequest?.client_assertion) {
+    if (hasClientCredentials && tokenRequest?.client_assertion) {
       client = await clientService.authenticateWithPrivateKey(tokenRequest?.client_assertion);
     }
 
@@ -52,7 +52,7 @@ export default withIronSession(async (event) => {
       );
     }
 
-    if (!isAuthenticated && tokenRequest.grant_type === 'client_credentials') {
+    if (!hasClientCredentials && tokenRequest.grant_type === 'client_credentials') {
       throw new UnauthorizedClientError('The client is not authenticated ');
     }
 
@@ -107,7 +107,7 @@ export default withIronSession(async (event) => {
       await tokenService.validateClientCredentialsGrantRequest(request);
 
       const createAccessTokenResponse = await tokenService.createAccessToken({
-        clientId: request.client_id,
+        clientId: client.id,
         scope: request.scope,
         sub: client.userId,
         aud: Array.isArray(request.resource) ? request.resource : [request.resource]
@@ -124,7 +124,9 @@ export default withIronSession(async (event) => {
     if (tokenRequest.grant_type === 'refresh_token') {
       const request = jsonBody as tokenService.RefreshTokenGrantRequest;
 
-      const validation = await tokenService.validateRefreshTokenGrantRequest(request);
+      const validation = await tokenService.validateRefreshTokenGrantRequest(request, {
+        clientId: client.id
+      });
 
       const decoded = await tokenService.validateRefreshToken(validation.refresh_token);
 

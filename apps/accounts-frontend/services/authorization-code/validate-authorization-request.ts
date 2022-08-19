@@ -10,7 +10,7 @@ export const authorizationRequestSchema = yup.object({
   code_challenge: yup.string().required(),
   code_challenge_method: yup.string().default('plain'),
   redirect_uri: yup.string().required(),
-  scope: yup.string().default(''),
+  scope: yup.string().required(),
   state: yup.string().nullable(),
   resource: yup.lazy((val) => (Array.isArray(val) ? yup.array().of(yup.string()) : yup.string()))
 });

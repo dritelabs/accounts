@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'unauthenticated'
+  layout: 'unauthenticated',
+  middleware: 'redirect'
 });
 </script>
 
@@ -15,7 +16,7 @@ definePageMeta({
             <p class="title is-1 has-text-white">Drite</p>
             <p class="subtitle is-3 has-text-white">New name, same great account.</p>
             <small class="is-3 has-text-light">
-              We changed our name to Wise — because we’re so much more than transfers.
+              We changed our name to Drite — because we’re so much more than transfers.
             </small>
           </div>
         </div>

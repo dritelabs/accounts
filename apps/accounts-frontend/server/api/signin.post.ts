@@ -1,4 +1,3 @@
-import { useBody, useQuery, sendRedirect } from 'h3';
 import { grpc } from '@dritelabs/accounts-protobuf';
 import { InvalidRequestError } from '@dritelabs/accounts-errors';
 import { withIronSession } from '~/lib/session';
@@ -6,8 +5,8 @@ import { user as userService } from '~/services';
 
 export default withIronSession(async (event) => {
   try {
-    const query = useQuery(event);
-    const body = await useBody(event);
+    const query = getQuery(event);
+    const body = await readBody(event);
     const params = new URLSearchParams(body);
 
     const response = await userService.authenticateUser({

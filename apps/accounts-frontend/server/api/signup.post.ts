@@ -5,7 +5,7 @@ import { user as userService } from '~/services';
 
 export default withIronSession(async (event) => {
   try {
-    const body = await useRawBody(event);
+    const body = await readRawBody(event);
     const params = new URLSearchParams(body as string);
 
     await userService.createUser({

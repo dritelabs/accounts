@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'unauthenticated'
+  layout: 'unauthenticated',
+  middleware: 'redirect'
 });
 </script>
 

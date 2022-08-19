@@ -5,7 +5,7 @@ export async function validateClientCredentialsGrantRequest(request: ClientCrede
 }
 
 export const clientCredentialsGrantRequestSchema = yup.object({
-  scope: yup.string().default(''),
+  scope: yup.string().required(),
   resource: yup.lazy((val) => (Array.isArray(val) ? yup.array().of(yup.string()) : yup.string())),
   grant_type: yup.string().oneOf(['client_credentials']).required()
 });

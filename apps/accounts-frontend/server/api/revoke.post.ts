@@ -6,7 +6,7 @@ import { client as clientService, token as tokenService } from '~/services';
 
 export default withIronSession(async (event) => {
   try {
-    const body = await useRawBody(event);
+    const body = await readRawBody(event);
     const params = new URLSearchParams(body as string);
     const request = Object.fromEntries(params) as tokenService.TokenRequest & tokenService.RevocationRequest;
     const validation = await tokenService.validateRevocationRequest(request);

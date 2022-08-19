@@ -1,5 +1,0 @@
-query GetClient($id: String!) {
-  client(id: $id) {
-    ...Client
-  }
-}

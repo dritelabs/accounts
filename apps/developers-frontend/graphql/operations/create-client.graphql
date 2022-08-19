@@ -1,5 +1,0 @@
-mutation CreateClient($input: CreateClientInput!) {
-  createClient(input: $input) {
-    ...Client
-  }
-}

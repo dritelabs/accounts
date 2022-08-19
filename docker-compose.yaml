@@ -25,54 +25,9 @@ services:
       - /usr/src/accounts/apps/accounts-server/node_modules/
       - /usr/src/accounts/apps/accounts-server/dist/
       - /usr/src/accounts/common/temp/node_modules/
-
-    #   - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
-    #   - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
-    #   - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
-    #   - server_node_modules:/usr/src/accounts/node_modules
     networks:
       - accounts_net
       - postgres_net
-      - memcached_net
-
-  developers-frontend:
-    container_name: developers-frontend
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-      args:
-        APP_DIR: developers-frontend
-        APP_NAME: '@dritelabs/developers-frontend'
-      # restart: on-failure
-    ports:
-      - 3001:3001
-      - 24679:24679
-    environment:
-      NODE_ENV: development
-      PORT: 3001
-      SERVER_HOST: accounts-server:4000
-      MEMCACHED_HOST: memcached:11211
-      SECRET_COOKIE_PASSWORD: complex_password_at_least_32_characters_long
-      TOKEN_ENDPOINT: http://accounts-frontend:3000/api/token
-    volumes:
-      - ./apps/developers-frontend:/usr/src/accounts/apps/developers-frontend
-      - /usr/src/accounts/apps/developers-frontend/node_modules/
-      - /usr/src/accounts/apps/developers-frontend/.nuxt/
-      - /usr/src/accounts/common/temp/node_modules/
-      # - .:/usr/src/accounts
-      # - /usr/src/accounts/apps/accounts-frontend/node_modules
-      # - /usr/src/accounts/common/temp
-      # - /usr/src/accounts/apps/accounts-frontend/.nuxt
-      # - ./libraries/accounts-errors:/usr/src/accounts/libraries/accounts-errors
-      # - ./libraries/accounts-protobuf:/usr/src/accounts/libraries/accounts-protobuf
-      # - ./libraries/accounts-utils:/usr/src/accounts/libraries/accounts-utils
-      # - ./common:/usr/src/accounts/common
-      # - ./rush.json:/usr/src/accounts/rush.json
-      # - ./apps/accounts-frontend:/usr/src/accounts/apps/accounts-frontend
-      # - /usr/src/accounts/packages/accounts-frontend/.nuxt
-      # - frontend_node_modules:/usr/src/accounts/apps/accounts-frontend/node_modules
-    networks:
-      - accounts_net
       - memcached_net
 
   accounts-frontend:
@@ -87,6 +42,7 @@ services:
     ports:
       - 3000:3000
       - 24678:24678
+      - 24679:24679
     environment:
       NODE_ENV: development
       PORT: 3000
@@ -98,21 +54,9 @@ services:
       - /usr/src/accounts/apps/accounts-frontend/node_modules/
       - /usr/src/accounts/apps/accounts-frontend/.nuxt/
       - /usr/src/accounts/common/temp/node_modules/
-
-      # - ./libraries/accounts-errors:/usr/src/accounts/libraries/accounts-errors
-      # - ./libraries/accounts-protobuf:/usr/src/accounts/libraries/accounts-protobuf
-      # - ./libraries/accounts-utils:/usr/src/accounts/libraries/accounts-utils
-      # - ./common:/usr/src/accounts/common
-      # - ./rush.json:/usr/src/accounts/rush.json
-      # - ./apps/accounts-frontend:/usr/src/accounts/apps/accounts-frontend
-      # - /usr/src/accounts/packages/accounts-frontend/.nuxt
-      # - frontend_node_modules:/usr/src/accounts/apps/accounts-frontend/node_modules
     networks:
       - accounts_net
       - memcached_net
-# volumes:
-#   frontend_node_modules:
-#   server_node_modules:
 
 networks:
   accounts_net:

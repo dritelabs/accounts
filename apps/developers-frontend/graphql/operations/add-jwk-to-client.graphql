@@ -1,5 +1,0 @@
-mutation AddJWKToClient($input: AddJWKToClientInput!) {
-  addJWKToClient(input: $input) {
-    ...Client
-  }
-}
