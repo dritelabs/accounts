@@ -34,7 +34,7 @@
    *
    * The default value is false.
    */
-  "includeNpmIgnoreFiles": false,
+  // "includeNpmIgnoreFiles": true,
 
   /**
    * To improve backwards compatibility with legacy packages, the PNPM package manager installs extra links in the
@@ -61,7 +61,7 @@
    * the deployment target folder (common/deploy). This can be used to provide additional configuration files
    * or scripts needed by the server when deploying. The path is resolved relative to the repository root.
    */
-  // "folderToCopy": "apps/accounts-frontend/.output",
+  //  "folderToCopy": "repo-tools/assets/deploy-config",
 
   /**
    * Customize how Rush projects are processed during deployment.

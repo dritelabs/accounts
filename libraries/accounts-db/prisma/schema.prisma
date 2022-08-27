@@ -94,7 +94,7 @@ model Profile {
   birthdate  DateTime? // YYYY-MM-DD
   firstName  String?
   gender     Gender?
-  locale     String? //en-US or en_US
+  locale     String?   @default("en-US") //en-US or en_US
   lastName   String?
   middleName String?
   nickname   String?

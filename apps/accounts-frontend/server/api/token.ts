@@ -20,31 +20,13 @@ export default withIronSession(async (event) => {
     const jsonBody = Object.fromEntries(params);
     const hasClientCredentials = !!event.req.headers.authorization || !!jsonBody?.client_assertion;
 
-    let client: Client;
+    const tokenRequest = await tokenService.validateTokenRequest(jsonBody as tokenService.TokenRequest);
 
-    const tokenRequest = await tokenService.validateTokenRequest(jsonBody as tokenService.TokenRequest, {
-      context: { hasClientCredentials }
+    const client = await clientService.authenticate({
+      authorization: event.req.headers.authorization,
+      clientAssertion: jsonBody?.client_assertion,
+      clientId: tokenRequest.client_id
     });
-
-    if (event.req.headers.authorization && tokenRequest?.client_assertion) {
-      throw new InvalidRequestError('The authentication method is invalid');
-    }
-
-    if (!hasClientCredentials && !tokenRequest?.client_id) {
-      throw new InvalidClientError('The client_id is required field');
-    }
-
-    if (!hasClientCredentials) {
-      client = await clientService.getClient({ id: tokenRequest.client_id });
-    }
-
-    if (hasClientCredentials && event.req.headers.authorization) {
-      client = await clientService.authenticateWithBasic(event.req.headers.authorization);
-    }
-
-    if (hasClientCredentials && tokenRequest?.client_assertion) {
-      client = await clientService.authenticateWithPrivateKey(tokenRequest?.client_assertion);
-    }
 
     if (!client.grantTypes.includes(tokenRequest.grant_type)) {
       throw new UnauthorizedClientError(

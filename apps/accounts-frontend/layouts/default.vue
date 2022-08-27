@@ -1,6 +1,6 @@
 <template>
   <div class="is-100vh">
-    <Header />
+    <MainHeader />
     <div class="is-flex is-flex-grow-1">
       <slot />
     </div>

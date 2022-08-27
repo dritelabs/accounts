@@ -17,8 +17,6 @@ export async function authenticateWithPrivateKey(authorization: string) {
   }
 }
 
-export const authenticateClientWithPrivateKey = promisify<
-  AuthenticateClientRequest,
-  grpc.Metadata | void,
-  Client
->(client.authenticateClientWithPrivateKey.bind(client));
+const authenticateClientWithPrivateKey = promisify<AuthenticateClientRequest, grpc.Metadata | void, Client>(
+  client.authenticateClientWithPrivateKey.bind(client)
+);

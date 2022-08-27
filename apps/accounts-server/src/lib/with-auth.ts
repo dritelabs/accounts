@@ -12,7 +12,7 @@ export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnary
       keys: [config.publicKey]
     };
 
-    const token = await verifyToken(metadata?.authorization as string, {
+    const decoded = await verifyToken(metadata?.authorization as string, {
       typ: 'at+jwt',
       issuer: config.authorizationServerIssuerBaseUrl,
       audience: config.baseUrl,
@@ -25,17 +25,19 @@ export function withAuth<T>(scopes: string[], callback: T): T | grpc.handleUnary
       });
     });
 
-    if (!token) {
+    if (!decoded) {
       return;
     }
 
-    if (!verifyTokenScopes((token?.payload.scope as string)?.split(' '), scopes)) {
+    if (scopes?.length && !verifyTokenScopes((decoded?.payload.scope as string)?.split(' '), scopes)) {
       return _callback({
         code: grpc.status.PERMISSION_DENIED,
         name: 'Invalid scope',
         details: 'Invalid scope'
       });
     }
+
+    call.metadata.add('decoded', JSON.stringify(decoded))
 
     // @ts-ignore
     callback(call, _callback);

@@ -1,20 +1,30 @@
 import { client } from '@dritelabs/accounts-db';
 import { grpc } from '@dritelabs/accounts-protobuf';
 import { AccountHandlers } from '@dritelabs/accounts-protobuf/dist/protobuf/accounts/Account';
+import { withAuth } from '../lib/with-auth';
 import { userMessageReducer } from '../utils';
 
-export const getUser: AccountHandlers['GetUser'] = async (call, callback) => {
+export const getUser = withAuth<AccountHandlers['GetUser']>([], async (call, callback) => {
   try {
+    const metadata = call.metadata.getMap();
+    const decoded = JSON.parse(metadata.decoded as string);
+    const scope = decoded?.payload.scope as string;
+    const includesProfile = scope.includes('profile');
+    const includesAddress = scope.includes('address');
+    const includesEmail = scope.includes('email');
+    const includesPhone = scope.includes('phone');
+
     const found = await client.user.findFirst({
-      where: { id: call.request.id },
-      include: {
-        addresses: true,
-        profile: true,
-        clientApprovals: {
-          include: {
-            scopes: true
-          }
-        }
+      where: { id: call.request.id || decoded?.payload?.sub },
+      select: {
+        id: true,
+        username: includesProfile,
+        addresses: includesAddress,
+        email: includesEmail,
+        emailVerified: includesEmail,
+        phoneNumber: includesPhone,
+        phoneNumberVerified: includesPhone,
+        profile: includesProfile
       }
     });
 
@@ -34,4 +44,4 @@ export const getUser: AccountHandlers['GetUser'] = async (call, callback) => {
       code: grpc.status.UNKNOWN
     });
   }
-};
+});

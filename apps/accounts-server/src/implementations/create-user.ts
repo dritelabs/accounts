@@ -24,7 +24,12 @@ export const createUser: AccountHandlers['CreateUser'] = async (call, callback) 
       data: {
         email: payload.email,
         password: hashed,
-        profile: {}
+        profile: {
+          create: {
+            firstName: payload.firstName,
+            lastName: payload.lastName
+          }
+        }
       }
     });
 

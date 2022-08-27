@@ -3,18 +3,18 @@
 
 export interface AuthenticateUserResponse {
   'id'?: (string);
-  'email'?: (string);
   'accessToken'?: (string);
+  'email'?: (string);
+  'expiresIn'?: (number);
   'refreshToken'?: (string);
   'tokenType'?: (string);
-  'expiresIn'?: (number);
 }
 
 export interface AuthenticateUserResponse__Output {
   'id': (string);
-  'email': (string);
   'accessToken': (string);
+  'email': (string);
+  'expiresIn': (number);
   'refreshToken': (string);
   'tokenType': (string);
-  'expiresIn': (number);
 }

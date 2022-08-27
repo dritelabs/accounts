@@ -13,5 +13,7 @@ const packageDef = protoLoader.loadSync(filename, {
 const proto = grpc.loadPackageDefinition(packageDef) as unknown as ProtoGrpcType;
 
 export function createClient(host: string = defaultHost) {
-  return new proto.accounts.Account(host, grpc.credentials.createInsecure());
+  const client = new proto.accounts.Account(host, grpc.credentials.createInsecure());
+
+  return client;
 }

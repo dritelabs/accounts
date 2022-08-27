@@ -7,12 +7,23 @@ import { config } from '../config';
 export const createIdToken: AccountHandlers['CreateIDToken'] = async (call, callback) => {
   try {
     const privatekey = await importJWK(config.privateKey);
+    const scope = call.request.scope;
+    const includesProfile = scope.includes('profile');
+    const includesAddress = scope.includes('address');
+    const includesEmail = scope.includes('email');
+    const includesPhone = scope.includes('phone');
 
     const found = await client.user.findFirst({
       where: { id: call.request.sub },
-      include: {
-        addresses: true,
-        profile: true
+      select: {
+        id: true,
+        username: includesProfile,
+        addresses: includesAddress,
+        email: includesEmail,
+        emailVerified: includesEmail,
+        phoneNumber: includesPhone,
+        phoneNumberVerified: includesPhone,
+        profile: includesProfile
       }
     });
 

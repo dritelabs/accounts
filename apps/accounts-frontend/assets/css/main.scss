@@ -1,6 +1,30 @@
-@import 'bulma/sass/utilities/initial-variables.sass';
+// @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-$primary: $blue;
+@import 'bulma/sass/utilities/initial-variables.sass';
+// @import 'bulma-calendar/dist/css/bulma-calendar.min.css';
+
+// Set your brand colors
+$primary-color: #4069ff;
+$purple: #8a4d76;
+$pink: #fa7c91;
+$brown: #757763;
+$beige-light: #d0d1cd;
+$beige-lighter: #eff0eb;
+
+// Update Bulma's global variables
+$family-sans-serif: 'Roboto', sans-serif;
+// $grey-dark: $brown;
+// $grey-light: $beige-light;
+// $primary: $purple;
+$primary: $primary-color;
+$link: $primary-color;
+
+// Update some of Bulma's component variables
+$control-border-width: 2px;
+// $input-background-color: $beige-lighter;
+$input-border-color: $beige-lighter;
+// $input-shadow: none;
 
 @import 'bulma/sass/helpers/color.sass';
 
@@ -8,14 +32,10 @@ $modal-card-title-size: $size-6;
 $modal-card-head-background-color: $white-ter;
 $modal-card-head-border-bottom: none;
 $modal-card-foot-border-top: none;
-$menu-item-active-color: $text;
+$menu-item-active-color: $primary;
 $menu-item-active-background-color: transparent;
 
 @import 'bulma/bulma.sass';
-
-body {
-  font-family: 'Roboto', sans-serif;
-}
 
 .has-display-1 {
   font-size: 4rem;
@@ -41,10 +61,6 @@ body {
 
 .is-hoverable:hover {
   background-color: $white-bis;
-}
-
-.is-bordered {
-  border: 1px solid $grey-lighter !important;
 }
 
 .is-100vh {
@@ -75,4 +91,8 @@ body {
 .has-border-bottom {
   border-bottom: 1px solid $grey-lighter;
   padding-bottom: 1em;
+}
+
+.is-bordered {
+  border: 1px solid $grey-lighter;
 }

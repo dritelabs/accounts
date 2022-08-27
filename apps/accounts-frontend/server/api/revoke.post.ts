@@ -11,7 +11,7 @@ export default withIronSession(async (event) => {
     const request = Object.fromEntries(params) as tokenService.TokenRequest & tokenService.RevocationRequest;
     const validation = await tokenService.validateRevocationRequest(request);
 
-    const isAuthenticated = !!event.req.headers.authorization || !!request?.client_assertion;
+    const hasClientCredentials = !!event.req.headers.authorization || !!request?.client_assertion;
 
     let client: Client;
 
@@ -19,19 +19,19 @@ export default withIronSession(async (event) => {
       throw new UnauthorizedClientError('The authentication method is invalid');
     }
 
-    if (!isAuthenticated && !request?.client_id) {
+    if (!hasClientCredentials && !request?.client_id) {
       throw new InvalidClientError('The client_id is required field');
     }
 
-    if (!isAuthenticated) {
+    if (!hasClientCredentials) {
       client = await clientService.getClient({ id: request.client_id });
     }
 
-    if (isAuthenticated && event.req.headers.authorization) {
+    if (hasClientCredentials && event.req.headers.authorization) {
       client = await clientService.authenticateWithBasic(event.req.headers.authorization);
     }
 
-    if (isAuthenticated && request?.client_assertion) {
+    if (hasClientCredentials && request?.client_assertion) {
       client = await clientService.authenticateWithPrivateKey(request?.client_assertion);
     }
 

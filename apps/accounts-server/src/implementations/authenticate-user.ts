@@ -10,23 +10,23 @@ export const authenticateUser: AccountHandlers['AuthenticateUser'] = async (call
     const privatekey = await importJWK(config.privateKey);
 
     const accessToken = await signToken({
-      audience: config.authorizationServerIssuerBaseUrl,
+      audience: [config.authorizationServerIssuerBaseUrl, config.baseUrl],
       exp: config.accessTokenExpirationTime,
       issuer: config.authorizationServerIssuerBaseUrl,
       key: privatekey,
       typ: 'at+jwt',
       subject: found.id,
-      scope: ''
+      scope: 'openid profile email'
     });
 
     const refreshToken = await signToken({
-      audience: config.authorizationServerIssuerBaseUrl,
+      audience: [config.authorizationServerIssuerBaseUrl, config.baseUrl],
       exp: config.refreshTokenExpirationTime,
       issuer: config.authorizationServerIssuerBaseUrl,
       key: privatekey,
       typ: 'rt+jwt',
       subject: found.id,
-      scope: ''
+      scope: 'openid profile email'
     });
 
     callback(null, {

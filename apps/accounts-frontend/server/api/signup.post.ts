@@ -9,7 +9,10 @@ export default withIronSession(async (event) => {
     const params = new URLSearchParams(body as string);
 
     await userService.createUser({
+      confirmPassword: params.get('confirmPassword'),
       email: params.get('email'),
+      firstName: params.get('firstName'),
+      lastName: params.get('lastName'),
       password: params.get('password')
     });
 

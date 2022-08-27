@@ -1,18 +1,21 @@
 import { prisma } from '@dritelabs/accounts-db';
 import { User } from '@dritelabs/accounts-protobuf/dist/protobuf/core/User';
+import { clientMessageReducer } from './client-message-reducer';
 
-type Payload = prisma.User & {
-  addresses: prisma.Address[];
-  profile: prisma.Profile | null;
-  clientApprovals: (prisma.ClientApproval & {
-    scopes: prisma.Scope[];
-  })[];
-};
+type Payload = Partial<
+  prisma.User & {
+    addresses: prisma.Address[];
+    profile: prisma.Profile | null;
+    clientApprovals: (prisma.ClientApproval & {
+      scopes: prisma.Scope[];
+    })[];
+  }
+>;
 
 export function userMessageReducer(payload: Payload): User {
   return {
-    id: payload.id,
-    addresses: payload.addresses?.map((address) => ({
+    id: payload?.id,
+    addresses: payload?.addresses?.map((address) => ({
       ...address,
       id: address?.id,
       city: address?.city!,
@@ -29,23 +32,24 @@ export function userMessageReducer(payload: Payload): User {
       updatedAt: address?.updatedAt?.toISOString(),
       userId: address?.userId!
     })),
-    clientApprovals: payload.clientApprovals.map((clientApproval) => ({
+    clientApprovals: payload?.clientApprovals?.map((clientApproval) => ({
       ...clientApproval,
-      scopes: clientApproval.scopes.map((scope) => ({
+      // client: clientMessageReducer(clientApproval.client),
+      scopes: clientApproval?.scopes.map((scope) => ({
         ...scope,
-        createdAt: payload.createdAt.toISOString(),
-        deletedAt: payload.deletedAt?.toISOString(),
-        updatedAt: payload.updatedAt.toISOString()
+        createdAt: payload?.createdAt?.toISOString(),
+        deletedAt: payload?.deletedAt?.toISOString(),
+        updatedAt: payload?.updatedAt?.toISOString()
       })),
-      createdAt: payload.createdAt.toISOString(),
-      deletedAt: payload.deletedAt?.toISOString(),
-      updatedAt: payload.updatedAt.toISOString()
+      createdAt: payload?.createdAt?.toISOString(),
+      deletedAt: payload?.deletedAt?.toISOString(),
+      updatedAt: payload?.updatedAt?.toISOString()
     })),
-    email: payload.email,
-    emailVerified: payload.emailVerified!,
-    password: payload.password,
-    phoneNumber: payload.phoneNumber!,
-    phoneNumberVerified: payload.phoneNumberVerified!,
+    email: payload?.email,
+    emailVerified: payload?.emailVerified!,
+    password: payload?.password,
+    phoneNumber: payload?.phoneNumber!,
+    phoneNumberVerified: payload?.phoneNumberVerified!,
     profile: {
       birthdate: payload?.profile?.birthdate?.toISOString(),
       createdAt: payload?.profile?.createdAt.toISOString(),
@@ -62,9 +66,9 @@ export function userMessageReducer(payload: Payload): User {
       website: payload?.profile?.website!,
       zoneinfo: payload?.profile?.zoneinfo!
     },
-    username: payload.username!,
-    createdAt: payload.createdAt.toISOString(),
-    deletedAt: payload.deletedAt?.toISOString(),
-    updatedAt: payload.updatedAt.toISOString()
+    username: payload?.username!,
+    createdAt: payload?.createdAt?.toISOString(),
+    deletedAt: payload?.deletedAt?.toISOString(),
+    updatedAt: payload?.updatedAt?.toISOString()
   };
 }
