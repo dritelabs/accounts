@@ -1,30 +1,22 @@
 // Original file: proto/token.proto
 
 
-export interface CreateTokenRequest {
+export interface CreateTokenWithClientCredentialsRequest {
   'clientId'?: (string);
-  'code'?: (string);
-  'codeVerifier'?: (string);
   'clientCredentials'?: (string);
   'clientAssertion'?: (string);
   'clientAssertionType'?: (string);
   'grantType'?: (string);
-  'refreshToken'?: (string);
-  'redirectUri'?: (string);
   'resource'?: (string)[];
   'scope'?: (string);
 }
 
-export interface CreateTokenRequest__Output {
+export interface CreateTokenWithClientCredentialsRequest__Output {
   'clientId': (string);
-  'code': (string);
-  'codeVerifier': (string);
   'clientCredentials': (string);
   'clientAssertion': (string);
   'clientAssertionType': (string);
   'grantType': (string);
-  'refreshToken': (string);
-  'redirectUri': (string);
   'resource': (string)[];
   'scope': (string);
 }

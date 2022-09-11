@@ -2,20 +2,61 @@ syntax = "proto3";
 
 package token;
 
-message CreateTokenRequest {
-  string auth_time = 1;
-  string acr = 2;
-  string amr = 3;
-  repeated string aud = 4;
-  string client_id = 5;
-  string sub = 6;
+message CreateTokenWithAuthorizationCodeRequest {
+  string client_id = 1;
+  string code = 2;
+  string code_verifier = 3;
+  string client_credentials = 4;
+  string client_assertion = 5;
+  string client_assertion_type = 6;
+  string grant_type = 7;
+  string redirect_uri = 8;
+}
+
+message CreateTokenWithClientCredentialsRequest {
+  string client_id = 1;
+  string client_credentials = 2;
+  string client_assertion = 3;
+  string client_assertion_type = 4;
+  string grant_type = 5;
+  repeated string resource = 6;
   string scope = 7;
 }
 
-message CreateTokenResponse {
-  int32 expires_in = 1;
-  string token = 2;
-  string token_type = 3;
+message IntrospectTokenRequest {
+  string token = 1;
+  string token_type_hint = 2;
+}
+
+message IntrospectTokenResponse {
+  string token = 1;
+}
+
+message RevokeTokenRequest {
+  string token = 1;
+  string token_type_hint = 2;
+}
+
+message RevokeTokenResponse {
+  string token = 1;
+}
+
+message RefreshTokenRequest {
+  string client_id = 1;
+  string client_credentials = 2;
+  string client_assertion = 3;
+  string client_assertion_type = 4;
+  string grant_type = 5;
+  string refresh_token = 6;
+}
+
+message TokenResponse {
+  string access_token = 1;
+  int32 expires_in = 2;
+  string id_token = 3;
+  string refresh_token = 4;
+  string scope = 5;
+  string token_type = 6;
 }
 
 message InvalidateTokenRequest {

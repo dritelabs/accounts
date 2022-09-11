@@ -6,24 +6,21 @@ export async function authenticateWithBasic(authorization: string) {
   const decoded = decodeBasic(authorization);
 
   if (!decoded) {
-    throw new InvalidClientError('Invalid client_id or client_secret');
+    throw new InvalidClientError('The authentication method is invalid');
   }
 
   const found = await client.client.findFirst({
     where: {
       id: decoded.clientId
-    },
-    include: {
-      jwks: true
     }
   });
 
   if (!found) {
-    throw new InvalidClientError('Invalid client_id or client_secret');
+    throw new InvalidClientError('The authentication method is invalid');
   }
 
   if (found.secret !== decoded.clientSecret) {
-    throw new InvalidClientError('Invalid client_id or client_secret');
+    throw new InvalidClientError('The authentication method is invalid');
   }
 
   return found;

@@ -14,8 +14,6 @@ export const deleteClient: AccountHandlers['DeleteClient'] = async (call, callba
 
     callback(null, clientMessageReducer(deleted));
   } catch (e) {
-    console.log(e);
-
     const error = e as Error;
     callback({
       ...error,

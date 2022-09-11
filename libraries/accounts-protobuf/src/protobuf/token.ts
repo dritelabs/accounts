@@ -8,10 +8,16 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 
 export interface ProtoGrpcType {
   token: {
-    CreateTokenRequest: MessageTypeDefinition
-    CreateTokenResponse: MessageTypeDefinition
+    CreateTokenWithAuthorizationCodeRequest: MessageTypeDefinition
+    CreateTokenWithClientCredentialsRequest: MessageTypeDefinition
+    IntrospectTokenRequest: MessageTypeDefinition
+    IntrospectTokenResponse: MessageTypeDefinition
     InvalidateTokenRequest: MessageTypeDefinition
     InvalidateTokenResponse: MessageTypeDefinition
+    RefreshTokenRequest: MessageTypeDefinition
+    RevokeTokenRequest: MessageTypeDefinition
+    RevokeTokenResponse: MessageTypeDefinition
+    TokenResponse: MessageTypeDefinition
     ValidateTokenRequest: MessageTypeDefinition
     ValidateTokenResponse: MessageTypeDefinition
   }

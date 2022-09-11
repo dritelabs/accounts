@@ -38,13 +38,13 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cuid": "^2.1.8",
-    "jose": "^4.5.0"
+    "jose": "4.9.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/node": "16.11.19",
-    "@rushstack/heft": "0.47.0",
-    "typescript": "4.5.5",
+    "@rushstack/heft": "0.47.5",
+    "typescript": "4.8.2",
     "tsup": "5.11.13"
   }
 }

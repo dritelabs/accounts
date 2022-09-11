@@ -16,20 +16,10 @@ export async function authenticateWithPrivateKey(authorization: string) {
   });
 
   if (!found) {
-    throw new InvalidClientError('Invalid client_id');
+    throw new InvalidClientError('The authentication method is invalid');
   }
 
   const metadata = await getAuthorizationServerMetadata();
-
-  // const { value: cached } = await cache.get(decoded.jti);
-
-  // if (cached) {
-  //   throw new InvalidGrantError("The client assertion was already used");
-  // }
-
-  // await cache.set(decoded.jti, clientAssertion, {
-  //   expires: decoded.exp - decoded.iat,
-  // });
 
   if (found.publicKeysConfiguration === 'local') {
     await verifyToken(authorization, {

@@ -1,7 +1,7 @@
 // Original file: proto/token.proto
 
 
-export interface CreateTokenResponse {
+export interface TokenResponse {
   'accessToken'?: (string);
   'expiresIn'?: (number);
   'idToken'?: (string);
@@ -10,7 +10,7 @@ export interface CreateTokenResponse {
   'tokenType'?: (string);
 }
 
-export interface CreateTokenResponse__Output {
+export interface TokenResponse__Output {
   'accessToken': (string);
   'expiresIn': (number);
   'idToken': (string);

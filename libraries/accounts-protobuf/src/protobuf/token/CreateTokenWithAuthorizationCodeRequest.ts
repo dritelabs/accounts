@@ -1,7 +1,7 @@
 // Original file: proto/token.proto
 
 
-export interface CreateTokenRequest {
+export interface CreateTokenWithAuthorizationCodeRequest {
   'clientId'?: (string);
   'code'?: (string);
   'codeVerifier'?: (string);
@@ -9,13 +9,10 @@ export interface CreateTokenRequest {
   'clientAssertion'?: (string);
   'clientAssertionType'?: (string);
   'grantType'?: (string);
-  'refreshToken'?: (string);
   'redirectUri'?: (string);
-  'resource'?: (string)[];
-  'scope'?: (string);
 }
 
-export interface CreateTokenRequest__Output {
+export interface CreateTokenWithAuthorizationCodeRequest__Output {
   'clientId': (string);
   'code': (string);
   'codeVerifier': (string);
@@ -23,8 +20,5 @@ export interface CreateTokenRequest__Output {
   'clientAssertion': (string);
   'clientAssertionType': (string);
   'grantType': (string);
-  'refreshToken': (string);
   'redirectUri': (string);
-  'resource': (string)[];
-  'scope': (string);
 }

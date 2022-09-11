@@ -24,10 +24,6 @@ services:
       - /usr/src/accounts/apps/accounts-server/node_modules/
       - /usr/src/accounts/apps/accounts-server/dist/
       - /usr/src/accounts/common/temp/node_modules/
-    networks:
-      - accounts_net
-      - postgres_net
-      - memcached_net
 
   accounts-frontend:
     container_name: accounts-frontend
@@ -53,16 +49,8 @@ services:
       - /usr/src/accounts/apps/accounts-frontend/node_modules/
       - /usr/src/accounts/apps/accounts-frontend/.nuxt/
       - /usr/src/accounts/common/temp/node_modules/
-    networks:
-      - accounts_net
-      - memcached_net
 
 networks:
-  accounts_net:
-    name: accounts_net
-  postgres_net:
+  default:
     external:
-      name: postgres_net
-  memcached_net:
-    external:
-      name: memcached_net
+      name: drite
