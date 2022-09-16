@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "dev": "lerna run dev --stream",
+    "generate": "lerna run generate --stream"
+  },
+  "devDependencies": {
+    "lerna": "^5.5.1",
+    "nx": "^14.7.3"
+  }
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package authorization_code;
+
+message CreateAuthorizationCodeRequest {
+  repeated string aud = 1;
+  string client_id = 2;
+  string code_challenge = 3;
+  string code_challenge_method = 4;
+  string redirect_uri = 6;
+  string sub = 7;
+  string scope = 8;
+}
+
+message CreateAuthorizationCodeResponse {
+  string code = 1;
+  string iss = 2;
+}
+
+message InvalidateAuthorizationCodeRequest {
+  string code = 1;
+}
+
+message InvalidateAuthorizationCodeResponse {
+  string code = 1;
+}

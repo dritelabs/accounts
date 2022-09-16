@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import 'bulma/sass/utilities/initial-variables.sass';
+// @import 'bulma-calendar/dist/css/bulma-calendar.min.css';
+
+// Set your brand colors
+$primary-color: #335fff;
+$secondary-color: #161b2c;
+$purple: #8a4d76;
+$pink: #fa7c91;
+$brown: #757763;
+$beige-light: #d0d1cd;
+$beige-lighter: #eff0eb;
+
+// Update Bulma's global variables
+$family-sans-serif: 'Roboto', sans-serif;
+// $grey-dark: $brown;
+// $grey-light: $beige-light;
+// $primary: $purple;
+$primary: $primary-color;
+$link: $primary-color;
+
+// Update some of Bulma's component variables
+$control-border-width: 2px;
+// $input-background-color: $beige-lighter;
+$input-border-color: $beige-lighter;
+// $input-shadow: none;
+
+// $navbar-item-color: $grey-light !important;
+// $navbar-item-hover-color: $white-ter !important;
+$navbar-item-hover-background-color: transparent !important;
+
+@import 'bulma/sass/helpers/color.sass';
+
+$modal-card-title-size: $size-6;
+$modal-card-head-background-color: $white-ter;
+$modal-card-head-border-bottom: none;
+$modal-card-foot-border-top: none;
+$menu-item-active-color: $primary;
+$menu-item-active-background-color: $primary-light;
+
+@import 'bulma/bulma.sass';
+
+.has-hero-illustration-background {
+  @include tablet {
+    background: url('/hero-illustration-background.png') 100% -100%;
+    background-repeat: no-repeat;
+    background-size: 700px;
+  }
+}
+
+.is-display-1 {
+  font-size: 4.2rem;
+  font-weight: 400;
+
+  strong {
+    font-weight: 800;
+  }
+}
+
+.is-display-2 {
+  font-size: 3.9rem;
+  font-weight: 800;
+}
+
+.has-border-rounded {
+  border-radius: 5px;
+}
+
+.has-background-secondary {
+  background-color: $secondary-color !important;
+}
+
+.has-background-gradient {
+  background-image: linear-gradient(to right, rgb(239, 68, 68), rgb(59, 130, 246));
+  color: white;
+}
+
+.has-text-weight-bolder {
+  font-weight: 900;
+}
+
+.has-text-gradient {
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(to right, rgb(239, 68, 68), #485fc7);
+  color: transparent;
+}
+
+.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.is-hoverable:hover {
+  opacity: 0.6;
+}
+
+.is-100vh {
+  min-height: 100vh;
+}
+
+.is-100h {
+  height: 100%;
+}
+
+.is-100w {
+  width: 100%;
+}
+
+.is-75w {
+  width: 75%;
+}
+
+.is-50w {
+  width: 50%;
+}
+
+.is-border-none {
+  border: none;
+  box-shadow: none;
+}
+
+.has-border-bottom {
+  border-bottom: 1px solid $grey-lighter;
+  padding-bottom: 1em;
+}
+
+.is-bordered {
+  border: 1px solid $grey-lighter;
+}

@@ -1,0 +1,56 @@
+{
+  "name": "@dritelabs/accounts-db",
+  "version": "0.0.0",
+  "description": "Accounts database module",
+  "keywords": [
+    "Accounts",
+    "database",
+    "module"
+  ],
+  "author": "Guillermo <guillermolopez2529@gmail.com>",
+  "homepage": "https://driten.com",
+  "license": "ISC",
+  "exports": "./dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driten-project/accounts.git"
+  },
+  "scripts": {
+    "build": "tsup",
+    "generate": "prisma generate",
+    "test": "tsup-node script.ts --watch --onSuccess 'node dist/script.js'"
+  },
+  "bugs": {
+    "url": "https://github.com/driten-project/accounts/issues"
+  },
+  "dependencies": {
+    "@dritelabs/accounts-utils": "*",
+    "@dritelabs/accounts-errors": "*",
+    "@prisma/client": "^4.1.0",
+    "memjs": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.19",
+    "@rushstack/heft": "0.47.0",
+    "prisma": "^4.1.0",
+    "typescript": "4.5.5",
+    "tsup": "5.11.13"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "./dist"
+        ]
+      }
+    }
+  }
+}
